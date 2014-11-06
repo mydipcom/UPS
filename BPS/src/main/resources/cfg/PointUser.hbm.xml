@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bps.dto.TpointUser"
+		table="bps_point_user" lazy="false">
+		<id name="userId" type="string">
+			<column name="user_id" />
+			<generator class="assigned"></generator>
+		</id>
+		<property name="points" type="integer">
+			<column name="points"/>
+		</property>	
+		<property name="status" type="java.lang.Boolean">
+            <column name="status"/>
+        </property>	
+	</class>
+</hibernate-mapping>

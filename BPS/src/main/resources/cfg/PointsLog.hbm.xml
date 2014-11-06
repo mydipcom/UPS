@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bps.dto.TpointsLog" table="bps_points_log" lazy="true">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native"></generator>
+		</id>
+		<many-to-one name="pointUser" column="user_id" class="com.bps.dto.TpointUser" unique="true" not-null="true"/>						
+        <property name="points" type="java.lang.Integer">
+            <column name="points" length="11" not-null="true"/>
+        </property>                
+        <property name="pointsBalance" type="java.lang.Integer">
+        	<column name="points_balance" length="11" not-null="true"/>
+        </property>
+        <property name="content" type="java.lang.String">
+        	<column name="content" length="1000" not-null="true"/>
+        </property>        
+        <property name="from" type="java.lang.Integer">
+            <column name="from" length="6">
+                <comment>0 System; 1 Interface; 2 Excel</comment>
+            </column>
+        </property>                           
+        <property name="createdTime" type="java.lang.Long">
+            <column name="created_time" length="20" not-null="true"/>              
+        </property>        
+	</class>
+</hibernate-mapping>

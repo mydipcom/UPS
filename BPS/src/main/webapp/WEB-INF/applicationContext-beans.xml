@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<bean class="com.bps.commons.MyApplicationContextUtil" lazy-init="false"></bean>
+	
+	<!-- 资源文件绑定器 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="i18n.messageResource" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+	
+	
+	<bean id="systemConfig" class="com.bps.commons.SystemConfig" lazy-init="true">
+		<property name="apiKey" value="${api.access.key}"/>	
+	</bean>
+	<bean id="pointUserDao" class="com.bps.dao.PointUserDao" autowire="byName">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="pointsLogDao" class="com.bps.dao.PointsLogDao" autowire="byName">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminUserDao" class="com.bps.dao.AdminUserDao" autowire="byName">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<bean id="adminRoleDao" class="com.bps.dao.AdminRoleDao" autowire="byName">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<bean id="adminNodesDao" class="com.bps.dao.AdminNodesDao" autowire="byName"/>
+	
+	<bean id="pointUserService" class="com.bps.service.impl.PointUserServiceImpl" autowire="byName">
+		<property name="pointUserDao" ref="pointUserDao"></property>
+		<property name="pointsLogDao" ref="pointsLogDao"></property>
+	</bean>
+	
+	<bean id="pointsLogService" class="com.bps.service.impl.PointsLogServiceImpl" autowire="byName">
+		<property name="pointsLogDao" ref="pointsLogDao"></property>
+	</bean>	
+		
+	<bean id="adminUserService" class="com.bps.service.impl.AdminUserServiceImpl">
+		<property name="adminUserDao" ref="adminUserDao"></property>
+	</bean>
+		
+	<bean id="adminRoleService" class="com.bps.service.impl.AdminRoleServiceImpl" autowire="byName">
+		<property name="adminRoleDao" ref="adminRoleDao"></property>
+	</bean>
+	
+	<bean id="adminNodesService" class="com.bps.service.impl.AdminNodesServiceImpl" autowire="byName"/>	
+</beans>

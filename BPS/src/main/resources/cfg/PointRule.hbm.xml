@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.bps.dto.TpointRule" table="bps_point_rule" catalog="bps">
+        <id name="ruleId" type="java.lang.Integer">
+            <column name="rule_id" />
+            <generator class="identity" />
+        </id>
+        <property name="ruleName" type="string">
+            <column name="rule_name" length="100" not-null="true" />
+        </property>
+        <property name="ruleInput" type="int">
+            <column name="rule_input" not-null="true" />
+        </property>
+        <property name="ruleOutput" type="int">
+            <column name="rule_output" not-null="true" />
+        </property>
+        <property name="descr" type="string">
+            <column name="descr" length="1000" not-null="true" />
+        </property>
+        <property name="status" type="boolean">
+            <column name="status" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
