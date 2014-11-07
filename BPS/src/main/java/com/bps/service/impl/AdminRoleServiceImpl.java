@@ -9,6 +9,9 @@
  */ 
 package com.bps.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bps.dao.AdminRoleDao;
 import com.bps.dto.TadminRole;
 import com.bps.service.AdminRoleService;
@@ -19,8 +22,10 @@ import com.bps.service.AdminRoleService;
  * @author Phills Li 
  * 
  */
+@Service
 public class AdminRoleServiceImpl implements AdminRoleService {
-
+	
+    @Autowired
 	private AdminRoleDao adminRoleDao;
 	
 	public AdminRoleDao getAdminRoleDao() {
@@ -39,7 +44,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @return TadminRole
 	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
 	 */
-	@Override
+	
 	public TadminRole getAdminRoleById(String roleId) {
 		TadminRole adminRole=adminRoleDao.getAdminRoleById(roleId);
 		return adminRole;
@@ -52,7 +57,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminRole 
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void createAdminRole(TadminRole adminRole) {
 		adminRoleDao.createAdminRole(adminRole);
 	}
@@ -64,7 +69,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminRole 
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void updateAdminRole(TadminRole adminRole) {
 		adminRoleDao.updateAdminRole(adminRole);
 
@@ -77,7 +82,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#deleteAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void deleteAdminRole(TadminRole adminRole) {
 		adminRoleDao.deleteAdminRole(adminRole);
 	}

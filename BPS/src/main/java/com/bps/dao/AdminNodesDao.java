@@ -1,6 +1,10 @@
 package com.bps.dao;
 
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.bps.dao.base.BaseDao;
 import com.bps.dto.TadminNodes;
 
@@ -11,6 +15,12 @@ import com.bps.dto.TadminNodes;
  * @author Phills Li 
  *
  */
+@Repository
 public class AdminNodesDao extends BaseDao<TadminNodes> {
+	
+	@Autowired  
+    public void setSessionFactoryOverride(SessionFactory sessionFactory) {   
+      super.setSessionFactory(sessionFactory);   
+    } 
 			
 }

@@ -1,11 +1,16 @@
 package com.bps.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bps.commons.BPSException;
 import com.bps.dao.PointUserDao;
 import com.bps.dto.TpointUser;
 import com.bps.service.PointUserService;
 
+@Service
 public class PointUserServiceImplBySql implements PointUserService {
+	@Autowired
 	private PointUserDao pointUserDao;				
 
 	public TpointUser getUserInfoById(String userId) {							

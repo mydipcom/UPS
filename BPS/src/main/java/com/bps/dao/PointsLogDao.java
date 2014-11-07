@@ -7,10 +7,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bps.dto.TpointsLog;
 import com.bps.dto.TpointUser;
 
+@Repository
 public class PointsLogDao {
 	
 	@Autowired

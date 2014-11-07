@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bps.dto.TadminRoleRights;
 
@@ -19,24 +21,14 @@ import com.bps.dto.TadminRoleRights;
  * @see com.bps.dto.TadminRoleRights
  * @author Hibernate Tools
  */
+@Repository
 public class AdminRoleRightsDao {
 
 	private static final Log log = LogFactory
 			.getLog(AdminRoleRightsDao.class);
-
-	private final SessionFactory sessionFactory = getSessionFactory();
-
-	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext()
-					.lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException(
-					"Could not locate SessionFactory in JNDI");
-		}
-	}
-
+    @Autowired
+	private SessionFactory sessionFactory;
+    
 	public void persist(TadminRoleRights transientInstance) {
 		log.debug("persisting TadminRoleRights instance");
 		try {

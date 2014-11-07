@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bps.dto.TadminInfo;
 
@@ -19,23 +21,12 @@ import com.bps.dto.TadminInfo;
  * @see com.bps.dto.TadminInfo
  * @author Hibernate Tools
  */
+@Repository
 public class AdminInfoDao {
 
 	private static final Log log = LogFactory.getLog(AdminInfoDao.class);
-
-	private final SessionFactory sessionFactory = getSessionFactory();
-
-	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext()
-					.lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException(
-					"Could not locate SessionFactory in JNDI");
-		}
-	}
-
+    @Autowired
+    private SessionFactory sessionFactory;
 	public void persist(TadminInfo transientInstance) {
 		log.debug("persisting TadminInfo instance");
 		try {

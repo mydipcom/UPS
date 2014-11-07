@@ -9,6 +9,10 @@
  */ 
 package com.bps.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
 import com.bps.dao.AdminNodesDao;
 import com.bps.dto.TadminNodes;
 import com.bps.model.PagingData;
@@ -21,8 +25,9 @@ import com.bps.service.AdminNodesService;
  * @author Phills Li 
  * 
  */
+@Service
 public class AdminNodesServiceImpl implements AdminNodesService {	
-
+    @Autowired
 	private AdminNodesDao adminNodesDao;
 	
 	public AdminNodesDao getAdminNodesDao() {
@@ -41,7 +46,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @return 
 	 * @see com.bps.service.AdminNodesService#getAdminNodeById(java.lang.String) 
 	 */
-	@Override
+	
 	public TadminNodes getAdminNodeById(String nodeId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -54,7 +59,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#createAdminRole(com.bps.dto.TadminNodes) 
 	 */
-	@Override
+	
 	public void createAdminRole(TadminNodes adminNodes) {
 		// TODO Auto-generated method stub
 
@@ -67,7 +72,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#updateAdminRole(com.bps.dto.TadminNodes) 
 	 */
-	@Override
+	
 	public void updateAdminRole(TadminNodes adminNodes) {
 		// TODO Auto-generated method stub
 
@@ -80,7 +85,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#deleteAdminRole(com.bps.dto.TadminNodes) 
 	 */
-	@Override
+	
 	public void deleteAdminRole(TadminNodes adminNodes) {
 		// TODO Auto-generated method stub
 

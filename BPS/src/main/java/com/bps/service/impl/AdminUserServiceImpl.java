@@ -9,6 +9,9 @@
  */ 
 package com.bps.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bps.dao.AdminUserDao;
 import com.bps.dto.TadminUser;
 import com.bps.service.AdminUserService;
@@ -19,8 +22,10 @@ import com.bps.service.AdminUserService;
  * @author Phills Li 
  * 
  */
+
+@Service
 public class AdminUserServiceImpl implements AdminUserService {
-	
+	@Autowired
 	private AdminUserDao adminUserDao;
 	
 	public AdminUserDao getAdminUserDao() {
@@ -40,7 +45,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @return 
 	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
 	 */
-	@Override
+
 	public TadminUser getAdminUserById(String userId) {
 		TadminUser adminUser=adminUserDao.getAdminUserById(userId);
 		return adminUser;
@@ -53,7 +58,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void createAdminUser(TadminUser adminUser) {
 		adminUserDao.createAdminUser(adminUser);
 	}
@@ -65,7 +70,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void updateAdminUser(TadminUser adminUser) {
 		adminUserDao.updateAdminUser(adminUser);
 
@@ -78,7 +83,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#deleteAdminUser(com.bps.dto.TadminUser) 
 	 */
-	@Override
+	
 	public void deleteAdminUser(TadminUser adminUser) {
 		adminUserDao.deleteAdminUser(adminUser);
 	}

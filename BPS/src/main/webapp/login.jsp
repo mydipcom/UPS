@@ -75,13 +75,15 @@
 			<div class="input-icon">
 				<i class="fa fa-user"></i>				
 				<form:input path="adminId" cssClass="form-control placeholder-no-fix" placeholder="Username" autocomplete="off"/>
+				
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.password"/></label>
 			<div class="input-icon">
 				<i class="fa fa-lock"></i>
-				<form:password path="password" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off"/>				
+				<form:password path="password" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off"/>
+								
 			</div>
 		</div>
 		<div class="form-actions">

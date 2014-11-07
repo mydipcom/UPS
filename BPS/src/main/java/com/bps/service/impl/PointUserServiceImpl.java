@@ -1,5 +1,8 @@
 package com.bps.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bps.commons.BPSException;
 import com.bps.dao.PointUserDao;
 import com.bps.dao.PointsLogDao;
@@ -7,9 +10,11 @@ import com.bps.dto.TpointUser;
 import com.bps.dto.TpointsLog;
 import com.bps.service.PointUserService;
 
+@Service
 public class PointUserServiceImpl implements PointUserService {
-	
-	private PointUserDao pointUserDao;		
+	@Autowired
+	private PointUserDao pointUserDao;
+	@Autowired
 	private PointsLogDao pointsLogDao;
 
 	public TpointUser getUserInfoById(String userId) {							

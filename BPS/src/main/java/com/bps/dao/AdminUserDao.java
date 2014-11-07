@@ -2,12 +2,15 @@ package com.bps.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bps.dto.TadminUser;
 
+@Repository
 public class AdminUserDao {
 	
-	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 	public SessionFactory getSessionFactory() {

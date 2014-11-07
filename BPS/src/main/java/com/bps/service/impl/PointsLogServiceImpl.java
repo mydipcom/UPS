@@ -11,6 +11,9 @@ package com.bps.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bps.dao.PointsLogDao;
 import com.bps.dto.TpointsLog;
 import com.bps.service.PointsLogService;
@@ -21,8 +24,9 @@ import com.bps.service.PointsLogService;
  * @author Phills Li 
  * 
  */
+@Service
 public class PointsLogServiceImpl implements PointsLogService {
-
+    @Autowired
 	private PointsLogDao pointsLogDao;	
 
 	/**
@@ -33,7 +37,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @return 
 	 * @see com.bps.service.PointsLogService#getPointsHistoryById(java.lang.String) 
 	 */
-	@Override
+	
 	public TpointsLog getPointsHistoryById(String id) {
 		TpointsLog pointsHistory=pointsLogDao.getPointsHistoryById(id);
 		return pointsHistory;
@@ -46,7 +50,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param pointsHistory 
 	 * @see com.bps.service.PointsLogService#createPointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	@Override
+	
 	public void createPointsHistory(TpointsLog pointsHistory) {
 		pointsLogDao.createPointsHistory(pointsHistory);
 
@@ -59,7 +63,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param adminUser 
 	 * @see com.bps.service.PointsLogService#updatePointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	@Override
+	
 	public void updatePointsHistory(TpointsLog pointsHistory) {
 		pointsLogDao.updatePointsHistory(pointsHistory);
 
@@ -72,7 +76,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param pointsHistory 
 	 * @see com.bps.service.PointsLogService#deletePointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	@Override
+	
 	public void deletePointsHistory(TpointsLog pointsHistory) {
 		pointsLogDao.deletePointsHistory(pointsHistory);
 
@@ -86,7 +90,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @return 
 	 * @see com.bps.service.PointsLogService#findPointsHistoryByStatus(boolean) 
 	 */
-	@Override
+	
 	public List<TpointsLog> findPointsHistoryByStatus(String userId,Boolean status) {
 		return pointsLogDao.findPointsHistoryByStatus(userId,status);		
 	}
