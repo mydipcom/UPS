@@ -12,7 +12,7 @@ public class TadminNodes implements java.io.Serializable {
 	*/ 
 	private static final long serialVersionUID = -2186010030840281949L;
 	private Integer nodeId;
-	private byte[] nodeBinary;
+	private long bitFlag;
 	private String name;
 	private String uri;
 	private String method;
@@ -26,9 +26,9 @@ public class TadminNodes implements java.io.Serializable {
 	public TadminNodes() {
 	}
 
-	public TadminNodes(byte[] nodeBinary, String name, String uri,String method, int pid,
+	public TadminNodes(long bitFlag, String name, String uri,String method, int pid,
 			boolean isMenu, boolean status) {
-		this.nodeBinary = nodeBinary;
+		this.bitFlag = bitFlag;
 		this.name = name;
 		this.uri = uri;
 		this.method=method;
@@ -37,10 +37,10 @@ public class TadminNodes implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public TadminNodes(byte[] nodeBinary, String name, String uri,String method, int pid,
+	public TadminNodes(long bitFlag, String name, String uri,String method, int pid,
 			boolean isMenu, boolean status, String groupName, Short groupSort,
 			String descr) {
-		this.nodeBinary = nodeBinary;
+		this.bitFlag = bitFlag;
 		this.name = name;
 		this.uri = uri;
 		this.method=method;
@@ -66,14 +66,14 @@ public class TadminNodes implements java.io.Serializable {
 
 	public void setNodeId(Integer nodeId) {
 		this.nodeId = nodeId;
+	}	
+
+	public long getBitFlag() {
+		return bitFlag;
 	}
 
-	public byte[] getNodeBinary() {
-		return this.nodeBinary;
-	}
-
-	public void setNodeBinary(byte[] nodeBinary) {
-		this.nodeBinary = nodeBinary;
+	public void setBitFlag(long bitFlag) {
+		this.bitFlag = bitFlag;
 	}
 
 	public String getName() {

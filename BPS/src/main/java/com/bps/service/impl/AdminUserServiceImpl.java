@@ -22,20 +22,12 @@ import com.bps.service.AdminUserService;
  * @author Phills Li 
  * 
  */
-
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
+	
 	@Autowired
 	private AdminUserDao adminUserDao;
-	
-	public AdminUserDao getAdminUserDao() {
-		return adminUserDao;
-	}
-
-	public void setAdminUserDao(AdminUserDao adminUserDao) {
-		this.adminUserDao = adminUserDao;
-	}	
-		
+				
 
 	/**
 	 * (non-Javadoc)
@@ -45,10 +37,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @return 
 	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
 	 */
-
 	public TadminUser getAdminUserById(String userId) {
-		TadminUser adminUser=adminUserDao.getAdminUserById(userId);
-		return adminUser;
+		return adminUserDao.get(userId);	
 	}
 
 	/**
@@ -58,9 +48,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void createAdminUser(TadminUser adminUser) {
-		adminUserDao.createAdminUser(adminUser);
+		adminUserDao.create(adminUser);
 	}
 
 	/**
@@ -70,9 +59,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void updateAdminUser(TadminUser adminUser) {
-		adminUserDao.updateAdminUser(adminUser);
+		adminUserDao.update(adminUser);
 
 	}
 
@@ -83,9 +71,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#deleteAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void deleteAdminUser(TadminUser adminUser) {
-		adminUserDao.deleteAdminUser(adminUser);
+		adminUserDao.delete(adminUser);
 	}
 
 }

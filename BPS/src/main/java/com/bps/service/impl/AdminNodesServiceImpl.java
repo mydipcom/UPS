@@ -10,13 +10,13 @@
 package com.bps.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.bps.commons.BPSException;
 import com.bps.dao.AdminNodesDao;
 import com.bps.dto.TadminNodes;
+import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
-import com.bps.model.RightsDataTableParamter;
 import com.bps.service.AdminNodesService;
 
 /** 
@@ -27,17 +27,11 @@ import com.bps.service.AdminNodesService;
  */
 @Service
 public class AdminNodesServiceImpl implements AdminNodesService {	
-    @Autowired
-	private AdminNodesDao adminNodesDao;
-	
-	public AdminNodesDao getAdminNodesDao() {
-		return adminNodesDao;
-	}
 
-	public void setAdminNodesDao(AdminNodesDao adminNodesDao) {
-		this.adminNodesDao = adminNodesDao;
-	}
-	
+	@Autowired
+	private AdminNodesDao adminNodesDao;		
+		
+
 	/**
 	 * (non-Javadoc)
 	 * <p>Title: getAdminNodeById</p> 
@@ -46,23 +40,31 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @return 
 	 * @see com.bps.service.AdminNodesService#getAdminNodeById(java.lang.String) 
 	 */
-	
-	public TadminNodes getAdminNodeById(String nodeId) {
+	public TadminNodes getAdminNodeById(int nodeId) {
 		// TODO Auto-generated method stub
-		return null;
+		return adminNodesDao.get(nodeId);
 	}
 
 	/**
 	 * (non-Javadoc)
-	 * <p>Title: createAdminRole</p> 
+	 * <p>Title: createAdminNode</p> 
 	 * <p>Description: </p> 
 	 * @param adminNodes 
-	 * @see com.bps.service.AdminNodesService#createAdminRole(com.bps.dto.TadminNodes) 
+	 * @see com.bps.service.AdminNodesService#createAdminNode(com.bps.dto.TadminNodes) 
 	 */
-	
-	public void createAdminRole(TadminNodes adminNodes) {
-		// TODO Auto-generated method stub
-
+	public void createAdminNode(TadminNodes adminNodes) {
+		try{
+			adminNodesDao.create(adminNodes);
+			double nodeValue=Math.pow(2, adminNodes.getNodeId()-1);
+			adminNodes.setBitFlag((long)nodeValue);
+			adminNodesDao.update(adminNodes);
+		}
+		catch(BPSException be){
+			throw be;
+		}
+		catch(Exception e){
+			throw new BPSException("error.service.adminnodes.create",e);
+		}
 	}
 
 	/**
@@ -70,29 +72,56 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * <p>Title: updateAdminRole</p> 
 	 * <p>Description: </p> 
 	 * @param adminNodes 
-	 * @see com.bps.service.AdminNodesService#updateAdminRole(com.bps.dto.TadminNodes) 
+	 * @see com.bps.service.AdminNodesService#updateAdminNode(com.bps.dto.TadminNodes) 
 	 */
-	
-	public void updateAdminRole(TadminNodes adminNodes) {
-		// TODO Auto-generated method stub
-
+	public void updateAdminNode(TadminNodes adminNodes) {
+		adminNodesDao.update(adminNodes);
 	}
 
 	/**
 	 * (non-Javadoc)
-	 * <p>Title: deleteAdminRole</p> 
+	 * <p>Title: deleteAdminNode</p> 
 	 * <p>Description: </p> 
 	 * @param adminNodes 
-	 * @see com.bps.service.AdminNodesService#deleteAdminRole(com.bps.dto.TadminNodes) 
+	 * @see com.bps.service.AdminNodesService#deleteAdminNode(com.bps.dto.TadminNodes) 
 	 */
+	public void deleteAdminNode(TadminNodes adminNodes) {
+		adminNodesDao.delete(adminNodes);		
+	}
 	
-	public void deleteAdminRole(TadminNodes adminNodes) {
-		// TODO Auto-generated method stub
-
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: deleteAdminNodeById</p> 
+	 * <p>Description: </p> 
+	 * @param id 
+	 * @see com.bps.service.AdminNodesService#deleteAdminNodeById(int)
+	 */
+	public void deleteAdminNodeById(int id){
+		adminNodesDao.delete(id);
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: deleteAdminNodesByIds</p> 
+	 * <p>Description: </p> 
+	 * @param ids 
+	 * @see com.bps.service.AdminNodesService#deleteAdminNodesByIds(int[])
+	 */
+	public void deleteAdminNodesByIds(Integer[] ids){		
+		adminNodesDao.deleteAll(ids);
 	}
 
-	
-	public PagingData loadAdminNodesList(RightsDataTableParamter rdtp){		
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: loadAdminNodesList</p> 
+	 * <p>Description: </p> 
+	 * @param rdtp
+	 * @return 
+	 * @see com.bps.service.AdminNodesService#loadAdminNodesList(com.bps.model.DataTableParamter)
+	 */
+	public PagingData loadAdminNodesList(DataTableParamter rdtp){		
 		return adminNodesDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
+
+	
 }

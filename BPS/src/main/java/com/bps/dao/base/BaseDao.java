@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.bps.model.PagingData;
@@ -32,6 +34,11 @@ public class BaseDao<T> extends HibernateDaoSupport
 {	
 	
     protected Class<T> clazz;
+    
+    @Autowired
+    public void setSessionFactoryOverride(SessionFactory sessionFactory){
+    	super.setSessionFactory(sessionFactory);
+    }
 
     @SuppressWarnings("unchecked")
 	public BaseDao()
@@ -47,9 +54,9 @@ public class BaseDao<T> extends HibernateDaoSupport
         }
     }
 
-    public void save(T t)
+    public Serializable save(T t)
     {
-        this.getHibernateTemplate().save(t);
+        return this.getHibernateTemplate().save(t);
     }
 
     public T get(Serializable id)
@@ -63,9 +70,9 @@ public class BaseDao<T> extends HibernateDaoSupport
         return this.getHibernateTemplate().loadAll(clazz);
     }
 
-    public void create(T t)
+    public Serializable create(T t)
     {
-        getHibernateTemplate().save(t);
+        return getHibernateTemplate().save(t);
     }
 
     public void update(T t)
@@ -94,13 +101,42 @@ public class BaseDao<T> extends HibernateDaoSupport
     		delete(id);
 		}
     }
+    
+    public void deleteAll(final Long[] ids)
+    {
+    	for (Long id : ids) {
+    		delete(id);
+		}
+    }
+    
+    public void deleteAll(final int[] ids)
+    {
+    	for (int id : ids) {
+    		delete(id);
+		}
+    }
+    
+    public void deleteAll(final long[] ids)
+    {
+    	for (long id : ids) {
+    		delete(id);
+		}
+    }
+    
+    public void deleteAll(final String[] ids)
+    {
+    	for (String id : ids) {
+    		delete(id);
+		}
+    }
 
     public void merge(T t)
     {
         this.getHibernateTemplate().merge(t);
     }
    
-    public List<T> getAll(String orderBy, boolean isAsc)
+    @SuppressWarnings("unchecked")
+	public List<T> getAll(String orderBy, boolean isAsc)
     {
         return createCriteria(orderBy, isAsc).list();
     }
@@ -111,12 +147,14 @@ public class BaseDao<T> extends HibernateDaoSupport
         return (T)createCriteria(Restrictions.eq(name, value)).uniqueResult();
     }
 
-    public List<T> findBy(String name, Object value)
+    @SuppressWarnings("unchecked")
+	public List<T> findBy(String name, Object value)
     {
         return createCriteria(Restrictions.eq(name, value)).list();
     }
 
-    public List<T> findBy(String propertyName, Object value, String orderBy,boolean isAsc)
+    @SuppressWarnings("unchecked")
+	public List<T> findBy(String propertyName, Object value, String orderBy,boolean isAsc)
     {
         return createCriteria(orderBy, isAsc, Restrictions.eq(propertyName, value)).list();
     }
@@ -178,6 +216,7 @@ public class BaseDao<T> extends HibernateDaoSupport
         return (T)criteria.uniqueResult();
     }
         
+	@SuppressWarnings("rawtypes")
 	public List findByHqlName(String hqlName)
     {
         Query query = this.currentSession().getNamedQuery(hqlName);
@@ -185,7 +224,8 @@ public class BaseDao<T> extends HibernateDaoSupport
         return query.list();
     }
 
-    public List findByHqlName(String hqlName, Object[] params)
+    @SuppressWarnings("rawtypes")
+	public List findByHqlName(String hqlName, Object[] params)
     {
         Query query = this.currentSession().getNamedQuery(hqlName);
 
@@ -196,7 +236,8 @@ public class BaseDao<T> extends HibernateDaoSupport
         return query.list();
     }       
 
-    public PagingData findPage(Criteria criteria, int startNo, int pageSize)
+    @SuppressWarnings("rawtypes")
+	public PagingData findPage(Criteria criteria, int startNo, int pageSize)
     {
         CriteriaImpl impl = (CriteriaImpl)criteria;
         Projection projection = impl.getProjection();        
@@ -261,7 +302,8 @@ public class BaseDao<T> extends HibernateDaoSupport
         return findPage(hql, startNo, pageSize, new Object[] {param});
     }
 
-    public PagingData findPage(final String hql, final int startNo,
+    @SuppressWarnings("rawtypes")
+	public PagingData findPage(final String hql, final int startNo,
                          final int pageSize, final Object[] params)
     {
         String countHql = getCountHql(hql);

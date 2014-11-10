@@ -24,17 +24,9 @@ import com.bps.service.AdminRoleService;
  */
 @Service
 public class AdminRoleServiceImpl implements AdminRoleService {
-	
-    @Autowired
+	@Autowired
 	private AdminRoleDao adminRoleDao;
-	
-	public AdminRoleDao getAdminRoleDao() {
-		return adminRoleDao;
-	}
-
-	public void setAdminRoleDao(AdminRoleDao adminRoleDao) {
-		this.adminRoleDao = adminRoleDao;
-	}
+		
 	
 	/**
 	 * (non-Javadoc)
@@ -44,10 +36,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @return TadminRole
 	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
 	 */
-	
 	public TadminRole getAdminRoleById(String roleId) {
-		TadminRole adminRole=adminRoleDao.getAdminRoleById(roleId);
-		return adminRole;
+		return adminRoleDao.get(roleId);
 	}
 
 	/**
@@ -57,9 +47,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminRole 
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void createAdminRole(TadminRole adminRole) {
-		adminRoleDao.createAdminRole(adminRole);
+		adminRoleDao.create(adminRole);
 	}
 
 	/**
@@ -69,9 +58,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminRole 
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void updateAdminRole(TadminRole adminRole) {
-		adminRoleDao.updateAdminRole(adminRole);
+		adminRoleDao.update(adminRole);
 
 	}	
 
@@ -82,9 +70,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#deleteAdminUser(com.bps.dto.TadminUser) 
 	 */
-	
 	public void deleteAdminRole(TadminRole adminRole) {
-		adminRoleDao.deleteAdminRole(adminRole);
+		adminRoleDao.delete(adminRole);
 	}
 
 }

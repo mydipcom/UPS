@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd 
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-    
-    <context:annotation-config/>
-    
-    <context:component-scan base-package="com.bps.dao,com.bps.service.impl"/>
-    
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
 	<bean class="com.bps.commons.MyApplicationContextUtil" lazy-init="false"></bean>
 	
 	<!-- 资源文件绑定器 -->
@@ -21,9 +12,64 @@
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 	
-	
+	 <!-- 
 	<bean id="systemConfig" class="com.bps.commons.SystemConfig" lazy-init="true">
 		<property name="apiKey" value="${api.access.key}"/>	
 	</bean>
+	 
+	<bean id="pointUserDao" class="com.bps.dao.PointUserDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="pointsLogDao" class="com.bps.dao.PointsLogDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminUserDao" class="com.bps.dao.AdminUserDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	
+	<bean id="adminRoleDao" class="com.bps.dao.AdminRoleDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	 
+	<bean id="adminNodesDao" class="com.bps.dao.AdminNodesDao">
+	<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminInfoDao" class="com.bps.dao.AdminInfoDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminLogDao" class="com.bps.dao.AdminLogDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminRoleRightsDao" class="com.bps.dao.AdminRoleRightsDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="pointRuleLogDao" class="com.bps.dao.PointRuleLogDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="pointRuleDao" class="com.bps.dao.PointRuleDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="settingDao" class="com.bps.dao.SettingDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	-->
+		 	 
+	<bean id="pointUserService" class="com.bps.service.impl.PointUserServiceImpl" autowire="byName"/>
+	
+	<bean id="pointsLogService" class="com.bps.service.impl.PointsLogServiceImpl" autowire="byName"/>
+		
+	<bean id="adminUserService" class="com.bps.service.impl.AdminUserServiceImpl" autowire="byName"/>
+		
+	<bean id="adminRoleService" class="com.bps.service.impl.AdminRoleServiceImpl" autowire="byName"/>
+	
+	<bean id="adminNodesService" class="com.bps.service.impl.AdminNodesServiceImpl" autowire="byName"/>
 	
 </beans>

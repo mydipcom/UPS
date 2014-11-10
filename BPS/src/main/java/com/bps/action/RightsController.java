@@ -8,12 +8,11 @@
  */
 package com.bps.action;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.bps.commons.BPSException;
+import com.bps.commons.ConvertTools;
 import com.bps.dto.TadminNodes;
+import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
-import com.bps.model.RightsDataTableParamter;
 import com.bps.service.AdminNodesService;
 
 /**
@@ -38,8 +40,9 @@ public class RightsController extends BaseController {
 
 	private Logger logger = Logger.getLogger(RightsController.class);
 	
-	@Autowired
-	private AdminNodesService adminNodesService;			
+	@Resource
+	private AdminNodesService adminNodesService;
+		
 
 	@RequestMapping(value="/rights",method=RequestMethod.GET)
 	public ModelAndView rights(HttpServletRequest request){
@@ -50,72 +53,95 @@ public class RightsController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/rightsList",method=RequestMethod.POST)
+	@RequestMapping(value="/rightsList",method=RequestMethod.GET)
 	@ResponseBody
-	public String rightsList(HttpServletRequest request,RightsDataTableParamter dtp,ModelMap model){		
+	public String rightsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminNodesService.loadAdminNodesList(dtp);
 		pagingData.setSEcho(dtp.sEcho);
-//		pagingData.setITotalDisplayRecords(1);
-//		pagingData.setITotalRecords(1);
-//		TadminNodes ad=new TadminNodes();
-//		ad.setDescr("desc test");
-//		ad.setGroupName("Rights");
-//		ad.setGroupSort((short)1);
-//		ad.setIsMenu(true);
-//		ad.setName("Rights");
-//		ad.setNodeId(1);
-//		ad.setPid(0);
-//		ad.setStatus(true);
-//		ad.setUri("/rightsList");
-//		pagingData.setAaData(new Object[]{ad});
-//				
-//		model.addAttribute("rightsList", pagingData);
 		
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;
 	}
+		
 	
 	/**
-	 * <p>Description:添加权限</p>
-	 * @Title: rights 
-	 * @param id
+	 * <p>Description: 处理新增数据的ajax请求</p>
+	 * @Title: addRights 
+	 * @param jsonStr
 	 * @param request
-	 * @return
+	 * @return String
 	 * @throws
 	 */
-	@RequestMapping(value="/rights/{id}",method=RequestMethod.GET)
-	public ModelAndView rights(@PathVariable int id,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-
-//		mav.addObject("user", tUser);
-		mav.setViewName("rights/rights");
-		return mav;
+	@RequestMapping(value="/addRights",method=RequestMethod.POST)
+	@ResponseBody
+	public String addRights(HttpServletRequest request,TadminNodes adminNode){
+//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
+//		TadminNodes adminNode=new TadminNodes();
+//		ConvertTools.json2Model(jsonObj, adminNode);
+//		adminNode.setName(jsonObj.getString("name"));
+//		adminNode.setUri(jsonObj.getString("uri"));
+//		adminNode.setMethod(jsonObj.getString("method"));
+//		adminNode.setPid(jsonObj.getIntValue("pid"));
+//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
+//		adminNode.setGroupName(jsonObj.getString("groupName"));
+//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
+//		adminNode.setDescr(jsonObj.getString("descr"));
+//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
+			
+		JSONObject respJson = new JSONObject();
+		try{
+			adminNodesService.createAdminNode(adminNode);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}		
+		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/rights",method=RequestMethod.POST)
-	public ModelAndView addRights(HttpServletRequest request,TadminNodes adminNodes){
-		ModelAndView mav=new ModelAndView();
+	@RequestMapping(value="/editRights",method=RequestMethod.POST)
+	@ResponseBody
+	public String updateRights(HttpServletRequest request,TadminNodes adminNode){		
+//		TadminNodes adminNode=new TadminNodes();		
+//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
+//		ConvertTools.json2Model(jsonObj, adminNode);
+//		adminNode.setName(jsonObj.getString("name"));
+//		adminNode.setUri(jsonObj.getString("uri"));
+//		adminNode.setMethod(jsonObj.getString("method"));
+//		adminNode.setPid(jsonObj.getIntValue("pid"));
+//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
+//		adminNode.setGroupName(jsonObj.getString("groupName"));
+//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
+//		adminNode.setDescr(jsonObj.getString("descr"));
+//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
 
-//		mav.addObject("user", tUser);
-		mav.setViewName("rights/rights");
-		return mav;
+		JSONObject respJson = new JSONObject();
+		try{
+			adminNodesService.updateAdminNode(adminNode);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);		
 	}
-	
-	@RequestMapping(value="/rights/{id}",method=RequestMethod.PUT)
-	public ModelAndView updateRights(HttpServletRequest request,TadminNodes adminNodes){
-		ModelAndView mav=new ModelAndView();
 
-//		mav.addObject("user", tUser);
-		mav.setViewName("rights/rights");
-		return mav;
-	}
-
-	@RequestMapping(value="/rights/{id}",method=RequestMethod.DELETE)
-	public ModelAndView deleteRights(@PathVariable int id,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-
-//		mav.addObject("user", tUser);
-		mav.setViewName("rights/rights");
-		return mav;
+	@RequestMapping(value="/rights/{ids}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteRights(@PathVariable String ids,HttpServletRequest request){
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		JSONObject respJson = new JSONObject();
+		try{
+			adminNodesService.deleteAdminNodesByIds(idArr);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
 	}
 }

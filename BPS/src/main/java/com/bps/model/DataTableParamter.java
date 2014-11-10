@@ -15,7 +15,7 @@ package com.bps.model;
  * @author Phills Li 
  * 
  */
-public class RightsDataTableParamter {
+public class DataTableParamter {
 	
 	// DataTable请求服务器端次数
 	public String sEcho;
@@ -37,6 +37,8 @@ public class RightsDataTableParamter {
 	
 	// 逗号分割所有的列
 	public String sColumns;
+	
+	public String delIds;
 
 	public String getsEcho() {
 		return sEcho;
@@ -93,4 +95,13 @@ public class RightsDataTableParamter {
 	public void setsColumns(String sColumns) {
 		this.sColumns = sColumns;
 	}
+
+	public String getDelIds() {
+		return delIds;
+	}
+
+	public void setDelIds(String delIds) {
+		this.delIds = delIds;
+	}
+	
 }

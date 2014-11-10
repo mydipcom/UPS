@@ -75,15 +75,13 @@
 			<div class="input-icon">
 				<i class="fa fa-user"></i>				
 				<form:input path="adminId" cssClass="form-control placeholder-no-fix" placeholder="Username" autocomplete="off"/>
-				
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.password"/></label>
 			<div class="input-icon">
 				<i class="fa fa-lock"></i>
-				<form:password path="password" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off"/>
-								
+				<form:password path="password" cssClass="form-control placeholder-no-fix" placeholder="" autocomplete="off"/>				
 			</div>
 		</div>
 		<div class="form-actions">
@@ -163,8 +161,6 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-<script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
 <script src="assets/admin/pages/scripts/login.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
@@ -173,9 +169,7 @@ jQuery(document).ready(function() {
   $("#password").attr("placeholder","<s:message code="login.form.password"/>");
   $("#adminId").focus();    
   Metronic.init(); // init metronic core components
-Layout.init(); // init current layout
-QuickSidebar.init(); // init quick sidebar
-Demo.init(); // init demo features
+  Layout.init(); // init current layout
   Login.init();
 });
 </script>

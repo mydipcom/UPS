@@ -12,7 +12,4 @@ public interface PointUserService {
 	
 	void deleteUserInfo(TpointUser userInfo);
 	
-	void deductPoints(String userId,int deductedPoints);
-	
-	void addPoints(String userId,int addedPoints);
 }

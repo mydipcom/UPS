@@ -9,8 +9,6 @@
  */ 
 package com.bps.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ import com.bps.service.PointsLogService;
  */
 @Service
 public class PointsLogServiceImpl implements PointsLogService {
-    @Autowired
+	@Autowired
 	private PointsLogDao pointsLogDao;	
 
 	/**
@@ -37,9 +35,8 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @return 
 	 * @see com.bps.service.PointsLogService#getPointsHistoryById(java.lang.String) 
 	 */
-	
 	public TpointsLog getPointsHistoryById(String id) {
-		TpointsLog pointsHistory=pointsLogDao.getPointsHistoryById(id);
+		TpointsLog pointsHistory=pointsLogDao.get(id);
 		return pointsHistory;
 	}
 
@@ -50,9 +47,8 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param pointsHistory 
 	 * @see com.bps.service.PointsLogService#createPointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	
 	public void createPointsHistory(TpointsLog pointsHistory) {
-		pointsLogDao.createPointsHistory(pointsHistory);
+		pointsLogDao.create(pointsHistory);
 
 	}
 
@@ -63,9 +59,8 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param adminUser 
 	 * @see com.bps.service.PointsLogService#updatePointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	
 	public void updatePointsHistory(TpointsLog pointsHistory) {
-		pointsLogDao.updatePointsHistory(pointsHistory);
+		pointsLogDao.update(pointsHistory);
 
 	}
 
@@ -76,37 +71,10 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @param pointsHistory 
 	 * @see com.bps.service.PointsLogService#deletePointsHistory(com.bps.dto.TpointsLog) 
 	 */
-	
 	public void deletePointsHistory(TpointsLog pointsHistory) {
-		pointsLogDao.deletePointsHistory(pointsHistory);
+		pointsLogDao.delete(pointsHistory);
 
 	}
-
-	/**
-	 * (non-Javadoc)
-	 * <p>Title: findPointsHistoryByStatus</p> 
-	 * <p>Description: </p> 
-	 * @param status
-	 * @return 
-	 * @see com.bps.service.PointsLogService#findPointsHistoryByStatus(boolean) 
-	 */
 	
-	public List<TpointsLog> findPointsHistoryByStatus(String userId,Boolean status) {
-		return pointsLogDao.findPointsHistoryByStatus(userId,status);		
-	}
-
-	/**
-	 * @return the pointsLogDao
-	 */
-	public PointsLogDao getPointsLogDao() {
-		return pointsLogDao;
-	}
-
-	/**
-	 * @param pointsLogDao the pointsLogDao to set
-	 */
-	public void setPointsLogDao(PointsLogDao pointsLogDao) {
-		this.pointsLogDao = pointsLogDao;
-	}
 
 }

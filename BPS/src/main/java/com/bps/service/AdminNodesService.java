@@ -1,20 +1,23 @@
 package com.bps.service;
 
 import com.bps.dto.TadminNodes;
+import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
-import com.bps.model.RightsDataTableParamter;
-
 
 public interface AdminNodesService {
 	
-	TadminNodes getAdminNodeById(String nodeId);
+	TadminNodes getAdminNodeById(int nodeId);
 	
-	void createAdminRole(TadminNodes adminNodes);
+	void createAdminNode(TadminNodes adminNodes);
 	
-	void updateAdminRole(TadminNodes adminNodes);
+	void updateAdminNode(TadminNodes adminNodes);
 	
-	void deleteAdminRole(TadminNodes adminNodes);
+	void deleteAdminNode(TadminNodes adminNodes);
 	
-	public PagingData loadAdminNodesList(RightsDataTableParamter rdtp);
+	void deleteAdminNodeById(int id);
+	
+	void deleteAdminNodesByIds(Integer[] ids);
+	
+	public PagingData loadAdminNodesList(DataTableParamter rdtp);
 		
 }

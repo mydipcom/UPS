@@ -8,8 +8,8 @@
             <column name="node_id" />
             <generator class="identity" />
         </id>
-        <property name="nodeBinary" type="binary">
-            <column name="node_binary" not-null="true" unique="true" />
+        <property name="bitFlag" type="long">
+            <column name="bit_flag" not-null="true" unique="true" />
         </property>
         <property name="name" type="string">
             <column name="name" length="100" not-null="true" />
