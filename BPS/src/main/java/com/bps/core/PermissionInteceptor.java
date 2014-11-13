@@ -25,11 +25,16 @@ public class PermissionInteceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) throws Exception {
+		String reqMethod=request.getMethod();
+		String uri=request.getRequestURI();
+		String contextPath=request.getContextPath();
+		if((contextPath+"/login").equalsIgnoreCase(uri)){
+			return true;
+		}
 		// TODO Auto-generated method stub
 		Object obj = request.getSession().getAttribute(SystemConstants.LOGINED);
 		//If not login
 		if (null == obj) {
-			
 			response.sendRedirect(request.getContextPath()+"/login");
 			return false;
 		}

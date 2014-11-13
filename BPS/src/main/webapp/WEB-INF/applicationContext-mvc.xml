@@ -34,6 +34,7 @@
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>	
 	-->			
 	
+	<mvc:view-controller path="/" view-name="forward:/login" />
 	<!--静态资源访问 -->
 	<mvc:resources location="/static/" mapping="/static/**"/> 
 	<mvc:resources location="/media/" mapping="/media/**" cache-period="72000000"/>
@@ -53,23 +54,17 @@
 	<mvc:interceptors>
 		<!-- 拦截指定请求 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/user/*"/>
-			<mvc:mapping path="/home/*"/>
-			<mvc:mapping path="/rights/*"/>
-			<bean class="com.bps.core.PermissionInteceptor"></bean>
-		</mvc:interceptor>
-	    <!-- 拦截所有非静态请求 -->
-	    <mvc:interceptor>
-	    	<mvc:mapping path="/static/*"/>						
-			<bean class="com.bps.core.ErrorLoggingInteceptor"></bean>
-		</mvc:interceptor>		
+			<mvc:mapping path="/home"/>
+			<mvc:mapping path="/*/*"/>		
+			<bean class="com.bps.core.PermissionInteceptor"></bean>			
+		</mvc:interceptor>	    
 	</mvc:interceptors>
 	 
 	 <!-- 全局异常处理 -->
 	 <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 	 	<property name="defaultErrorView" value="/error/errpage"/>
-	 	<property name="defaultStatusCode" value="200"/>
-	 	<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/> 	
+	 	<property name="defaultStatusCode" value="500"/>
+	 	<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>
 	 </bean>
 	 
 	 
