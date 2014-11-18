@@ -78,7 +78,7 @@
 
 <tx:advice id="txAdvice" transaction-manager="transactionManager">
 	<tx:attributes>
-		<tx:method name="get*" read-only="false"/>
+		<tx:method name="get*" read-only="true"/>
 		<tx:method name="update*" rollback-for="Exception" propagation="REQUIRED"/>
 		<tx:method name="create*" rollback-for="Exception" propagation="REQUIRED"/>
 		<tx:method name="delete*" rollback-for="Exception" propagation="REQUIRED"/>

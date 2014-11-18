@@ -18,6 +18,20 @@
 	
     <!-- 国际化操作 拦截器 必需配置,可以和其它国际化方式通用 -->
 	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieName" value="locale"></property>
+        <property name="cookieMaxAge" value="86400"></property>
+        <property name="defaultLocale" value="en_US"></property>
+        <property name="cookieDomain" value="www.campray.com"></property>
+        <property name="cookiePath" value="/"></property>
+	</bean>
+	<!-- <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean> -->
+	<bean id="defaultUrlMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="interceptors" ref="localeChangeInterceptor" />
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
 	
 	
 	<!--开启请求URL映射的自动注解 
@@ -47,25 +61,16 @@
 		<property name="prefix" value="/" />
 		<!--模板文件后缀 -->
 		<property name="suffix" value=".jsp" />
-	</bean>
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+	</bean>	
 	
 	<!--拦截器-->
 	<mvc:interceptors>
 		<!-- 拦截指定请求 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/user/*"/>
-			<mvc:mapping path="/home/*"/>
-			<mvc:mapping path="/rights/*"/>
-			<mvc:mapping path="/manager/*"/>
-			<mvc:mapping path="/rules/*"/>
-			<bean class="com.bps.core.PermissionInteceptor"></bean>
-		</mvc:interceptor>
-	    <!-- 拦截所有非静态请求 -->
-	    <mvc:interceptor>
-	    	<mvc:mapping path="/static/*"/>						
-			<bean class="com.bps.core.ErrorLoggingInteceptor"></bean>
-		</mvc:interceptor>		
+			<mvc:mapping path="/home"/>
+			<mvc:mapping path="/*/*"/>		
+			<bean class="com.bps.core.PermissionInteceptor"></bean>			
+		</mvc:interceptor>	    
 	</mvc:interceptors>
 	 
 	 <!-- 全局异常处理 -->

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bps.commons.SystemConfig;
 import com.bps.dto.TadminUser;
 
 /**
@@ -43,8 +44,7 @@ public class CommonController extends BaseController {
 	@RequestMapping(value="left",method=RequestMethod.GET)
 	public ModelAndView left(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-//		TadminUser tUser=new TadminUser();
-//		mav.addObject("user", tUser);
+		mav.addObject("menus", SystemConfig.Admin_Nodes_Menu_Map);
 		mav.setViewName("common/left");
 		return mav;
 	}

@@ -19,4 +19,6 @@ package com.bps.commons;
 public class SystemConstants {
 	public static final String LOGINED="Logined";
 	
+	public static final String RIGHTS="rights";
+	
 }

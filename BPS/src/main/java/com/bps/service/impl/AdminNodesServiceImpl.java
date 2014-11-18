@@ -9,9 +9,19 @@
  */ 
 package com.bps.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.dao.AdminNodesDao;
 import com.bps.dto.TadminNodes;
@@ -38,11 +48,66 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * <p>Description: </p> 
 	 * @param nodeId
 	 * @return 
-	 * @see com.bps.service.AdminNodesService#getAdminNodeById(java.lang.String) 
+	 * @see com.bps.service.AdminNodesService#getAdminNodeById(int) 
 	 */
-	public TadminNodes getAdminNodeById(int nodeId) {
-		// TODO Auto-generated method stub
+	public TadminNodes getAdminNodeById(int nodeId) {		
 		return adminNodesDao.get(nodeId);
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: getAllAdminNodes</p> 
+	 * <p>Description: </p> 
+	 * @return 
+	 * @see com.bps.service.AdminNodesService#getAllAdminNodes()
+	 */
+	public List<TadminNodes> getAllAdminNodes(){
+		return adminNodesDao.LoadAll();
+	}
+	
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: getAllAdminNodes</p> 
+	 * <p>Description: </p> 
+	 * @return List<TadminNodes>
+	 * @see com.bps.service.AdminNodesService#getAllAdminNodes()
+	 */
+	public List<TadminNodes> getAllEnabledAdminNodes(){
+		return adminNodesDao.findBy("status", true);		
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: getAllAdminNodesMenu</p> 
+	 * <p>Description: </p> 
+	 * @return List<TadminNodes>
+	 * @see com.bps.service.AdminNodesService#getAllAdminNodesMenu()
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TadminNodes> getAllAdminNodesMenu(){
+		Criteria criteria=adminNodesDao.createCriteria();
+		return criteria.add(Restrictions.eq("isMenu", true))
+				.add(Restrictions.eq("status", true))
+				.addOrder(Order.asc("groupSort"))
+				.list();						
+	}		
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: getAdminNodesMenuByPid</p> 
+	 * <p>Description: </p> 
+	 * @return List<TadminNodes>
+	 * @see com.bps.service.AdminNodesService#getAdminNodesMenuByPid()
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TadminNodes> getAdminNodesMenuByPid(Integer pid){
+		Criteria criteria=adminNodesDao.createCriteria();
+		return criteria.add(Restrictions.eq("isMenu", true))
+				.add(Restrictions.eq("status", true))
+				.add(Restrictions.eq("pid", pid))
+				.addOrder(Order.asc("groupSort"))
+				.list();						
 	}
 
 	/**
@@ -119,7 +184,31 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @return 
 	 * @see com.bps.service.AdminNodesService#loadAdminNodesList(com.bps.model.DataTableParamter)
 	 */
-	public PagingData loadAdminNodesList(DataTableParamter rdtp){		
+	public PagingData loadAdminNodesList(DataTableParamter rdtp){
+		String searchJsonStr=rdtp.getsSearch();
+		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
+			List<Criterion> criterionsList=new ArrayList<Criterion>();
+			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
+			Set<String> keys=jsonObj.keySet();						
+			for (String key : keys) {
+				String val=jsonObj.getString(key);
+				if(val!=null&&!val.isEmpty()){
+					if(key=="isMenu"||key=="status"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+					}					
+					else{
+						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));
+					}
+				}
+			}
+			Criterion[] criterions=new Criterion[criterionsList.size()];
+			int i=0;
+			for (Criterion criterion : criterionsList) {
+				criterions[i]=criterion;	
+				i++;
+			}
+			return adminNodesDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+		}
 		return adminNodesDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
