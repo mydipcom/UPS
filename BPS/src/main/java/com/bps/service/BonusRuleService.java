@@ -4,7 +4,7 @@ import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 public interface BonusRuleService {
 	
-	 TpointRule getBonusRuleById(String ruleId);
+	TpointRule getBonusRuleById(String ruleId);
 	
 	void createAdminRole(TpointRule pointRule);
 	
@@ -18,5 +18,7 @@ public interface BonusRuleService {
 	
 	void deactivateRulesByIds(Integer[] ids);
 	
-	public PagingData loadAdminUserList(DataTableParamter rdtp);	
+	public PagingData loadAdminUserList(DataTableParamter rdtp);
+	
+	int getBonusRuleAmount();	
 }

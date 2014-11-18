@@ -344,8 +344,13 @@ public class BaseDao<T> extends HibernateDaoSupport
         String hql = currentSession().getNamedQuery(queryName).getQueryString();
         return findPage(hql, startNo, pageSize, params);
     }
-
-    private String getCountHql(String hql)
+    
+    public int getCount(){
+    	Criteria criteria = createCriteria();
+    	return ((Number)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+    }
+    
+    protected String getCountHql(String hql)
     {
         Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*",
             Pattern.CASE_INSENSITIVE);

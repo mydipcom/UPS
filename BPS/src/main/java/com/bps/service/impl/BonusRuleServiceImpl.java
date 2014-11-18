@@ -59,5 +59,10 @@ public class BonusRuleServiceImpl implements BonusRuleService{
 	public PagingData loadAdminUserList(DataTableParamter rdtp) {
 		return pointRuleDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
-
+    
+	 	public int getBonusRuleAmount() {
+		// TODO Auto-generated method stub
+		return pointRuleDao.getCount();
+	}
+	
 }

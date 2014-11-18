@@ -77,16 +77,17 @@
 	 
 	 
     <!-- Spring MVC 文件上传配置 -->
-    <!-- 
+    
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="utf-8">  
 	    <property name="maxUploadSize">
 			<value>52428800</value>
 		</property>
 		<property name="maxInMemorySize">
 			<value>40960</value>
+		</property>
 		<property name="uploadTempDir">
 			<value>upload/temp/</value>	
-	</property>
+	   </property>
 	</bean>		
- 	-->
+ 	
 </beans>

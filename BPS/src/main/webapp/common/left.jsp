@@ -88,7 +88,7 @@
 				</ul>
 			</li>
 			<li class="">
-				<a href="javascript:;">
+				<a href="<c:url value="/"/>point">
 				<i class="icon-users"></i> 
 				<span class="title">Point Users List</span>					
 				</a>					

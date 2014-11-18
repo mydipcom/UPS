@@ -101,5 +101,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 	public PagingData loadAdminUserList(DataTableParamter rdtp) {
 		return adminUserDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
+	
+public int getAdminUserAmount() {
+		// TODO Auto-generated method stub
+		return adminUserDao.getCount();
+	}
 
 }

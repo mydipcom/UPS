@@ -19,5 +19,7 @@ public interface AdminUserService {
 	void deleteAdminUserByIds(String[] ids);
 	
 	public PagingData loadAdminUserList(DataTableParamter rdtp);
+	
+	int getAdminUserAmount();
 		
 }

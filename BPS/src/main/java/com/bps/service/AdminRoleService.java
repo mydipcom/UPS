@@ -11,5 +11,7 @@ public interface AdminRoleService {
 	void updateAdminRole(TadminRole adminRole);
 	
 	void deleteAdminRole(TadminRole adminRole);
+	
+	
 		
 }

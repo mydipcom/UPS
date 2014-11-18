@@ -67,9 +67,11 @@ public class LoginController extends BaseController {
 		ModelAndView mav=new ModelAndView();
 		if(tUser==null){
 			mav.addObject(ERROR_MSG_KEY, "用户名不存在");
+			mav.addObject("user", tUser);
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
 			mav.addObject(ERROR_MSG_KEY, "登录密码不正确");
+			mav.addObject("user", tUser);
 		}
 		else{
 			setSessionUser(request, tUser);

@@ -17,7 +17,7 @@ public class TadminInfo implements java.io.Serializable {
 	private String firstName;
 	private String lastName;
 	private Boolean gender;
-	private Date birthday;
+	private String birthday;
 	private String mobile;
 	private String position;
 	private String about;
@@ -32,7 +32,7 @@ public class TadminInfo implements java.io.Serializable {
 	}
 
 	public TadminInfo(String adminId, String firstName, String lastName,
-			Boolean gender, Date birthday, String mobile, String position,
+			Boolean gender, String birthday, String mobile, String position,
 			String about, byte[] avatarSmall, byte[] avatar) {
 		this.adminId = adminId;
 		this.firstName = firstName;
@@ -71,18 +71,18 @@ public class TadminInfo implements java.io.Serializable {
 	}
 
 	public Boolean getGender() {
-		return this.gender;
+		return gender;
 	}
 
 	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
 
-	public Date getBirthday() {
-		return this.birthday;
+	public String getBirthday() {
+		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

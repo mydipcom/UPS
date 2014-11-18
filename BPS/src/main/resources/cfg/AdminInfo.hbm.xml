@@ -17,7 +17,7 @@
         <property name="gender" type="java.lang.Boolean">
             <column name="gender" />
         </property>
-        <property name="birthday" type="date">
+        <property name="birthday" type="string">
             <column name="birthday" length="10" />
         </property>
         <property name="mobile" type="string">
