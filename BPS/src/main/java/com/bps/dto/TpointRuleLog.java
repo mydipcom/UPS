@@ -1,5 +1,8 @@
 package com.bps.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 // Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -15,7 +18,8 @@ public class TpointRuleLog implements java.io.Serializable {
 	private int ruleId;
 	private String content;
 	private short from;
-	private long createdTime;
+	private Long createdTime;
+	private String createdTimeStr;
 
 	public TpointRuleLog() {
 	}
@@ -26,6 +30,21 @@ public class TpointRuleLog implements java.io.Serializable {
 		this.content = content;
 		this.from = from;
 		this.createdTime = createdTime;
+	}
+
+	
+	
+	public String getCreatedTimeStr() {
+		if(createdTime!=null){
+			Date date=new Date(createdTime);
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			return sdf.format(date);		
+			}else
+			return null;
+	}
+
+	public void setCreatedTimeStr(String createdTimeStr) {
+		this.createdTimeStr = createdTimeStr;
 	}
 
 	public Integer getId() {

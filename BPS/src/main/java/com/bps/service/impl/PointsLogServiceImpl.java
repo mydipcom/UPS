@@ -9,11 +9,15 @@
  */ 
 package com.bps.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bps.dao.PointsLogDao;
 import com.bps.dto.TpointsLog;
+import com.bps.model.DataTableParamter;
+import com.bps.model.PagingData;
 import com.bps.service.PointsLogService;
 
 /** 
@@ -35,7 +39,7 @@ public class PointsLogServiceImpl implements PointsLogService {
 	 * @return 
 	 * @see com.bps.service.PointsLogService#getPointsHistoryById(java.lang.String) 
 	 */
-	public TpointsLog getPointsHistoryById(String id) {
+	public TpointsLog getPointsHistoryById(Integer id) {
 		TpointsLog pointsHistory=pointsLogDao.get(id);
 		return pointsHistory;
 	}
@@ -74,6 +78,25 @@ public class PointsLogServiceImpl implements PointsLogService {
 	public void deletePointsHistory(TpointsLog pointsHistory) {
 		pointsLogDao.delete(pointsHistory);
 
+	}
+
+	@Override
+	public void deletePointsHistoryByIds(Integer[] ids) {
+		// TODO Auto-generated method stub
+		pointsLogDao.deleteAll(ids);
+	}
+
+	@Override
+	public PagingData loadPointLogList(DataTableParamter rdtp) {
+		// TODO Auto-generated method stub
+		return pointsLogDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TpointsLog> getPointsHistoryByRuleId(Integer id) {
+			String hqlName="from TpointsLog where id="+id;
+		return pointsLogDao.findByHqlName(hqlName);
 	}
 	
 

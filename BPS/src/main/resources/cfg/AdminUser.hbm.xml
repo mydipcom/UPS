@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.bps.dto.TadminUser" table="bps_admin" lazy="true">
+	<class name="com.bps.dto.TadminUser" table="bps_admin" lazy="false">
 		<id name="adminId" type="string">
 			<column name="admin_id" />
 			<generator class="assigned"></generator>

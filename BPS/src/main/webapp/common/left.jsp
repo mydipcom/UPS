@@ -50,7 +50,7 @@
 				</a>                    
 				<ul class="sub-menu">
 				   <li >
-						<a href="<c:url value="/"/>user">
+						<a href="<c:url value="/"/>userprofile">
 						Profile</a>
 					</li>
 					<li >
@@ -94,19 +94,25 @@
 				</a>					
 			</li>				
 			<li class="">
+				<a href="<c:url value="/"/>manager">
+				<i class="icon-users"></i> 
+				<span class="title">Admin User</span>					
+				</a>					
+			</li>			
+			<li class="">
 				<a href="javascript:;">
 				<i class="icon-note"></i> 
-				<span class="title">Point Rules List</span>
+				<span class="title">Bonus Rule </span>
 				<span class="arrow "></span>
 				</a>
 				<ul class="sub-menu">
 					<li >
-						<a href="extra_profile.html">
-						Rules List</a>
+						<a href="<c:url value="/"/>rules">
+						Bonus Rule Group</a>
 					</li>
 					<li >
-						<a href="extra_lock.html">
-						Add Rule</a>
+						<a href="<c:url value="/"/>rules">
+						Bonus Rule Configuration</a>
 					</li>						
 				</ul>
 			</li>			
@@ -128,8 +134,24 @@
 						System Log</a>
 					</li>
 					<li >
+						<a href="<c:url value="/"/>ruleslog">
+						Bonus Rule Change Log</a>
+					</li>
+					<li >
+						<a href="<c:url value="/"/>pointlog">
+						Bonus Point Change Log</a>
+					</li>
+					<li >
 						<a href="login_soft.html">
-						Points Log</a>
+						My Log</a>
+					</li>
+					<li >
+						<a href="<c:url value="/"/>managerlog">
+						Admin User Log</a>
+					</li>
+					<li >
+						<a href="login_soft.html">
+						Interface Access Log</a>
 					</li>
 				</ul>
 			</li>
@@ -158,7 +180,7 @@
 				</a>
 				<ul class="sub-menu">
 					<li >
-						<a href="portlet_general.html">
+						<a href="<c:url value="/"/>settings">
 						General Portlets</a>
 					</li>
 					<li >

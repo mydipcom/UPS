@@ -20,10 +20,10 @@
 })(jQuery);
 
 var rootURI="/";
-var RightsTable = function () {
+var ManagersTable = function () {
 	var handleTable = function () {
 		var selected = [];
-		var table=$('#rights_table');
+		var table=$('#adminusers_table');
 		var oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":false,
@@ -60,21 +60,19 @@ var RightsTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
-	           { title: "Rights Name",  data: "name"},
-	           { title: "URI", data: "uri" },
-	           { title: "Request Method", data: "method" },
-	           { title: "Parent ID",  data: "pid" },
-	           { title: "Is Menu",    data: "isMenu" },
-	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
-	           { title: "Status",    data: "status" },
-	           { title: "Action" ,"class":"center"}
+	           { title: "ID",   data: "adminId" },
+	           { title: "Email",   data: "email" },
+	           { title: "Role_Name",    data: "adminRole.roleName" },
+	           { title: "Status",  data: "status"},
+	           { title: "CreatedBy", data: "createdBy" },
+	           { title: "CreatedTime", data: "createdTimeStr" },
+	           { title: "UpdatedBy",  data: "updatedBy" },
+	           { title: "UpdatedTime",    data: "updatedTimeStr" },  
+	           { title: "Action" ,"class":"center"},
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"managersList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -105,7 +103,7 @@ var RightsTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"managers/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -125,13 +123,13 @@ var RightsTable = function () {
         });  
 		
 		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
+		$('#addUsersForm').on('submit', function (event) {
 			event.preventDefault();
 			var jsondata=$(this).serializeJson();
 			$.ajax( {
              "dataType": 'json', 
              "type":'POST', 
-             "url": rootURI+"addRights", 
+             "url": rootURI+"addUsers", 
              "data": $(this).serialize(),
 //             "processData":false,
 //             "contentType":"application/json",
@@ -139,10 +137,10 @@ var RightsTable = function () {
             	 if(status == "success"){  
             		 if(resp.status){						 
 		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+		            	 handleAlerts("Added the data successfully.","success","");		            	 
 					 }
 					 else{
-						 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
+						 handleAlerts("Failed to add the data.","danger","");						 
 					 }
 				}             	 
              },
@@ -150,7 +148,8 @@ var RightsTable = function () {
             	 alert(errorThrown);
              }
            });
-			return false;
+			$('#add_users').modal('hide');
+			//return false;
         }); 
 		
 		$("#openEditRightModal").on("click",function(event){
@@ -160,22 +159,22 @@ var RightsTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var name = data.name;
-	            var uri  = data.uri;
-	            $("#editRightsForm input[name='name']").val(name);
-	            $("#editRightsForm input[name='uri']").val(uri);
+	            var adminId = data.adminId;
+	            var email =data.email;
+	            $("#editUsersForm input[name='adminId']").val(adminId);
+	            $("#editUsersForm input[name='email']").val(email);
 			}
 		});
 		
 		
 		//编辑表单提交操作
-		$("#editRightsForm").on("submit", function(event) {
+		$("#editUsersForm").on("submit", function(event) {
 			  event.stopPropagation();
 			  var jsondata=$(this).serializeJson();
 			  $.ajax( {
 	             "dataType": 'json', 
 	             "type": "POST", 
-	             "url": rootURI+"editRights", 
+	             "url": rootURI+"editUsers", 
 	             "data": $(this).serialize(),
 //	             "processData":false,
 //	             "contentType":"application/json",
@@ -184,7 +183,7 @@ var RightsTable = function () {
 	            		 if(resp.status){
 							 selected=[];
 			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+			            	 handleAlerts("Edited the data successfully.","success","");
 						 }
 						 else{
 							 alert(resp.info);
@@ -195,17 +194,21 @@ var RightsTable = function () {
 	            	 alert(errorThrown);
 	             }
 	           });
+			  $('#edit_users').modal('hide');
+			  return false;
 		});
 				
                        
 		//全选
+		
         table.find('.group-checkable').change(function () {
+        	alert("in this");
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
             var api=oTable.api();
             jQuery(set).each(function () {
             	var data = api.row($(this).parents('tr')).data();
-            	var id = data.nodeId;
+            	var id = data.adminId;
                 var index = $.inArray(id, selected);
                 if (checked) {
                 	selected.push( id );
@@ -226,7 +229,7 @@ var RightsTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.nodeId;
+            var id = data.adminId;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -238,7 +241,38 @@ var RightsTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-                
+               
+        table.on('click', 'tbody tr button',function(){
+        	alert("in this");
+            var data = oTable.api().row($(this).parents('tr')).data();
+            var html="<table class=\"table table-bordered\"><tr class='success'><th>ID</th><th>Admin Name</th><th>Content</th><th>Level</th><th>Create Time</th></tr>";
+            $.ajax( {
+                "dataType": 'json', 
+                "type": "POST", 
+                "url": rootURI+"managerslogview/"+data.adminId, 
+                "success": function(data,status){
+               	 if(status == "success"){
+               		 alert("test");
+               		 var adminslog=data.adminslog;
+               		 $.each(adminslog,function(i, items){
+               			 html=html+"<tr>";
+               			 html=html+"<td>"+items.id+"</td>";
+               			 html=html+"<td>"+items.adminId+"</td>";
+               			 html=html+"<td>"+items.content+"</td>";
+               			 html=html+"<td>"+items.level+"</td>";
+               			 html=html+"<td>"+items.createdTimeStr+"</td>"+"</tr>";  
+               		 });
+               		 html=html+"</table>";
+                     $("#dialogDiv").html(html);
+               		 $("#dialogDiv").dialog("open");
+    				}           	 
+                },
+                "error":function(XMLHttpRequest, textStatus, errorThrown){
+               	 alert(errorThrown);
+                }
+              });
+         
+           });
         /* handle show/hide columns*/
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {
@@ -270,7 +304,7 @@ var RightsTable = function () {
     
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addRightsForm');
+            var addform = $('#addUsersForm');
             var errorDiv = $('.alert-danger', addform);            
 
             addform.validate({

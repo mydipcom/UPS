@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="com.bps.dto" default-lazy="true">
+<hibernate-mapping package="com.bps.dto" default-lazy="false">
 	<class name="TadminRole" table="bps_admin_role">
 		<id name="roleId" type="java.lang.Integer">
 			<column name="role_id" length="11" />

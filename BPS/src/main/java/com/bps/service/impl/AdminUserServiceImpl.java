@@ -12,8 +12,11 @@ package com.bps.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bps.commons.SecurityTools;
 import com.bps.dao.AdminUserDao;
 import com.bps.dto.TadminUser;
+import com.bps.model.DataTableParamter;
+import com.bps.model.PagingData;
 import com.bps.service.AdminUserService;
 
 /** 
@@ -49,6 +52,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void createAdminUser(TadminUser adminUser) {
+		adminUser.setPassword(SecurityTools.SHA1(adminUser.getPassword()));
 		adminUserDao.create(adminUser);
 	}
 
@@ -60,7 +64,15 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void updateAdminUser(TadminUser adminUser) {
-		adminUserDao.update(adminUser);
+		TadminUser ad=new TadminUser();
+		ad.setAdminId(adminUser.getAdminId());
+		ad.setAdminRole(adminUser.getAdminRole());
+		ad.setPassword(SecurityTools.SHA1(adminUser.getPassword()));
+		ad.setUpdatedTime(System.currentTimeMillis());
+		ad.setUpdatedBy("steve");
+		ad.setEmail(adminUser.getEmail());
+		ad.setStatus(adminUser.getStatus());
+		adminUserDao.update(ad);
 
 	}
 
@@ -73,6 +85,21 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 */
 	public void deleteAdminUser(TadminUser adminUser) {
 		adminUserDao.delete(adminUser);
+	}
+
+	public void deleteAdminUserById(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteAdminUserByIds(String[] ids) {
+		adminUserDao.deleteAll(ids);
+		// TODO Auto-generated method stub
+		
+	}
+
+	public PagingData loadAdminUserList(DataTableParamter rdtp) {
+		return adminUserDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
 }

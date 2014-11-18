@@ -82,6 +82,10 @@
 		<tx:method name="update*" rollback-for="Exception" propagation="REQUIRED"/>
 		<tx:method name="create*" rollback-for="Exception" propagation="REQUIRED"/>
 		<tx:method name="delete*" rollback-for="Exception" propagation="REQUIRED"/>
+		<tx:method name="load*" rollback-for="Exception" propagation="REQUIRED"/>
+		<tx:method name="activaterules" rollback-for="Exception" propagation="REQUIRED"/>
+		<tx:method name="deactivaterules" rollback-for="Exception" propagation="REQUIRED"/>
+		<tx:method name="*"  read-only="false"/>
 	</tx:attributes>
 </tx:advice>
 

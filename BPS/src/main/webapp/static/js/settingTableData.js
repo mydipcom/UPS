@@ -20,10 +20,10 @@
 })(jQuery);
 
 var rootURI="/";
-var RightsTable = function () {
+var SettingTable = function () {
 	var handleTable = function () {
 		var selected = [];
-		var table=$('#rights_table');
+		var table=$('#setting_table');
 		var oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":false,
@@ -49,32 +49,18 @@ var RightsTable = function () {
                     },
                     //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
                 },
-                {                	
-                	'targets':-1,
-                	'data':null,//定义列名
-                	'render':function(data,type,row){
-                    	return '<button>View</button>';
-                    },
-                    'class':'center'
-                }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
-	           { title: "Rights Name",  data: "name"},
-	           { title: "URI", data: "uri" },
-	           { title: "Request Method", data: "method" },
-	           { title: "Parent ID",  data: "pid" },
-	           { title: "Is Menu",    data: "isMenu" },
-	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
-	           { title: "Status",    data: "status" },
-	           { title: "Action" ,"class":"center"}
+	           { title: "Id",   data: "id" },
+	           { title: "Name",   data: "name" },
+	           { title: "Value",  data: "value"},
+	           { title: "descr", data: "descr" },
+	           { title: "sort",    data: "sort" },
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"settingsList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -105,7 +91,7 @@ var RightsTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"setting/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -122,16 +108,15 @@ var RightsTable = function () {
             	 alert(errorThrown);
              }
            });
-        });  
-		
+        }); 
 		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
+		$('#addSettingForm').on('submit', function (event) {
 			event.preventDefault();
 			var jsondata=$(this).serializeJson();
 			$.ajax( {
              "dataType": 'json', 
              "type":'POST', 
-             "url": rootURI+"addRights", 
+             "url": rootURI+"addsetting", 
              "data": $(this).serialize(),
 //             "processData":false,
 //             "contentType":"application/json",
@@ -160,22 +145,28 @@ var RightsTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var name = data.name;
-	            var uri  = data.uri;
-	            $("#editRightsForm input[name='name']").val(name);
-	            $("#editRightsForm input[name='uri']").val(uri);
+	            var Name = data.name;
+	            var value = data.value;
+	            var sort = data.sort;
+	            var descr = data.descr;
+	            var Id =data.id;
+	            $("#editSettingForm input[name='name']").val(Name);
+	            $("#editSettingForm input[name='value']").val(value);
+	            $("#editSettingForm input[name='sort']").val(sort);
+	            $("#editSettingForm input[name='descr']").val(descr);
+	            $("#editSettingForm input[name='id']").val(Id);
 			}
 		});
 		
 		
 		//编辑表单提交操作
-		$("#editRightsForm").on("submit", function(event) {
+		$("#editSettingForm").on("submit", function(event) {
 			  event.stopPropagation();
 			  var jsondata=$(this).serializeJson();
 			  $.ajax( {
 	             "dataType": 'json', 
 	             "type": "POST", 
-	             "url": rootURI+"editRights", 
+	             "url": rootURI+"editsetting", 
 	             "data": $(this).serialize(),
 //	             "processData":false,
 //	             "contentType":"application/json",
@@ -195,17 +186,19 @@ var RightsTable = function () {
 	            	 alert(errorThrown);
 	             }
 	           });
+			  return false;
 		});
 				
                        
 		//全选
+		
         table.find('.group-checkable').change(function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
             var api=oTable.api();
             jQuery(set).each(function () {
             	var data = api.row($(this).parents('tr')).data();
-            	var id = data.nodeId;
+            	var id = data.id;
                 var index = $.inArray(id, selected);
                 if (checked) {
                 	selected.push( id );
@@ -226,7 +219,7 @@ var RightsTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.nodeId;
+            var id = data.id;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -270,7 +263,7 @@ var RightsTable = function () {
     
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addRightsForm');
+            var addform = $('#addRulesForm');
             var errorDiv = $('.alert-danger', addform);            
 
             addform.validate({
@@ -324,7 +317,7 @@ var RightsTable = function () {
 
     return {
         //main function to initiate the module
-        init: function (rootPath) {
+        	init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
         	addFormValidation();

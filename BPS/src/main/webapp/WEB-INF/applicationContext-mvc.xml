@@ -54,10 +54,18 @@
 	<mvc:interceptors>
 		<!-- 拦截指定请求 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/home"/>
-			<mvc:mapping path="/*/*"/>		
-			<bean class="com.bps.core.PermissionInteceptor"></bean>			
-		</mvc:interceptor>	    
+			<mvc:mapping path="/user/*"/>
+			<mvc:mapping path="/home/*"/>
+			<mvc:mapping path="/rights/*"/>
+			<mvc:mapping path="/manager/*"/>
+			<mvc:mapping path="/rules/*"/>
+			<bean class="com.bps.core.PermissionInteceptor"></bean>
+		</mvc:interceptor>
+	    <!-- 拦截所有非静态请求 -->
+	    <mvc:interceptor>
+	    	<mvc:mapping path="/static/*"/>						
+			<bean class="com.bps.core.ErrorLoggingInteceptor"></bean>
+		</mvc:interceptor>		
 	</mvc:interceptors>
 	 
 	 <!-- 全局异常处理 -->

@@ -20,16 +20,95 @@
 })(jQuery);
 
 var rootURI="/";
-var RightsTable = function () {
+var RulesTable = function () {
+
 	var handleTable = function () {
+		var oLogTables;
+		var viewTable = function(ids){
+			var selected = [];
+			var table=$('#ruleslog_table');
+			oLogTables = table.dataTable({
+				"lengthChange":false,
+		    	"filter":false,
+		    	"sort":false,
+		    	"info":true,
+		    	"bRetrieve": true,
+		    	"processing":true,
+		        // set the initial value
+		        "displayLength": 3,
+		        "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+//		        "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
+//		        "oLanguage": {
+//		            "sLengthMenu": "_MENU_ records per page",
+//		            "oPaginate": {
+//		                "sPrevious": "Prev",
+//		                "sNext": "Next",
+//		            	"zeroRecords": "No records to display"
+//		            }
+//		        },
+		        "columnDefs": [{                    
+		            'targets': 0,   
+		            'render':function(data,type,row){
+		            	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
+		            },
+		            //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
+		        },
+		        {                	
+		        	'targets':-1,
+		        	'data':null,//定义列名
+		        	'render':function(data,type,row){
+		            	return '<div class="actions"><button><a  data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></button></div>';
+		            },
+		            'class':'center'
+		        }
+		    ],
+		    "columns": [
+		       {"orderable": false },
+		       { title: "ID",   data: "id" },
+		       { title: "Rule ID",   data: "ruleId" },
+		       { title: "Content",  data: "content"},
+		       { title: "Create Time", data: "createdTimeStr" },
+		       { title: "Action" ,"class":"center"}
+		    ],
+		     	        "serverSide": true,
+		     	        "serverMethod": "GET",
+		     	        "ajaxSource": rootURI+"ruleslogList/"+ids+"?rand="+Math.random(),
+		     	       //"ajaxSource": rootURI+"ruleslogList?rand="+Math.random(),
+//		        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+//		           $.ajax( {
+//		             "dataType": 'json', 
+//		             "type": "POST", 
+//		             "url": sSource, 
+//		             "data": aoData,
+////		             "contentType":"application/json",
+//		             "success": function(resp){ 		            	
+//		            	 fnCallback(resp);
+//		             },
+//		             "error":function(XMLHttpRequest, textStatus, errorThrown){
+//		            	 alert(errorThrown);
+//		             }
+//		           } );
+//		         },
+//		        "fnServerParams": function ( aoData ) {
+//		           aoData.push( { "name": "more_data", "value": "my_value" } );
+//		         },
+//		        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {				
+//		        	$('td:eq(0)', nRow).html( '<input type="checkbox" class="checkboxes" value="1"/>' );
+//					return nRow;
+//				},
+
+			});	
+		};
+		
 		var selected = [];
-		var table=$('#rights_table');
+		var table=$('#rules_table');
 		var oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":false,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"bDestroy":true,
             // set the initial value
             "displayLength": 10,
             "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -53,28 +132,24 @@ var RightsTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<button>View</button>';
+                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
-	           { title: "Rights Name",  data: "name"},
-	           { title: "URI", data: "uri" },
-	           { title: "Request Method", data: "method" },
-	           { title: "Parent ID",  data: "pid" },
-	           { title: "Is Menu",    data: "isMenu" },
-	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
+	           { title: "Rule Id",   data: "ruleId" },
+	           { title: "Rule Name",   data: "ruleName" },
+	           { title: "Rule Iutput",  data: "ruleInput"},
+	           { title: "Rule Output", data: "ruleOutput" },
+	           { title: "descr", data: "descr" },
 	           { title: "Status",    data: "status" },
 	           { title: "Action" ,"class":"center"}
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"rulesList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -105,7 +180,7 @@ var RightsTable = function () {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"rules/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -122,27 +197,23 @@ var RightsTable = function () {
             	 alert(errorThrown);
              }
            });
-        });  
-		
-		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
-			event.preventDefault();
-			var jsondata=$(this).serializeJson();
+        }); 
+		//激活规则
+		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
-             "type":'POST', 
-             "url": rootURI+"addRights", 
-             "data": $(this).serialize(),
-//             "processData":false,
-//             "contentType":"application/json",
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){						 
-		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+             "type": "POST", 
+             "url": rootURI+"activaterules/"+selected.join(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];						 
+		            	oTable.api().draw();
+		            	oTable.$('th span').removeClass();
+		            	 handleAlerts("activateBtn the rules successfully.","success","");
 					 }
 					 else{
-						 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
+						 alert(data.info);
 					 }
 				}             	 
              },
@@ -150,7 +221,60 @@ var RightsTable = function () {
             	 alert(errorThrown);
              }
            });
-			return false;
+        }); 
+		//禁用规则
+		$('#deactivateBtn').on('click', function (e) {
+			$.ajax( {
+             "dataType": 'json', 
+             "type": "POST", 
+             "url": rootURI+"deactivaterules/"+selected.join(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];						 
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("deactivateBtn the rules successfully.","success","");
+					 }
+					 else{
+						 alert(data.info);
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+        });  
+		
+		//添加操作
+		$("#addRulesForm").on('submit', function (event) {
+			event.preventDefault();
+			var jsondata=$(this).serializeJson();
+			$.ajax( {
+             "dataType": 'json', 
+             "type":'POST', 
+             "url": rootURI+"addrules", 
+             "data": $(this).serialize(),
+//             "processData":false,
+//             "contentType":"application/json",
+             "success": function(resp,status){
+            	 if(status == "success"){  
+            		 if(resp.status){						 
+		            	 oTable.api().draw();
+		            	 handleAlerts("Added the data successfully.","success","");		            	 
+					 }
+					 else{
+						 handleAlerts("Failed to add the data.","danger","");						 
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+			$("#add_rules").modal("hide");
+			//return false;
         }); 
 		
 		$("#openEditRightModal").on("click",function(event){
@@ -160,22 +284,28 @@ var RightsTable = function () {
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var name = data.name;
-	            var uri  = data.uri;
-	            $("#editRightsForm input[name='name']").val(name);
-	            $("#editRightsForm input[name='uri']").val(uri);
+	            var ruleName = data.ruleName;
+	            var ruleInput = data.ruleInput;
+	            var ruleOutput = data.ruleOutput;
+	            var descr = data.descr;
+	            var ruleId =data.ruleId;
+	            $("#editRulesForm input[name='ruleName']").val(ruleName);
+	            $("#editRulesForm input[name='ruleInput']").val(ruleInput);
+	            $("#editRulesForm input[name='ruleOutput']").val(ruleOutput);
+	            $("#editRulesForm input[name='descr']").val(descr);
+	            $("#editRulesForm input[name='ruleId']").val(ruleId);
 			}
 		});
 		
 		
 		//编辑表单提交操作
-		$("#editRightsForm").on("submit", function(event) {
+		$("#editRulesForm").on("submit", function(event) {
 			  event.stopPropagation();
 			  var jsondata=$(this).serializeJson();
 			  $.ajax( {
 	             "dataType": 'json', 
 	             "type": "POST", 
-	             "url": rootURI+"editRights", 
+	             "url": rootURI+"editrules", 
 	             "data": $(this).serialize(),
 //	             "processData":false,
 //	             "contentType":"application/json",
@@ -184,7 +314,7 @@ var RightsTable = function () {
 	            		 if(resp.status){
 							 selected=[];
 			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+			            	 handleAlerts("Edited the data successfully.","success","");
 						 }
 						 else{
 							 alert(resp.info);
@@ -195,17 +325,21 @@ var RightsTable = function () {
 	            	 alert(errorThrown);
 	             }
 	           });
+			  $("#edit_rules").modal("hide");
+			   return false;
 		});
 				
                        
 		//全选
+		
         table.find('.group-checkable').change(function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
             var api=oTable.api();
             jQuery(set).each(function () {
             	var data = api.row($(this).parents('tr')).data();
-            	var id = data.nodeId;
+            	var id = data.ruleId;
+            	alert("in this")
                 var index = $.inArray(id, selected);
                 if (checked) {
                 	selected.push( id );
@@ -226,7 +360,7 @@ var RightsTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.nodeId;
+            var id = data.ruleId;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -238,7 +372,70 @@ var RightsTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-                
+   /*     
+        table.on('click', 'tbody tr a',function(){
+         var data = oTable.api().row($(this).parents('tr')).data();
+         var html="<table class=\"table table-bordered\"><tr class='success'><th>ID</th><th>RuleId</th><th>Content</th><th>Create Time</th></tr>";
+         $.ajax( {
+             "dataType": 'json', 
+             "type": "POST", 
+             "url": rootURI+"rulesLogByRuleID/"+data.ruleId, 
+             "success": function(data,status){
+            	 var pointrulelog=data.pointrulelog;
+            	 if(status == "success"){
+            		 var pointrulelog=data.pointrulelog;
+            		 $.each(pointrulelog,function(i, items){
+            			 html=html+"<tr>";
+            			 html=html+"<td>"+items.id+"</td>";
+            			 html=html+"<td>"+items.ruleId+"</td>";
+            			 html=html+"<td>"+items.content+"</td>";
+            			 html=html+"<td>"+items.createdTimeStr+"</td>"+"</tr>";  
+            		 });
+            		 html=html+"</table>";
+                     $("#dialogDiv").html(html);
+            		 $("#dialogDiv").dialog("open");
+ 				}           	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+        });
+        
+  */      
+        
+        table.on('click', 'tbody tr a',function(){
+            var data = oTable.api().row($(this).parents('tr')).data();
+           var ids=data.ruleId;
+           //oTables.ajax.url(rootURI+"ruleslogList/"+ids);
+           //oTables.api().draw();
+           //oTables.clear();
+           //alert(ids+"11");
+           
+           viewTable(ids);
+           oLogTables.api().darw();
+           //oTables.api().darw();
+           //oTables.destory();
+             /*$.ajax( {
+                "dataType": 'json', 
+                "type": "GET", 
+                "url": rootURI+"rules", 
+                "success": function(data,status){
+               	 if(status == "success"){
+               		 alert("xxxxx");
+                     
+               		// viewTable(data.ruleId);
+                    	 
+                      
+                     alert("test");
+    				}           	 
+                },
+                "error":function(XMLHttpRequest, textStatus, errorThrown){
+               	 alert(errorThrown);
+                }
+           });
+         */
+           });
         /* handle show/hide columns*/
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {
@@ -270,9 +467,8 @@ var RightsTable = function () {
     
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addRightsForm');
+            var addform = $('#addRulesForm');
             var errorDiv = $('.alert-danger', addform);            
-
             addform.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class

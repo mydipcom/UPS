@@ -1,6 +1,8 @@
 package com.bps.dto;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -26,6 +28,10 @@ public class TadminUser implements Serializable {
 	
 	private Long updatedTime;
 	
+	private String createdTimeStr;	
+	
+	private String updatedTimeStr;	
+
 	private TadminRole adminRole;
 	
 	private TadminInfo adminInfo; 
@@ -41,6 +47,38 @@ public class TadminUser implements Serializable {
 		this.status=status;
 	}
 	
+
+	
+	
+	
+	public String getCreatedTimeStr() {
+		if(createdTime!=null){
+		Date date=new Date(createdTime);
+		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return sdf.format(date);		
+		}else
+		return null;
+	
+	}
+
+	public void setCreatedTimeStr(String createdTimeStr) {
+		this.createdTimeStr = createdTimeStr;
+	}
+
+	public String getUpdatedTimeStr() {
+		if(updatedTime!=null){
+		Date date=new Date(updatedTime);
+		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return sdf.format(date);	
+		}
+		else
+			return null;
+	
+	}
+
+	public void setUpdatedTimeStr(String updatedTimeStr) {
+		this.updatedTimeStr = updatedTimeStr;
+	}
 
 	public String getCreatedBy() {
 		return this.createdBy;

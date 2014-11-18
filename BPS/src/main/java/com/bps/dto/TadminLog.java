@@ -1,5 +1,8 @@
 package com.bps.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 // Generated Oct 29, 2014 11:20:20 AM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -15,7 +18,9 @@ public class TadminLog implements java.io.Serializable {
 	private String adminId;
 	private String content;
 	private short level;
-	private long createdTime;
+	private Long createdTime;
+	
+	private String createdTimeStr;
 
 	public TadminLog() {
 	}
@@ -26,6 +31,24 @@ public class TadminLog implements java.io.Serializable {
 		this.content = content;
 		this.level = level;
 		this.createdTime = createdTime;
+	}
+
+	
+	
+	
+	
+	public String getCreatedTimeStr() {
+		if(createdTime!=null){
+			Date date=new Date(createdTime);
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			return sdf.format(date);		
+			}else
+			return null;
+	
+	}
+
+	public void setCreatedTimeStr(String createdTimeStr) {
+		this.createdTimeStr = createdTimeStr;
 	}
 
 	public Integer getId() {

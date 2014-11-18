@@ -54,8 +54,12 @@ public class ConvertTools {
 					else if(field.get(model) instanceof Object){
 						field.set(model, jsonObj.get(name));
 					}
-				} catch (IllegalArgumentException | IllegalAccessException e) {
+				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				catch(IllegalAccessException e)
+				{
 					e.printStackTrace();
 				}
 			}

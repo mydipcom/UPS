@@ -76,4 +76,11 @@
 	
 	<bean id="adminNodesService" class="com.bps.service.impl.AdminNodesServiceImpl" autowire="byName"/>
 	
+	<bean id="bonusRuleService" class="com.bps.service.impl.BonusRuleServiceImpl" autowire="byName"/>
+	
+	<bean id="rulesLogService" class="com.bps.service.impl.RulesLogServiceImpl" autowire="byName"/>
+	
+	<bean id="adminuserLogService" class="com.bps.service.impl.AdminuserLogServiceImpl" autowire="byName"/>
+	
+	<bean id="systemSettingService" class="com.bps.service.impl.SystemSettingServiceImpl" autowire="byName"/>
 </beans>
