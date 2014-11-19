@@ -12,12 +12,12 @@ public class TadminRoleRights implements java.io.Serializable {
 	*/ 
 	private static final long serialVersionUID = 979892202536550526L;
 	private int roleId;
-	private byte[] roleRights;
+	private long roleRights;
 
 	public TadminRoleRights() {
 	}
 
-	public TadminRoleRights(int roleId, byte[] roleRights) {
+	public TadminRoleRights(int roleId, long roleRights) {
 		this.roleId = roleId;
 		this.roleRights = roleRights;
 	}
@@ -30,11 +30,11 @@ public class TadminRoleRights implements java.io.Serializable {
 		this.roleId = roleId;
 	}
 
-	public byte[] getRoleRights() {
+	public long getRoleRights() {
 		return this.roleRights;
 	}
 
-	public void setRoleRights(byte[] roleRights) {
+	public void setRoleRights(long roleRights) {
 		this.roleRights = roleRights;
 	}
 

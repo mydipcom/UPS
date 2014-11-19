@@ -74,6 +74,8 @@
 		
 	<bean id="adminRoleService" class="com.bps.service.impl.AdminRoleServiceImpl" autowire="byName"/>
 	
+	<bean id="adminRoleRightsService" class="com.bps.service.impl.AdminRoleRightsServiceImpl" autowire="byName"/>
+	
 	<bean id="adminNodesService" class="com.bps.service.impl.AdminNodesServiceImpl" autowire="byName"/>
 	
 	<bean id="adminInfoService" class="com.bps.service.impl.AdminInfoServiceImpl" autowire="byName"/>
@@ -85,4 +87,7 @@
 	<bean id="adminuserLogService" class="com.bps.service.impl.AdminuserLogServiceImpl" autowire="byName"/>
 	
 	<bean id="systemSettingService" class="com.bps.service.impl.SystemSettingServiceImpl" autowire="byName"/>
+	
+	<!-- 缓存系统常用数据 -->
+	<bean class="com.bps.core.CachedDataProcessor"/>
 </beans>

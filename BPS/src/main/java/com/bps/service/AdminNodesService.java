@@ -1,22 +1,32 @@
 package com.bps.service;
 
+import java.util.List;
+
 import com.bps.dto.TadminNodes;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 
 public interface AdminNodesService {
 	
-	TadminNodes getAdminNodeById(int nodeId);
+	public TadminNodes getAdminNodeById(int nodeId);
 	
-	void createAdminNode(TadminNodes adminNodes);
+	public List<TadminNodes> getAllAdminNodes();
 	
-	void updateAdminNode(TadminNodes adminNodes);
+	public List<TadminNodes> getAllEnabledAdminNodes();
 	
-	void deleteAdminNode(TadminNodes adminNodes);
+	public List<TadminNodes> getAllAdminNodesMenu();
 	
-	void deleteAdminNodeById(int id);
+	public List<TadminNodes> getAdminNodesMenuByPid(Integer pid);
 	
-	void deleteAdminNodesByIds(Integer[] ids);
+	public void createAdminNode(TadminNodes adminNodes);
+	
+	public void updateAdminNode(TadminNodes adminNodes);
+	
+	public void deleteAdminNode(TadminNodes adminNodes);
+	
+	public void deleteAdminNodeById(int id);
+	
+	public void deleteAdminNodesByIds(Integer[] ids);
 	
 	public PagingData loadAdminNodesList(DataTableParamter rdtp);
 		

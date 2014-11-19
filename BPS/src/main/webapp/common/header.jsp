@@ -24,6 +24,34 @@
 			<!-- BEGIN TOP NAVIGATION MENU -->              
         <div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
+				<!-- END INBOX DROPDOWN -->
+				<!-- BEGIN LANGUAGE BAR -->
+				<li class="dropdown dropdown-language">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<img alt="" src="../assets/global/img/flags/us.png">
+					<span class="langname">US </span>
+					<i class="fa fa-angle-down"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">
+							<img alt="" src="../assets/global/img/flags/es.png"> Spanish </a>
+						</li>
+						<li>
+							<a href="#">
+							<img alt="" src="../assets/global/img/flags/de.png"> German </a>
+						</li>
+						<li>
+							<a href="#">
+							<img alt="" src="../assets/global/img/flags/ru.png"> Russian </a>
+						</li>
+						<li>
+							<a href="#">
+							<img alt="" src="../assets/global/img/flags/fr.png"> French </a>
+						</li>
+					</ul>
+				</li>
+				<!-- END LANGUAGE BAR -->
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">

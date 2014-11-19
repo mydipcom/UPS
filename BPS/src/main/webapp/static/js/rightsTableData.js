@@ -21,18 +21,19 @@
 
 var rootURI="/";
 var RightsTable = function () {
+	var oTable
 	var handleTable = function () {
 		var selected = [];
 		var table=$('#rights_table');
-		var oTable = table.dataTable({
+		oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -196,6 +197,16 @@ var RightsTable = function () {
 	             }
 	           });
 		});
+		
+		
+		//搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
 				
                        
 		//全选
@@ -250,6 +261,31 @@ var RightsTable = function () {
         
         
 	};
+	
+	//添加操作
+	var ajaxAddRights=function(){	
+		var jsondata=$(this).serializeJson();
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"addRights", 
+         "data": $('#addRightsForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
+				 }
+				 else{
+					 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+    };
 	
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
@@ -318,6 +354,7 @@ var RightsTable = function () {
 
                 submitHandler: function (form) {                	
                     errorDiv.hide();
+                    ajaxAddRights();
                 }
             });
     };

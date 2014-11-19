@@ -8,7 +8,7 @@
             <column name="role_id" />
             <generator class="assigned" />
         </id>
-        <property name="roleRights" type="binary">
+        <property name="roleRights" type="long">
             <column name="role_rights" not-null="true" />
         </property>
     </class>

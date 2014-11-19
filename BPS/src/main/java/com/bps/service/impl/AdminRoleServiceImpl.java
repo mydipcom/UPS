@@ -34,9 +34,9 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * <p>Description: </p> 
 	 * @param userId
 	 * @return TadminRole
-	 * @see com.bps.service.AdminUserService#getAdminUserById(java.lang.String) 
+	 * @see com.bps.service.AdminUserService#getAdminUserById(int) 
 	 */
-	public TadminRole getAdminRoleById(String roleId) {
+	public TadminRole getAdminRoleById(int roleId) {
 		return adminRoleDao.get(roleId);
 	}
 
