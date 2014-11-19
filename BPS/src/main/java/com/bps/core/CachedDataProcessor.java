@@ -25,7 +25,7 @@ import com.bps.service.AdminNodesService;
  * 
  */
 public class CachedDataProcessor implements ApplicationListener<ContextRefreshedEvent> {
-	@Override
+	
     public void onApplicationEvent(ContextRefreshedEvent event) {
 		//root application context
     	if(event.getApplicationContext().getParent() == null){

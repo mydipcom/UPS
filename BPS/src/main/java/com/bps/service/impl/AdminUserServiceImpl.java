@@ -102,13 +102,13 @@ public class AdminUserServiceImpl implements AdminUserService {
 		return adminUserDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 	
-public int getAdminUserAmount() {
+   public int getAdminUserAmount() {
 		// TODO Auto-generated method stub
 		return adminUserDao.getCount();
 	}
 
-@Override
-public void updateAdminUserPassword(TadminUser adminUser) {
+
+   public void updateAdminUserPassword(TadminUser adminUser) {
 	// TODO Auto-generated method stub
 	adminUserDao.update(adminUser);
 }

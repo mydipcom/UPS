@@ -21,18 +21,19 @@
 
 var rootURI="/";
 var PointUserTable = function () {
+	var oTable;
 	var handleTable = function () {
 		var selected = [];
 		var table=$('#point_users_table');
-		var oTable = table.dataTable({
+		oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "T<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "Tt<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -105,7 +106,17 @@ var PointUserTable = function () {
 //			},
 	       
 
-		});	
+		});
+		
+		  $("#searchForm").on("submit",function(event){
+			    event.preventDefault();
+				var jsonData=$(this).serializeJson();
+				var jsonDataStr=JSON.stringify(jsonData);			
+				oTable.fnFilter(jsonDataStr);
+				return false;
+		    });
+		  
+		  
 		$("#deactivateBtn").on("click",function(event){
 			if(selected.length<1){
 				

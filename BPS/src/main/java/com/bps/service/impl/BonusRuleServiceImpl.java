@@ -18,28 +18,28 @@ public class BonusRuleServiceImpl implements BonusRuleService{
 	
 	@Autowired
 	private PointRuleDao pointRuleDao;
-	@Override
+	
 	public TpointRule getBonusRuleById(String ruleId) {
 		
 		// TODO Auto-generated method stub
 		return pointRuleDao.get(ruleId);
 	}
 
-	@Override
+	
 	public void createAdminRole(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.create(pointRule);
 		
 	}
 
-	@Override
+	
 	public void updateAdminRole(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.update(pointRule);
 		
 	}
 
-	@Override
+	
 	public void deleteAdminRole(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.delete(pointRule);

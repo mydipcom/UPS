@@ -24,8 +24,7 @@ var UserProfile = function () {
 	    var handleUserProfile=function(){
 		//编辑表单提交操作
 	    $("#editUserProfile").on("submit", function(event) {
-	    	  
-			  event.stopPropagation();
+	    	  event.stopPropagation();
 			  var jsondata=$(this).serializeJson();
 			  $.ajax( {
 	             "dataType": 'json', 
@@ -53,45 +52,49 @@ var UserProfile = function () {
 			  return false;
 		});
 	    
-	    //修改密码
-	    $("#changePasswordForm").on("submit", function(event) {
-	    	  
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"changePassword?rand="+Math.random(), 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 
-	            	 if(status == "success"){ 
-	            		
-	            		 if(resp.status){
-	            			 if(resp.olderror){
-	            				 handleAlerts("Confirm your current password is correct","danger","#changePasswordMsg");
-	            			 }else{
-	            				 
-	            				   alert("Change the Password successfully.")
-	            				   window.location.href=rootURI+"login"
-	            			 }
-							 
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	alert(errorThrown);
-	              }
-	           });
-			  return false;
-		});
+	  
+	   
+	   };	
 	    
-	    };	
+	    //修改密码
+	    var ChangePassword = function() {
+             $("#changePasswordForm").on("submit", function(event) {
+		    	  event.stopPropagation();
+				  var jsondata=$(this).serializeJson();
+				  $.ajax( {
+		             "dataType": 'json', 
+		             "type": "POST", 
+		             "url": rootURI+"changePassword?rand="+Math.random(), 
+		             "data": $(this).serialize(),
+//		             "processData":false,
+//		             "contentType":"application/json",
+		             "success": function(resp,status){
+		            	 
+		            	 if(status == "success"){ 
+		            		
+		            		 if(resp.status){
+		            			 if(resp.olderror){
+		            				 handleAlerts("Confirm your current password is correct","danger","#changePasswordMsg");
+		            			 }else{
+		            				 
+		            				   alert("Change the Password successfully.")
+		            				   window.location.href=rootURI+"login"
+		            			 }
+								 
+							 }
+							 else{
+								 alert(resp.info);
+							 }
+						}             	 
+		             },
+		             "error":function(XMLHttpRequest, textStatus, errorThrown){
+		            	alert(errorThrown);
+		              }
+		           });
+				  return false;
+		});
+	    	
+	    };
 	    
 	    //验证表单
 	    var changePasswordValidation = function() {
@@ -145,8 +148,8 @@ var UserProfile = function () {
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
 
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
+                submitHandler: function (form) { 
+                	errorDiv.hide();
                 }
             });
     };
@@ -167,13 +170,24 @@ var UserProfile = function () {
     };
     
     
-
+    //initialize datepicker
+    var datePicker = function(){
+    	$('.date-picker').datepicker({
+        rtl: Metronic.isRTL(),
+        autoclose: true
+        });
+     };
+    
+  
+    
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleUserProfile();
+        	ChangePassword();
         	changePasswordValidation();
+        	datePicker();
         }
 
     };

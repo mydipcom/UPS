@@ -80,20 +80,19 @@ public class PointsLogServiceImpl implements PointsLogService {
 
 	}
 
-	@Override
+	
 	public void deletePointsHistoryByIds(Integer[] ids) {
 		// TODO Auto-generated method stub
 		pointsLogDao.deleteAll(ids);
 	}
 
-	@Override
+	
 	public PagingData loadPointLogList(DataTableParamter rdtp) {
 		// TODO Auto-generated method stub
 		return pointsLogDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<TpointsLog> getPointsHistoryByRuleId(Integer id) {
 			String hqlName="from TpointsLog where id="+id;
 		return pointsLogDao.findByHqlName(hqlName);

@@ -1,8 +1,15 @@
 package com.bps.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bps.dao.PointUserDao;
 import com.bps.dao.PointsLogDao;
 import com.bps.dto.TpointUser;
@@ -36,6 +43,28 @@ public class PointUserServiceImpl implements PointUserService {
 
 	public PagingData loadPoitUsersList(DataTableParamter dtp) {
 		// TODO Auto-generated method stub
+		String searchJsonStr = dtp.getsSearch();
+		if(searchJsonStr != null && !searchJsonStr.isEmpty()){
+			JSONObject searchJson = (JSONObject) JSON.parse(searchJsonStr);
+			List <Criterion> criterionList = new ArrayList<Criterion>();
+			if(searchJson.getString("userId") != null && !searchJson.getString("userId").isEmpty()){
+				criterionList.add(Restrictions.eq("userId", searchJson.getString("userId")));
+			}
+			if(searchJson.getString("first_points") != null && !searchJson.getString("first_points").isEmpty() 
+			    && searchJson.getString("end_points") != null && !searchJson.getString("end_points").isEmpty()){
+				criterionList.add(Restrictions.between("points", searchJson.getIntValue("first_points"), searchJson.getIntValue("end_points")));
+			}
+			
+			if(searchJson.getString("status") != null && !searchJson.getString("status").isEmpty()){
+				criterionList.add(Restrictions.eq("status", searchJson.getBoolean("status")));
+			}
+			
+			Criterion [] criterions = new Criterion[criterionList.size()];
+			for(int i=0 ; i<criterionList.size();i++){
+				criterions[i]=criterionList.get(i);
+			}
+			return pointUserDao.findPage(criterions, dtp.iDisplayStart, dtp.iDisplayLength);
+		}
 		return pointUserDao.findPage(dtp.iDisplayStart, dtp.iDisplayLength);
 	}
 
