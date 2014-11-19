@@ -21,7 +21,7 @@
 
 var rootURI="/";
 var RightsTable = function () {
-	var oTable
+	var oTable;
 	var handleTable = function () {
 		var selected = [];
 		var table=$('#rights_table');
@@ -127,31 +127,8 @@ var RightsTable = function () {
 		
 		//添加操作
 		$('#addRightsForm').on('submit', function (event) {
-			event.preventDefault();
-			var jsondata=$(this).serializeJson();
-			$.ajax( {
-             "dataType": 'json', 
-             "type":'POST', 
-             "url": rootURI+"addRights", 
-             "data": $(this).serialize(),
-//             "processData":false,
-//             "contentType":"application/json",
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){						 
-		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
-					 }
-					 else{
-						 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-			return false;
+			event.preventDefault();			
+			//return false;
         }); 
 		
 		$("#openEditRightModal").on("click",function(event){
@@ -263,8 +240,7 @@ var RightsTable = function () {
 	};
 	
 	//添加操作
-	var ajaxAddRights=function(){	
-		var jsondata=$(this).serializeJson();
+	var ajaxAddRights=function(){		
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
@@ -284,7 +260,7 @@ var RightsTable = function () {
          "error":function(XMLHttpRequest, textStatus, errorThrown){
         	 alert(errorThrown);
          }
-       });
+       });		
     };
 	
 	
@@ -332,8 +308,7 @@ var RightsTable = function () {
                     }                    
                 },
 
-                invalidHandler: function (event, validator) { //display error alert on form submit              
-                	successDiv.hide();
+                invalidHandler: function (event, validator) { //display error alert on form submit                	
                     errorDiv.show();                    
                 },
 
@@ -354,7 +329,7 @@ var RightsTable = function () {
 
                 submitHandler: function (form) {                	
                     errorDiv.hide();
-                    ajaxAddRights();
+                    ajaxAddRights();                    
                 }
             });
     };
