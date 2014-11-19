@@ -107,4 +107,10 @@ public int getAdminUserAmount() {
 		return adminUserDao.getCount();
 	}
 
+@Override
+public void updateAdminUserPassword(TadminUser adminUser) {
+	// TODO Auto-generated method stub
+	adminUserDao.update(adminUser);
+}
+
 }

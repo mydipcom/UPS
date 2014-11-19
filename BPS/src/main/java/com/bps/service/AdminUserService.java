@@ -12,6 +12,8 @@ public interface AdminUserService {
 	
 	void updateAdminUser(TadminUser adminUser);
 	
+	void updateAdminUserPassword(TadminUser adminUser);
+	
 	void deleteAdminUser(TadminUser adminUser);
 	
 	void deleteAdminUserById(int id);

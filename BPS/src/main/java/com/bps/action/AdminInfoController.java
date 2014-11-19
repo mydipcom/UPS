@@ -111,7 +111,7 @@ public class AdminInfoController extends BaseController {
 			else{
 				request.getSession().removeAttribute(SystemConstants.LOGINED);
 				adminUser.setPassword(SecurityTools.SHA1(cpMod.getNewpassword()));
-				adminUserService.updateAdminUser(adminUser);
+				adminUserService.updateAdminUserPassword(adminUser);
 				respJson.put("status", true);
 			}
 			
