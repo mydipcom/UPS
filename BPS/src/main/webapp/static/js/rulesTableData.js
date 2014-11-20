@@ -21,9 +21,10 @@
 
 var rootURI="/";
 var RulesTable = function () {
-
+	var oLogTables;
+	var oTable;
 	var handleTable = function () {
-		var oLogTables;
+		
 		var viewTable = function(ids){
 			var selected = [];
 			var table=$('#ruleslog_table');
@@ -102,16 +103,16 @@ var RulesTable = function () {
 		
 		var selected = [];
 		var table=$('#rules_table');
-		var oTable = table.dataTable({
+			oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,
-        	"bDestroy":true,
+        	//"bDestroy":true,
             // set the initial value
             "displayLength": 10,
-            "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -198,6 +199,15 @@ var RulesTable = function () {
              }
            });
         }); 
+		
+		//搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
 		//激活规则
 		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
@@ -407,35 +417,14 @@ var RulesTable = function () {
         table.on('click', 'tbody tr a',function(){
             var data = oTable.api().row($(this).parents('tr')).data();
            var ids=data.ruleId;
-           //oTables.ajax.url(rootURI+"ruleslogList/"+ids);
-           //oTables.api().draw();
-           //oTables.clear();
-           //alert(ids+"11");
-           
-           viewTable(ids);
-           oLogTables.api().darw();
-           //oTables.api().darw();
-           //oTables.destory();
-             /*$.ajax( {
-                "dataType": 'json', 
-                "type": "GET", 
-                "url": rootURI+"rules", 
-                "success": function(data,status){
-               	 if(status == "success"){
-               		 alert("xxxxx");
-                     
-               		// viewTable(data.ruleId);
-                    	 
-                      
-                     alert("test");
-    				}           	 
-                },
-                "error":function(XMLHttpRequest, textStatus, errorThrown){
-               	 alert(errorThrown);
-                }
+           if(oLogTables!=null){
+        	   oLogTables.fnDestroy();
+        	   viewTable(ids);
+           }else
+        	   viewTable(ids);
            });
-         */
-           });
+        
+        
         /* handle show/hide columns*/
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {

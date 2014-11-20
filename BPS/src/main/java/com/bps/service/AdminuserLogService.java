@@ -22,6 +22,6 @@ public interface AdminuserLogService {
 	
 	public PagingData loadAdminLogList(DataTableParamter rdtp);
 	
-	public List<TadminLog> getpointRuleLogByadminId(String id);
+	public PagingData loadAdminLogList(String id,DataTableParamter rdtp);
 	
 }

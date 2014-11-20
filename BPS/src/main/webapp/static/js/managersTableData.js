@@ -22,17 +22,96 @@
 var rootURI="/";
 var ManagersTable = function () {
 	var handleTable = function () {
+		var oLogTable;
+		var oTable;
+		var viewTable = function(ids){
+			var selected = [];
+			var table=$('#managerlog_table');
+			oLogTable = table.dataTable({
+				"lengthChange":false,
+		    	"filter":false,
+		    	"sort":false,
+		    	"info":true,
+		    	"bRetrieve": true,
+		    	"processing":true,
+		    	"bDestroy":true,
+		        // set the initial value
+		        "displayLength": 3,
+		        "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+//		        "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
+//		        "oLanguage": {
+//		            "sLengthMenu": "_MENU_ records per page",
+//		            "oPaginate": {
+//		                "sPrevious": "Prev",
+//		                "sNext": "Next",
+//		            	"zeroRecords": "No records to display"
+//		            }
+//		        },
+		        "columnDefs": [{                    
+		            'targets': 0,   
+		            'render':function(data,type,row){
+		            	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
+		            },
+		            //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
+		        },
+		        {                	
+		        	'targets':-1,
+		        	'data':null,//定义列名
+		        	'render':function(data,type,row){
+		            	return '<div class="actions"><button><a  data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></button></div>';
+		            },
+		            'class':'center'
+		        }
+		    ],
+		    "columns": [
+		                {"orderable": false },
+		 	           { title: "ID",   data: "id" },
+		 	           { title: "Admin Name",   data: "adminId" },
+		 	           { title: "Content",  data: "content"},
+		 	           { title: "Level", data: "level"},
+		 	           { title: "Create Time", data: "createdTimeStr" },
+		 	           { title: "Action" ,"class":"center"}
+		 	        ],
+		     	        "serverSide": true,
+		     	        "serverMethod": "GET",
+		     	        "ajaxSource": rootURI+"managerslogList/"+ids+"?rand="+Math.random(),
+		     	       //"ajaxSource": rootURI+"ruleslogList?rand="+Math.random(),
+//		        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+//		           $.ajax( {
+//		             "dataType": 'json', 
+//		             "type": "POST", 
+//		             "url": sSource, 
+//		             "data": aoData,
+////		             "contentType":"application/json",
+//		             "success": function(resp){ 		            	
+//		            	 fnCallback(resp);
+//		             },
+//		             "error":function(XMLHttpRequest, textStatus, errorThrown){
+//		            	 alert(errorThrown);
+//		             }
+//		           } );
+//		         },
+//		        "fnServerParams": function ( aoData ) {
+//		           aoData.push( { "name": "more_data", "value": "my_value" } );
+//		         },
+//		        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {				
+//		        	$('td:eq(0)', nRow).html( '<input type="checkbox" class="checkboxes" value="1"/>' );
+//					return nRow;
+//				},
+
+			});	
+		};
 		var selected = [];
 		var table=$('#adminusers_table');
-		var oTable = table.dataTable({
+		 oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -53,7 +132,7 @@ var ManagersTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<button>View</button>';
+                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
@@ -122,6 +201,16 @@ var ManagersTable = function () {
            });
         });  
 		
+		//搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
+		
+		
 		//添加操作
 		$('#addUsersForm').on('submit', function (event) {
 			event.preventDefault();
@@ -156,13 +245,21 @@ var ManagersTable = function () {
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
 				event.stopPropagation();
+			}else if(selected.length==0)
+			{
+				handleAlerts("Please choose one row.","warning","");
+				event.stopPropagation();
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 	            var adminId = data.adminId;
 	            var email =data.email;
+	            var createby=data.createdBy;
+	            var creatime=data.createdTimeStr;
 	            $("#editUsersForm input[name='adminId']").val(adminId);
 	            $("#editUsersForm input[name='email']").val(email);
+	            $("#editUsersForm input[name='createby']").val(createby);
+	            $("#editUsersForm input[name='creatime']").val(creatime);
 			}
 		});
 		
@@ -224,6 +321,19 @@ var ManagersTable = function () {
             });
             jQuery.uniform.update(set);
         });
+        
+        
+        table.on('click', 'tbody tr a',function(){
+            var data = oTable.api().row($(this).parents('tr')).data();
+           var ids=data.adminId;
+           if(oLogTable!=null){
+        	   oLogTable.fnDestroy();
+        	   viewTable(ids);
+        	   oLogTable.api().darw();
+           }else
+        	   viewTable(ids);
+           	   oLogTable.api().darw();
+           });
         
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {

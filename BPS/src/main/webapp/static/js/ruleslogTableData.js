@@ -26,13 +26,13 @@ var RulesLogTable = function () {
 		var table=$('#ruleslog_table');
 		var oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -141,7 +141,17 @@ var RulesLogTable = function () {
             	 alert(errorThrown);
              }
            });
-        });           
+        });   
+		
+		//搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
+		
 		//全选
 		
         table.find('.group-checkable').change(function () {
@@ -184,7 +194,7 @@ var RulesLogTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-       
+       //查看日志详情
         table.on('click', 'tbody tr a', function () {
         var datas = oTable.api().row($(this).parents('tr')).data(); 
         $.ajax( {
@@ -216,15 +226,21 @@ var RulesLogTable = function () {
 		});
         
         
-	};
-	
+	}; 
+	 //initialize datepicker
+    var datePicker = function(){
+    	$('.date-picker').datepicker({
+        rtl: Metronic.isRTL(),
+        autoclose: true
+        });
+     };
 
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	addFormValidation();
+        	datePicker();
         }
 
     };

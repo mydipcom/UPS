@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
+import com.bps.commons.SecurityTools;
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -77,9 +78,12 @@ private Logger logger = Logger.getLogger(UserController.class);
 //		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
 //		adminNode.setDescr(jsonObj.getString("descr"));
 //		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-			
+		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
 		try{
+			adminuser.setCreatedBy(ad.getAdminId());
+			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
+			adminuser.setCreatedTime(System.currentTimeMillis());
 			adminUserService.createAdminUser(adminuser);
 			respJson.put("status", true);
 		}
@@ -105,9 +109,12 @@ private Logger logger = Logger.getLogger(UserController.class);
 //		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
 //		adminNode.setDescr(jsonObj.getString("descr"));
 //		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-
+		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
 		try{
+			adminuser.setUpdatedBy(ad.getAdminId());
+			adminuser.setUpdatedTime(System.currentTimeMillis());
+			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
 			adminUserService.updateAdminUser(adminuser);
 			respJson.put("status", true);
 		}

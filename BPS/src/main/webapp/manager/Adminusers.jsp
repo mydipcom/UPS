@@ -75,6 +75,75 @@
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
+								
+				
+				<!-- BEGIN SEARCH FORM -->
+				<div class="portlet-body">
+					<form id="searchForm" name="searchForm" action="adminuserlist1" class="form-horizontal" method="post">
+					<div class="row">
+						<div class="col-md-6">					
+							<div class="form-group">
+								<label class="col-md-3 control-label">User ID</label>
+								<div class="col-md-9">
+									<input name="adminId" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Email</label>
+								<div class="col-md-9">
+									<input name="email" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Role Name</label>
+								<div class="col-md-9">
+									<select name="adminRole.roleId" class="form-control">
+										<option value="">ALL</option>
+										<option value="1">admin</option>
+										<option value="2">Bonus Point Manager</option>
+										<option value="3">Bonus Point Operator</option>									
+									</select>
+								</div>
+							</div>
+						</div>					
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Status</label>
+								<div class="col-md-9">
+									<div class="radio-list">
+										<label class="radio-inline">
+										<input type="radio" name="status" value="" checked/>All </label>
+										<label class="radio-inline">
+										<input type="radio" name="status" value="true"/>Enable </label>
+										<label class="radio-inline">
+										<input type="radio" name="status" value="false"/>Disable </label>
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="col-md-6">	
+							<div class="form-group">								
+								<div class="col-md-offset-3 col-md-9">
+									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
+									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+								</div>
+							</div>					
+						</div>
+					</div>	
+					</form>
+				</div>
+				<!-- END SEARCH FORM -->
+				
+				
+				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
@@ -207,6 +276,42 @@
 				</div>				
 				<!-- END ADD MODAL FORM-->
 				
+				
+				<div class="modal" id="view_log" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Rules logs</h4>
+					</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+				
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet-body">																
+								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
+									<thead>
+										<tr>
+											<th class="table-checkbox">
+												<input type="checkbox" class="group-checkable" data-set="#managerlog_table .checkboxes"/>
+											</th>
+											<th>ID</th>
+											<th>Admin Name</th>
+											<th>Content</th>
+											<th>Level</th>
+											<th>Create Time</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+																						
+								</table>
+							</div>
+				
+						<!-- END EXAMPLE TABLE PORTLET-->
+					 
+					</div>
+				</div>
+			</div>
+				
 			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -234,7 +339,21 @@
 										<input name="password" class="form-control"/>
 										
 									</div>
-								</div>				
+								</div>	
+								<div class="form-group">
+									<label class="control-label col-md-3">CreateBy</label>
+									<div class="col-md-9">																				
+										<input name="createby" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>			
+								<div class="form-group">
+									<label class="control-label col-md-3">Create Time</label>
+									<div class="col-md-9">																				
+										<input name="createtime" class="form-control" readonly="true"/>
+										
+									</div>
+								</div>						
 								<div class="form-group">
 									<label class="control-label col-md-3">Eamil</label>
 									<div class="col-md-9">																				
@@ -244,7 +363,7 @@
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Request Method</label>
+									<label class="control-label col-md-3">Role Name</label>
 									<div class="col-md-9">
 										<select name="adminRole.roleId" class="form-control">
 											<option value="1">admin</option>

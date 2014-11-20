@@ -46,7 +46,7 @@ public class PointLogController extends BaseController {
 	@ResponseBody
 	public String pointlogList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=pointsLogService.loadPointLogList(dtp);
-		pagingData.getAaData();
+
 		pagingData.setSEcho(dtp.sEcho);		
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;

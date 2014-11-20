@@ -26,6 +26,7 @@
 <link href="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="../assets/global/css/components.css" rel="stylesheet" type="text/css"/>
@@ -77,6 +78,81 @@
 					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
+				
+				<!-- BEGIN SEARCH FORM -->		
+				<div class="portlet-body" >
+					<form id="searchForm" name="searchForm" action="rulelist1" class="form-horizontal" method="post">
+					<div class="row">
+						<!-- 
+						<div class="col-md-6">					
+							<div class="form-group">
+								<label class="col-md-3 control-label">Bonus Rule Group</label>
+								<div class="col-md-9">
+									<input name="name" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>
+						 -->
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Admin Name</label>
+								<div class="col-md-9">
+									<input name="adminId" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>
+					</div>
+									<div class="row">	
+										<div class="col-md-6">	
+											<div class="form-group">
+														<label class="col-md-3 control-label">Start time</label>
+														<div class="col-md-5">
+                                                        <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
+												           <input type="text" name="startTime" readonly="true" class="form-control"/>
+												           <span class="input-group-btn">
+												           <button type="button" class="btn default"><i class="fa fa-calendar"></i></button>
+												           </span>
+											            </div>
+											            </div>
+											        </div>
+											     </div>
+											  </div>
+							
+								<div class="row">	
+										<div class="col-md-6">	
+											<div class="form-group">
+														<label class="col-md-3 control-label">End time</label>
+														<div class="col-md-5">
+                                                        <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
+												           <input type="text" name="endTime" readonly="true" class="form-control"/>
+												           <span class="input-group-btn">
+												           <button type="button" class="btn default"><i class="fa fa-calendar"></i></button>
+												           </span>
+											            </div>
+											            </div>
+											        </div>
+											     </div>
+											  </div>
+					
+					<div class="row">	
+						<div class="col-md-6">	
+							<div class="form-group">								
+								<div class="col-md-offset-3 col-md-9">
+									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
+									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+								</div>
+							</div>					
+						</div>
+					</div>	
+					</form>
+				</div>
+				<!-- END SEARCH FORM -->
+				
+				
+								
+				
+				
+				
 				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
@@ -228,6 +304,7 @@
 	<script src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>

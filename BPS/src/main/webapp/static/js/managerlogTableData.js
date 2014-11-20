@@ -26,13 +26,13 @@ var ManagerLogTable = function () {
 		var table=$('#managerlog_table');
 		var oTable = table.dataTable({
 			"lengthChange":false,
-        	"filter":false,
+        	"filter":true,
         	"sort":false,
         	"info":true,
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
-            "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //            "oLanguage": {
 //                "sLengthMenu": "_MENU_ records per page",
@@ -144,6 +144,15 @@ var ManagerLogTable = function () {
             jQuery.uniform.update(set);
         });
         
+      //搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
+        
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
@@ -162,19 +171,19 @@ var ManagerLogTable = function () {
         });
            
         table.on('click', 'tbody tr a', function () {
-            var datas = oTable.api().row($(this).parents('tr')).data();
+            var data = oTable.api().row($(this).parents('tr')).data();
             $.ajax( {
                 "dataType": 'json', 
                 "type": "POST", 
-                "url": rootURI+"managerslogview/"+datas.id, 
+                "url": rootURI+"managerslogview/"+data.id, 
                 "success": function(data,status){
                	 if(status == "success"){
-               		var adminslog=data.adminlog;
-               		$("#viewAdminlogForm input[name='id']").val(adminslog.id);
-    	            $("#viewAdminlogForm input[name='adminId']").val(adminslog.adminId);
-    	            $("#viewAdminlogForm textarea[name='content']").val(adminslog.content);
-    	            $("#viewAdminlogForm input[name='level']").val(adminslog.level);
-    	            $("#viewAdminlogForm input[name='createdTime']").val(adminslog.createdTimeStr);
+               		var adminslogs=data.adminslog;
+               		$("#viewAdminlogForm input[name='id']").val(adminslogs.id);
+    	            $("#viewAdminlogForm input[name='adminId']").val(adminslogs.adminId);
+    	            $("#viewAdminlogForm textarea[name='content']").val(adminslogs.content);
+    	            $("#viewAdminlogForm input[name='level']").val(adminslogs.level);
+    	            $("#viewAdminlogForm input[name='createdTime']").val(adminslogs.createdTimeStr);
     				}             	 
                 },
                 "error":function(XMLHttpRequest, textStatus, errorThrown){
@@ -193,14 +202,20 @@ var ManagerLogTable = function () {
         
         
 	};
-	
+	 //initialize datepicker
+    var datePicker = function(){
+    	$('.date-picker').datepicker({
+        rtl: Metronic.isRTL(),
+        autoclose: true
+        });
+     };
 
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	addFormValidation();
+        	datePicker();
         }
 
     };

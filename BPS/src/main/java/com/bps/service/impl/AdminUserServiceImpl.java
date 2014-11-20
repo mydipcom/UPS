@@ -9,9 +9,17 @@
  */ 
 package com.bps.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.SecurityTools;
 import com.bps.dao.AdminUserDao;
 import com.bps.dto.TadminUser;
@@ -52,7 +60,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void createAdminUser(TadminUser adminUser) {
-		adminUser.setPassword(SecurityTools.SHA1(adminUser.getPassword()));
+		
 		adminUserDao.create(adminUser);
 	}
 
@@ -64,15 +72,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void updateAdminUser(TadminUser adminUser) {
-		TadminUser ad=new TadminUser();
-		ad.setAdminId(adminUser.getAdminId());
-		ad.setAdminRole(adminUser.getAdminRole());
-		ad.setPassword(SecurityTools.SHA1(adminUser.getPassword()));
-		ad.setUpdatedTime(System.currentTimeMillis());
-		ad.setUpdatedBy("steve");
-		ad.setEmail(adminUser.getEmail());
-		ad.setStatus(adminUser.getStatus());
-		adminUserDao.update(ad);
+	
+		adminUserDao.update(adminUser);
 
 	}
 
@@ -99,6 +100,33 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 
 	public PagingData loadAdminUserList(DataTableParamter rdtp) {
+		String searchJsonStr=rdtp.getsSearch();
+		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
+			List<Criterion> criterionsList=new ArrayList<Criterion>();
+			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
+			Set<String> keys=jsonObj.keySet();						
+			for (String key : keys) {
+				String val=jsonObj.getString(key);
+				if(val!=null&&!val.isEmpty()){
+					if(key=="status"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+					}
+					else if(key=="adminRole.roleId"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getInteger(key)));
+					}
+					else{
+						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));
+					}
+				}
+			}
+			Criterion[] criterions=new Criterion[criterionsList.size()];
+			int i=0;
+			for (Criterion criterion : criterionsList) {
+				criterions[i]=criterion;	
+				i++;
+			}
+			return adminUserDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+		}
 		return adminUserDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 	

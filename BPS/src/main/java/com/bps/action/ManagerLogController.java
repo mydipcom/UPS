@@ -49,6 +49,18 @@ public class ManagerLogController extends BaseController {
 		return rightsListJson;
 			
 		}
+	
+	@RequestMapping(value="/managerslogList/{ids}",method=RequestMethod.GET)
+	@ResponseBody
+	public String AdminuserlogsList(HttpServletRequest request,@PathVariable String ids,DataTableParamter dtp){		
+		
+		PagingData pagingData=adminuserLogService.loadAdminLogList(ids, dtp);
+		
+		pagingData.setSEcho(dtp.sEcho);		
+		String rightsListJson= JSON.toJSONString(pagingData);
+		return rightsListJson;
+			
+		}
 	@RequestMapping(value="/managerslog/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteAdminuserslog(@PathVariable String ids,HttpServletRequest request){
@@ -68,11 +80,11 @@ public class ManagerLogController extends BaseController {
 	@RequestMapping(value="/managerslogview/{ids}",method=RequestMethod.POST)
 	@ResponseBody
 	public String viewAdminuserLogs(@PathVariable String ids,HttpServletRequest request){
-		//String[] idstrArr=ids.split(",");		
-		//Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		String[] idstrArr=ids.split(",");		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
 		try{
-			List<TadminLog> adminslog=adminuserLogService.getpointRuleLogByadminId(ids);
+			TadminLog adminslog=adminuserLogService.getRuleLogById(idArr[0]);
 			respJson.put("status", true);
 			respJson.put("adminslog", adminslog);
 		}
