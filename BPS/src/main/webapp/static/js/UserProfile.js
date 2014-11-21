@@ -22,7 +22,7 @@
 var rootURI="/";
 var UserProfile = function () {
 	    var handleUserProfile=function(){
-		//编辑表单提交操作
+		//编辑提交操作
 	    $("#editUserProfile").on("submit", function(event) {
 	    	  event.stopPropagation();
 			  var jsondata=$(this).serializeJson();
@@ -58,14 +58,13 @@ var UserProfile = function () {
 	    
 	    //修改密码
 	    var ChangePassword = function() {
-             $("#changePasswordForm").on("submit", function(event) {
-		    	  event.stopPropagation();
+                  event.stopPropagation();
 				  var jsondata=$(this).serializeJson();
 				  $.ajax( {
 		             "dataType": 'json', 
 		             "type": "POST", 
 		             "url": rootURI+"changePassword?rand="+Math.random(), 
-		             "data": $(this).serialize(),
+		             "data": $("#changePasswordForm").serialize(),
 //		             "processData":false,
 //		             "contentType":"application/json",
 		             "success": function(resp,status){
@@ -77,7 +76,7 @@ var UserProfile = function () {
 		            				 handleAlerts("Confirm your current password is correct","danger","#changePasswordMsg");
 		            			 }else{
 		            				 
-		            				   alert("Change the Password successfully.")
+		            				   alert("Change the Password successfully.");
 		            				   window.location.href=rootURI+"login"
 		            			 }
 								 
@@ -92,17 +91,13 @@ var UserProfile = function () {
 		              }
 		           });
 				  return false;
-		});
-	    	
-	    };
+};
 	    
 	    //验证表单
 	    var changePasswordValidation = function() {
-	    	
-            var changeform = $('#changePasswordForm');
+	    	var changeform = $('#changePasswordForm');
             var errorDiv = $('.alert-danger', changeform);            
-
-            changeform.validate({
+                changeform.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
@@ -124,12 +119,14 @@ var UserProfile = function () {
                         maxlength:20,
                         equalTo:"#newpassword"
                      
-                    },
+                    }
                                 
                 },
-
+                onfocusout:function(element){
+                	$(element).valid();
+                },
                 invalidHandler: function (event, validator) { //display error alert on form submit              
-                	successDiv.hide();
+                	//successDiv.hide();
                     errorDiv.show();                    
                 },
 
@@ -148,7 +145,8 @@ var UserProfile = function () {
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
 
-                submitHandler: function (form) { 
+                submitHandler: function (form) {
+                	ChangePassword();
                 	errorDiv.hide();
                 }
             });
@@ -185,9 +183,8 @@ var UserProfile = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleUserProfile();
-        	ChangePassword();
         	changePasswordValidation();
-        	datePicker();
+		datePicker();
         }
 
     };

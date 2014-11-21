@@ -8,6 +8,10 @@
  */
 package com.bps.action;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -87,8 +91,8 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(value="/getCpuStatus",method=RequestMethod.GET)
 	@ResponseBody
-	public String getSystemCpuStatus(HttpServletRequest request){
-	
+	public String getSystemCpuStatus(HttpServletRequest request) throws IOException{
+		loadLibiray(request);
 		JSONObject respJson = new JSONObject();
 		Sigar sigar = new Sigar();
 		try{
@@ -109,8 +113,8 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(value="/getMemStatus",method=RequestMethod.GET)
 	@ResponseBody
-	public String getSystemMemStatus(HttpServletRequest request){
-		
+	public String getSystemMemStatus(HttpServletRequest request) throws IOException{
+		loadLibiray(request);
 		JSONObject respJson = new JSONObject();
 		Sigar sigar = new Sigar();
 		try{
@@ -129,5 +133,8 @@ public class HomeController extends BaseController {
 		
 		return JSON.toJSONString(respJson);
 	}
-
+    public static void loadLibiray(HttpServletRequest request){
+    	String path=request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"lib"+File.separator;
+	    System.load(path+"sigar-amd64-winnt.dll");
+    }	
 }

@@ -12,7 +12,9 @@ package com.bps.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,18 +67,30 @@ public class LoginController extends BaseController {
 	public ModelAndView login(HttpServletRequest request,TadminUser user){
 		TadminUser tUser=(TadminUser)adminUserService.getAdminUserById(user.getAdminId());
 		ModelAndView mav=new ModelAndView();
-		if(tUser==null){
+		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
+		if(time != null && System.currentTimeMillis()-time<600000){
+			    mav.addObject(ERROR_MSG_KEY, "账号被锁定10分钟");
+				if(tUser != null){
+				  mav.addObject("user", tUser);
+				}else{
+					mav.addObject("user", new TadminUser());
+				}
+		}
+		else if(tUser==null){
 			mav.addObject(ERROR_MSG_KEY, "用户名不存在");
-			mav.addObject("user", tUser);
+			mav.addObject("user", new TadminUser());
+			saveLoginErrorTims(request);
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
 			mav.addObject(ERROR_MSG_KEY, "登录密码不正确");
 			mav.addObject("user", tUser);
-		}
-		else{
+			saveLoginErrorTims(request);
+		}else{
 			setSessionUser(request, tUser);
 			String toUrl=(String)request.getSession().getAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(LOGIN_TO_URL);
+			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
+			request.getSession().removeAttribute(SystemConstants.LOGIN_STATUS);
 			if(StringUtils.isEmpty(toUrl)){
 				toUrl="/home";
 			}

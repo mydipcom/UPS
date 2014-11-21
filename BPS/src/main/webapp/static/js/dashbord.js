@@ -191,7 +191,7 @@ var Dashbord = function () {
 								});
 								
 								
-							}, 2000);
+							}, 1000);
 						}
 					}
 				},
@@ -243,8 +243,8 @@ var Dashbord = function () {
 
 						for( i = -999; i <= 0; i++) {
 							data.push([
-								time + i * 2000,
-								Math.round(Math.random() * 100)
+								time + i * 1000,
+								0
 							]);
 						}
 						return data;
@@ -289,7 +289,7 @@ var Dashbord = function () {
 									});
 									
 									
-								}, 2000);
+								}, 1000);
 							}
 						}
 					},
@@ -341,8 +341,8 @@ var Dashbord = function () {
 
 							for( i = -999; i <= 0; i++) {
 								data.push([
-									time + i * 2000,
-									Math.round(Math.random() * 100)
+									time + i * 1000,
+									0
 								]);
 							}
 							return data;
@@ -363,8 +363,8 @@ var Dashbord = function () {
         	systemUserAmount();
         	pointUserAmount();
         	pointRuleAmount();
- //           systemCpuChart();
- //           systemMemChart();
+            systemCpuChart();
+            systemMemChart();
         }
 
     };

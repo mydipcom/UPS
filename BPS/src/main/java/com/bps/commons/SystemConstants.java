@@ -21,4 +21,7 @@ public class SystemConstants {
 	
 	public static final String RIGHTS="rights";
 	
+	public static final String LOGIN_ERROR="Login_Error";
+	
+	public static final String LOGIN_STATUS="Login_Status";
 }

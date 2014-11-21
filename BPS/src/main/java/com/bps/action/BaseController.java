@@ -9,15 +9,18 @@
 */ 
 package com.bps.action;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hyperic.sigar.cmd.Time;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.support.RequestContext;
 
 import com.bps.commons.SystemConstants;
 import com.bps.dto.TadminUser;
+import com.bps.model.LoginFailureModel;
 
 
 /** 
@@ -160,5 +163,51 @@ public class BaseController {
 				requestContext.changeLocale(locale);
 			}	
 		}		
+	}
+	
+	/**
+	 * <p>Description:获取登录错误次数</p>
+	 * @Title:getLoginFailureTimes
+	 * @param request
+	 * @return LoginFailureModel
+	 */
+	public LoginFailureModel getLoginFailureTimes(HttpServletRequest request){
+		return (LoginFailureModel) request.getSession().getAttribute(SystemConstants.LOGIN_ERROR);
+	}
+	
+	/**
+	 * <p>Description:save login error info</p>
+	 * @Title:saveLoginErrorTims
+	 * @param request
+	 * 
+	 */
+	public void saveLoginErrorTims(HttpServletRequest request){
+		LoginFailureModel lfm = new LoginFailureModel();
+		lfm = getLoginFailureTimes(request);
+		int count = 1 ;
+		if(lfm == null){
+			lfm = new LoginFailureModel();
+			lfm.setTime(System.currentTimeMillis());
+			lfm.setCount(count);
+			request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
+		}else{
+			Long time_interval = System.currentTimeMillis()-lfm.getTime();
+			if(time_interval>600000){
+				lfm.setTime(System.currentTimeMillis());
+				lfm.setCount(count);
+				request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
+			}else{
+				int error_count=lfm.getCount();
+				if(error_count == 2){
+					request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
+					request.getSession().setAttribute(SystemConstants.LOGIN_STATUS, System.currentTimeMillis());
+				}else{
+					lfm.setTime(System.currentTimeMillis());
+					lfm.setCount(2);
+					request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
+				}
+			}
+		}
+		
 	}
 }

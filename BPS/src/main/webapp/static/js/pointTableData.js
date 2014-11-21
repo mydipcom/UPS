@@ -22,8 +22,9 @@
 var rootURI="/";
 var PointUserTable = function () {
 	var oTable;
+	var selected;
 	var handleTable = function () {
-		var selected = [];
+		selected = [];
 		var table=$('#point_users_table');
 		oTable = table.dataTable({
 			"lengthChange":false,
@@ -82,6 +83,9 @@ var PointUserTable = function () {
 	        "serverSide": true,
 	        "serverMethod": "GET",
 	        "ajaxSource": rootURI+"pointsList?rand="+Math.random(),
+            "sScrollX":"100%",        	
+	        "sScrollXInner":"100%",
+	        
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -108,13 +112,7 @@ var PointUserTable = function () {
 
 		});
 		
-		  $("#searchForm").on("submit",function(event){
-			    event.preventDefault();
-				var jsonData=$(this).serializeJson();
-				var jsonDataStr=JSON.stringify(jsonData);			
-				oTable.fnFilter(jsonDataStr);
-				return false;
-		    });
+		 
 		  
 		  
 		$("#deactivateBtn").on("click",function(event){
@@ -216,75 +214,8 @@ var PointUserTable = function () {
 	            
 	            var points = data.points;
 	            $("#changeBalanceForm input[name='points']").val(points);
-	            
-	           
-			}
+	            }
 		});
-		
-		
-		//修改积分提交操作
-		$("#changeBalanceForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"changeUserPoints?rand="+Math.random(), 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Change the balance successfully.","success","","10");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-			 $("#Change_Balance").modal("hide");
-			 return false;
-		});
-			
-		//批量修改积分提交操作
-		$("#changeMoreBalanceForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"changeMoreUserPoints/"+selected.join()+"?rand="+Math.random(), 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Change the balance successfully.","success","","10");
-						 }
-						 else{
-							 
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-			  $("#Change_More_Balance").modal("hide");
-			  return false;
-		});
-		
 		
 		//EXCEL导入提交操作
 		$("#Import_Pointuser_Excel").on("submit", function(event) {
@@ -322,31 +253,34 @@ var PointUserTable = function () {
 	             }
 	           });
 			  return false;
-		});           
-		//全选
-        table.find('.group-checkable').change(function () {
-            var set = jQuery(this).attr("data-set");
-            var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.userId;
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
-                    $(this).attr("checked", true);
-                    $(this).parents('tr').addClass("active");
-                    $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
-            jQuery.uniform.update(set);
-        });
-        
+		});   
+		
+       //全选
+		 $(".group-checkable").on('change',function () {
+	            var set = jQuery(this).attr("data-set");
+	            var checked = jQuery(this).is(":checked");
+	            selected=[];
+	            if(checked){            	
+		            var api=oTable.api();            
+		            jQuery(set).each(function () {            	
+		            	var data = api.row($(this).parents('tr')).data();
+		            	var id = data.userId;
+		                var index = $.inArray(id, selected);
+		                selected.push( id );
+	                    $(this).attr("checked", true);
+	                    $(this).parents('tr').addClass("active");
+	                    $(this).parents('span').addClass("checked");
+		            });
+	            }
+	            else{
+	            	jQuery(set).removeAttr("checked");
+	            	jQuery(set).parents('tr').removeClass("active");
+	            	jQuery(set).parents('span').removeClass("checked");
+	            }
+	            jQuery.uniform.update(set);
+	        });
+
+      
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
@@ -372,10 +306,76 @@ var PointUserTable = function () {
 		    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
 		    oTable.fnSetColumnVis(iCol, (bVis ? false : true));
 		});
-        
-        
+ };
+	
+    
+    //search
+    var search = function(){
+    	event.preventDefault();
+		var jsonData=$("#searchForm").serializeJson();
+		var jsonDataStr=JSON.stringify(jsonData);			
+		oTable.fnFilter(jsonDataStr);
+		return false;
+    };
+    
+	
+    //修改积分
+	var changeBalance = function (){
+		 var jsondata=$(this).serializeJson();
+		 $.ajax( {
+             "dataType": 'json', 
+             "type": "POST", 
+             "url": rootURI+"changeUserPoints?rand="+Math.random(), 
+             "data": $("#changeBalanceForm").serialize(),
+             "success": function(resp,status){
+            	 if(status == "success"){  
+            		 if(resp.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 handleAlerts("Change the balance successfully.","success","","10");
+					 }
+					 else{
+						 alert(resp.info);
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+		 $("#Change_Balance").modal("hide");
+		 return false;
 	};
 	
+	//批量修改积分
+	var changeMoreBalance = function(){
+		  event.stopPropagation();
+		  var jsondata=$(this).serializeJson();
+		  $.ajax( {
+            "dataType": 'json', 
+            "type": "POST", 
+            "url": rootURI+"changeMoreUserPoints/"+selected.join()+"?rand="+Math.random(), 
+            "data": $('#changeMoreBalanceForm').serialize(),
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 handleAlerts("Change the balance successfully.","success","","10");
+					 }
+					 else{
+						 
+						 alert(resp.info);
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+		  $("#Change_More_Balance").modal("hide");
+		   return false;
+	};
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position,closeInSeconds) {         
@@ -393,36 +393,23 @@ var PointUserTable = function () {
 
     };
     
-    //处理表单验证方法
-    var addFormValidation = function() {
-            var addform = $('#addRightsForm');
-            var errorDiv = $('.alert-danger', addform);            
-
-            addform.validate({
+    //修改积分验证方法
+    var changeBalanceValidation = function() {
+            var form = $('#changeBalanceForm');
+            var errorDiv = $('.alert-danger', form);            
+            form.validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block help-block-error', // default input error message class
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    uri: {
+                	amount: {
+                		digits:true,
                         required: true,
-                        maxlength:60                        
-                    },
-                    method: {
-                        required: true                        
-                    },
-                    pid: {
-                        required: true,
-                        number: true
-                    }                    
+                        min:0
+                    }
                 },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit              
-                	successDiv.hide();
+               invalidHandler: function (event, validator) { //display error alert on form submit              
                     errorDiv.show();                    
                 },
 
@@ -441,18 +428,110 @@ var PointUserTable = function () {
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
 
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
+                submitHandler: function (form) { 
+                	errorDiv.hide();
+                	changeBalance();
                 }
             });
     };
+    
+  //批量修改积分验证方法
+    var changeMoreBalanceValidation = function() {
+            var form = $('#changeMoreBalanceForm');
+            var errorDiv = $('.alert-danger', form);            
 
+            form.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input                
+                rules: {
+                	Amount: {
+                		digits:true,
+                        required: true,
+                        min:0
+                    }
+                },
+               invalidHandler: function (event, validator) { //display error alert on form submit              
+                    errorDiv.show();                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+
+                submitHandler: function (form) { 
+                	errorDiv.hide();
+                	changeMoreBalance();
+                }
+            });
+    };
+    
+    //searchValidate
+    var searchValidation = function() {
+            var form = $('#searchForm');
+            var errorDiv = $('.alert-danger', form);            
+            form.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input                
+                rules: {
+                	first_points: {
+                		digits:true,
+                        min:0
+                    },
+                    end_points:{
+                    	digits:true,
+                        min:0
+                    }
+                },
+               invalidHandler: function (event, validator) { //display error alert on form submit              
+                    errorDiv.show();                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+
+                submitHandler: function (form) { 
+                	errorDiv.hide();
+                	search();
+                }
+            });
+    };
+    
+    
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	//addFormValidation();
+       	    changeBalanceValidation();
+       	    changeMoreBalanceValidation();
+         	searchValidation();
         }
 
     };

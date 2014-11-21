@@ -328,19 +328,7 @@
 		   QuickSidebar.init(); // init quick sidebar
            Demo.init(); // init demo features 
            Dashbord.init("<c:url value="/"/>");
-//		   Index.init();   
-//		   Index.initDashboardDaterange();
-//		   Index.initJQVMAP(); // init index page's custom scripts
-//		   Index.initCalendar(); // init index page's custom scripts
-//		   Index.initCharts(); // init index page's custom scripts
-//		   Index.initChat();
-//		   Index.initMiniCharts();
-//		   Index.initIntro();
-//		   Tasks.initDashboardWidget();
-//         Charts.init();
-//         Charts.initCharts();
-//         Charts.initPieCharts();
-//         Charts.initBarCharts();
+
 		});
 	</script>
 
