@@ -1,13 +1,14 @@
 package com.bps.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bps.dao.SettingDao;
 import com.bps.dto.Tsetting;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.SystemSettingService;
-
+@Service
 public class SystemSettingServiceImpl implements SystemSettingService {
 
 	

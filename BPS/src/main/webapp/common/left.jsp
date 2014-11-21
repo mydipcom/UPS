@@ -107,7 +107,7 @@
 				</a>
 				<ul class="sub-menu">
 					<li >
-						<a href="<c:url value="/"/>rules">
+						<a href="<c:url value="/"/>rulesgroup">
 						Bonus Rule Group</a>
 					</li>
 					<li >
@@ -142,7 +142,7 @@
 						Bonus Point Change Log</a>
 					</li>
 					<li >
-						<a href="login_soft.html">
+						<a href="<c:url value="/"/>mylog">
 						My Log</a>
 					</li>
 					<li >

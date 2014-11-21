@@ -11,6 +11,7 @@ import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +22,7 @@ import com.bps.dto.TpointsLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.RulesLogService;
-
+@Service
 public class RulesLogServiceImpl implements RulesLogService {
 	@Autowired
 	private  PointRuleLogDao pointRulesLogdao;
@@ -97,11 +98,7 @@ public class RulesLogServiceImpl implements RulesLogService {
 		 
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<TpointRuleLog> getpointRuleLogByRuleId(Integer id) {
-		
-		return pointRulesLogdao.getpointRuleLogRuleId(id);
-	}
+
 
 	
 	public PagingData loadRuleLogList(Integer id, DataTableParamter rdtp) {

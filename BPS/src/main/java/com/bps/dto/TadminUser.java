@@ -30,7 +30,9 @@ public class TadminUser implements Serializable {
 	
 	private String createdTimeStr;	
 	
-	private String updatedTimeStr;	
+	private String updatedTimeStr;
+	
+	private String roleName;
 
 	private TadminRole adminRole;
 	
@@ -51,13 +53,21 @@ public class TadminUser implements Serializable {
 	
 	
 	
+	public String getRoleName() {
+		return adminRole.getRoleName();
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	public String getCreatedTimeStr() {
 		if(createdTime!=null){
 		Date date=new Date(createdTime);
 		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		return sdf.format(date);		
 		}else
-		return null;
+		return this.createdTimeStr;
 	
 	}
 
@@ -72,7 +82,7 @@ public class TadminUser implements Serializable {
 		return sdf.format(date);	
 		}
 		else
-			return null;
+			return this.updatedTimeStr;
 	
 	}
 

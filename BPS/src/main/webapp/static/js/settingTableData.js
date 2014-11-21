@@ -21,15 +21,19 @@
 
 var rootURI="/";
 var SettingTable = function () {
+	var selected = [];
+	var oTable;
 	var handleTable = function () {
-		var selected = [];
+	
 		var table=$('#setting_table');
-		var oTable = table.dataTable({
+			oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":false,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"scrollX":"100%",
+           	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -109,35 +113,7 @@ var SettingTable = function () {
              }
            });
         }); 
-		//添加操作
-		$('#addSettingForm').on('submit', function (event) {
-			event.preventDefault();
-			var jsondata=$(this).serializeJson();
-			$.ajax( {
-             "dataType": 'json', 
-             "type":'POST', 
-             "url": rootURI+"addsetting", 
-             "data": $(this).serialize(),
-//             "processData":false,
-//             "contentType":"application/json",
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){						 
-		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
-					 }
-					 else{
-						 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-			return false;
-        }); 
-		
+	
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
@@ -158,60 +134,28 @@ var SettingTable = function () {
 			}
 		});
 		
-		
-		//编辑表单提交操作
-		$("#editSettingForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"editsetting", 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-			  return false;
-		});
-				
-                       
-		//全选
-		
-        table.find('.group-checkable').change(function () {
+                
+		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.id;
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
+            selected=[];
+            if(checked){            	
+	            var api=oTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	 var id = data.id;
+	                var index = $.inArray(id, selected);
+	                selected.push( id );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
             jQuery.uniform.update(set);
         });
         
@@ -260,10 +204,35 @@ var SettingTable = function () {
         });        
 
     };
-    
+    //添加
+    var AddSetting = function(){
+    	$.ajax( {
+            "dataType": 'json', 
+            "type":'POST', 
+            "url": rootURI+"addsetting", 
+            "data": $('#addSettingForm').serialize(),
+//            "processData":false,
+//            "contentType":"application/json",
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){						 
+		            	 oTable.api().draw();
+		            	 handleAlerts("Added the data successfully.","success","");		            	 
+					 }
+					 else{
+						 handleAlerts("Failed to add the data.","danger","");						 
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+			$("#add_settings").modal("hide");
+    }
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addRulesForm');
+            var addform = $('#addSettingForm');
             var errorDiv = $('.alert-danger', addform);            
 
             addform.validate({
@@ -273,19 +242,21 @@ var SettingTable = function () {
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
                     name: {
-                        minlength: 2,
+                        maxlength: 200,
                         required: true
                     },
-                    uri: {
+                    value: {
                         required: true,
-                        maxlength:60                        
+                        maxlength: 2000,                       
                     },
-                    method: {
-                        required: true                        
+                    sort: {
+                    	digits:true,
+                        required: true, 
+                        maxlength:6,
                     },
-                    pid: {
+                    descr: {
                         required: true,
-                        number: true
+                        maxlength: 2000,
                     }                    
                 },
 
@@ -308,19 +279,106 @@ var SettingTable = function () {
                     label
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
-
+                onfocusout:function(element){
+                	$(element).valid();
+                },
                 submitHandler: function (form) {                	
                     errorDiv.hide();
+                    AddSetting();
                 }
             });
     };
+    //编辑
+    var EditSetting = function(){
+    	$.ajax( {
+            "dataType": 'json', 
+            "type": "POST", 
+            "url": rootURI+"editsetting", 
+            "data": $('#editSettingForm').serialize(),
+//            "processData":false,
+//            "contentType":"application/json",
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 handleAlerts("Edited the data successfully.","success","");
+					 }
+					 else{
+						 alert(resp.info);
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+		  $("#edit_settings").modal("hide");
+    }
+    var editFormValidation = function() {
+        var addform = $('#editSettingForm');
+        var errorDiv = $('.alert-danger', addform);            
 
+        addform.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+                name: {
+                    maxlength: 200,
+                    required: true
+                },
+                value: {
+                    required: true,
+                    maxlength: 2000,                       
+                },
+                sort: {
+                	digits:true,
+                    required: true, 
+                    maxlength:6,
+                },
+                descr: {
+                    required: true,
+                    maxlength: 2000,
+                }                    
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit              
+            	successDiv.hide();
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                EditSetting();
+            }
+        });
+};
     return {
         //main function to initiate the module
         	init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
         	addFormValidation();
+        	editFormValidation();
         }
 
     };

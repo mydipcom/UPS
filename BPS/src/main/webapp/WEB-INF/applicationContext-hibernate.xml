@@ -45,6 +45,7 @@
 	      <value>cfg/AdminNodes.hbm.xml</value>
 	      <value>cfg/PointRule.hbm.xml</value>
 	      <value>cfg/PointRuleLog.hbm.xml</value>
+	      <value>cfg/PointRuleGroup.hbm.xml</value>
 	      <value>cfg/Setting.hbm.xml</value>
 	  </list>
 	</property>

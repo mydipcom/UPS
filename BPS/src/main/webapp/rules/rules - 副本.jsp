@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>AdminUser List</title>
+<title>Rules List</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -19,7 +19,7 @@
 <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-<link href="<c:url value="/"/>assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="../assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
@@ -69,49 +69,56 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">Admin Users</a>
+							<a href="<c:url value="/"/>rules">Bonus Rule</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="<c:url value="/"/>rules">Bonus Rule Configuration</a>
 						</li>
 					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
-								
-				
 				<!-- BEGIN SEARCH FORM -->
 				<div class="portlet-body">
-					<form id="searchForm" name="searchForm" action="adminuserlist1" class="form-horizontal" method="post">
+					<form id="searchForm" name="searchForm" action="rulelist1" class="form-horizontal" method="post">
 					<div class="row">
-						<div class="col-md-6">					
+				 		<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">User ID</label>
+								<label class="col-md-3 control-label">Rule ID</label>
 								<div class="col-md-9">
-									<input name="adminId" type="text" class="form-control">							
+									<input name="ruleId" type="text" class="form-control">							
 								</div>
 							</div>
 						</div>
+					
+			
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Email</label>
+								<label class="col-md-3 control-label">Bonus Rule Group</label>
 								<div class="col-md-9">
-									<input name="email" type="text" class="form-control">							
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">	
-							<div class="form-group">
-								<label class="col-md-3 control-label">Role Name</label>
-								<div class="col-md-9">
-									<select name="adminRole.roleId" class="form-control">
-										<option value="">ALL</option>
-										<option value="1">admin</option>
-										<option value="2">Bonus Point Manager</option>
-										<option value="3">Bonus Point Operator</option>									
+									<select name="pointRuleGroup.groupId" class="form-control">
+										<option value="">ALL</option>	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
 									</select>
 								</div>
 							</div>
-						</div>					
+						</div>	
+					</div>
+					<div class="row">
+						<div class="col-md-6">					
+							<div class="form-group">
+								<label class="col-md-3 control-label">Rule Name</label>
+								<div class="col-md-9">
+									<input name="ruleName" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>	
 						<div class="col-md-6">	
 							<div class="form-group">
 								<label class="col-md-3 control-label">Status</label>
@@ -142,8 +149,6 @@
 				</div>
 				<!-- END SEARCH FORM -->
 				
-				
-				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
@@ -151,47 +156,45 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Admin Users Table
+									<i class="fa fa-edit"></i>Managed Rules Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users"><i class="fa fa-key"></i> Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users"><i class="fa fa-lock"></i> Deactivate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_rules"><i class="fa fa-plus"></i> Add</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules"><i class="fa fa-key"></i> Activate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules"><i class="fa fa-lock"></i> Deactivate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Email</label>
-											<label><input type="checkbox" checked data-column="3">Role_Name</label>
-											<label><input type="checkbox" checked data-column="4">Status</label>
-											<label><input type="checkbox" checked data-column="5">CreatedBy</label>
-											<label><input type="checkbox" checked data-column="6">CreatedTime</label>
-											<label><input type="checkbox" checked data-column="7">UpdatedBy</label>
-											<label><input type="checkbox" checked data-column="8">UpdatedTime</label>
+											<label><input type="checkbox" checked data-column="1">Rule Id</label>
+											<label><input type="checkbox" checked data-column="2">Rule Name</label>
+											<label><input type="checkbox" checked data-column="3">Rule Group</label>
+											<label><input type="checkbox" checked data-column="4">Rule Input</label>
+											<label><input type="checkbox" checked data-column="5">Rule Output</label>
+											<label><input type="checkbox" checked data-column="6">descr</label>
+											<label><input type="checkbox" checked data-column="7">status</label>
 										</div>
 									</div>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="adminusers_table">
+								<table class="table table-striped table-hover table-bordered" id="rules_table">
 									<thead>
 										<tr>
 											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
+												<input type="checkbox" class="group-checkable" data-set="#rules_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Email</th>
-											<th>Role_Name</th>
-											<th>Status</th>
-											<th>CreatedBy</th>
-											<th>CreatedTime</th>
-											<th>UpdatedBy</th>
-											<th>UpdatedTime</th>
+											<th>Rule Id</th>
+											<th>Rule Name</th>
+											<th>Rule Group</th>
+											<th>Rule Input</th>
+											<th>Rule Output</th>
+											<th>descr</th>
+											<th>status</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -205,51 +208,53 @@
 				<!-- END PAGE CONTENT -->
 				
 				<!-- BEGIN ADD MODAL FORM-->
-				<div class="modal" id="add_users" tabindex="-1" data-width="760">
+				<div class="modal" id="add_rules" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add AdminUsers</h4>
+						<h4 class="modal-title">Add Rules</h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addUsersForm" action="" method="post" name="addUsersForm" class="form-horizontal form-bordered">
+						<form id="addRulesForm" action="" method="post" name="addRulesForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									You have some form errors. Please check below.
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3">Rule Name<span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
+										<input name="ruleName" class="form-control"/>										
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Password<span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="password" class="form-control"/>										
-									</div>
+							
+							<div class="form-group">
+							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+								<div class="col-md-9">
+									<select name="pointRuleGroup.groupId" class="form-control">	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
+									</select>
 								</div>
+							</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Email<span class="required">* </span></label>
+									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="ruleInput" class="form-control"/>
 										<span class="help-block">
-										Please input the email that access this rights page</span>
+										Please input the input that access this rights page</span>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Role_Name<span class="required">* </span></label>
+									<label class="control-label col-md-3">Rule Output<span class="required">* </span></label>
 									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
+										<input name="ruleOutput" class="form-control"/>									
 									</div>
 								</div>
 								<div class="form-group">
@@ -263,6 +268,13 @@
 										</div>
 									</div>
 								</div>	
+								<div class="form-group">
+									<label class="control-label col-md-3">Description</label>
+									<div class="col-md-9">										
+										<input name="descr" class="form-control"/>
+									</div>
+								</div>									
+								
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
@@ -278,116 +290,63 @@
 				</div>				
 				<!-- END ADD MODAL FORM-->
 				
-				
-			<div class="modal" id="view_log" tabindex="-1" data-width="760">
-					<div class="modal-body">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Rules logs</h4>
-					</div>
-				
-				<div class="row">
-					<div class="col-md-12">
-				
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-							<!-- BEGIN EXAMPLE TABLE PORTLET-->
-					<div class="portlet box blue-hoki">
-						<div class="portlet-title">
-								<div class="caption">
-									<i class="fa fa-edit"></i> Rulelogs Table
-								</div>
-						</div>
-						<div class="portlet box blue-hoki">
-						<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
-									<thead>
-										<tr>
-										<!-- 
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#managerlog_table .checkboxes"/>
-											</th>
-										-->
-											<th>ID</th>
-											<th>Admin Name</th>
-											<th>Content</th>
-											<th>Level</th>
-											<th>Create Time</th>
-											
-										</tr>
-									</thead>
-																						
-								</table>
-							</div>
-					</div>
-						<!-- END EXAMPLE TABLE PORTLET-->
-					</div> 
-					</div>
-				</div>
-			</div>
-				
-			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
+				<!-- BEGIN Edit MODAL FORM-->
+				<div class="modal" id="edit_rules" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Users</h4>
+						<h4 class="modal-title">Edit Rules</h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
-						<!-- BEGIN FORM-->						
-						<form id="editUsersForm" action="editUsers" method="post" name="editUsersForm" class="form-horizontal form-bordered">
+							<!-- BEGIN FORM	-->					
+						<form id="editRulesForm" action="" method="post" name="editRulesForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									You have some form errors. Please check below.
-								</div>								
-								<div class="form-group">
-									<label class="control-label col-md-3">ID</label>
-									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
-									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Password</label>
-									<div class="col-md-9">																				
-										<input name="password" class="form-control"/>
-										
-									</div>
-								</div>	
-								<div class="form-group">
-									<label class="control-label col-md-3">CreateBy</label>
-									<div class="col-md-9">																				
-										<input name="createdBy" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>			
-								<div class="form-group">
-									<label class="control-label col-md-3">Create Time</label>
-									<div class="col-md-9">																				
-										<input name="createdTimeStr" class="form-control" readonly="true"/>
-										
+									<label class="control-label col-md-3">Rule Id</label>
+									<div class="col-md-9">										
+										<input name="ruleId" class="form-control" readonly="true"/>										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Eamil</label>
+									<label class="control-label col-md-3">Rule Name<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="ruleName" class="form-control"/>										
+									</div>
+								</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+								<div class="col-md-9">
+									<select name="pointRuleGroup.groupId" class="form-control">	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
+									</select>
+								</div>
+							</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="ruleInput" class="form-control"/>
 										<span class="help-block">
-										Please input the uri that access this rights page</span>
+										Please input the input that access this rights page</span>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Role Name</label>
+									<label class="control-label col-md-3">Rule Output<span class="required">* </span></label>
 									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
+										<input name="ruleOutput" class="form-control"/>									
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Status</label>
+									<label class="control-label col-md-3">Status <span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -396,12 +355,19 @@
 											<input type="radio" name="status" value="0"/>false </label>
 										</div>
 									</div>
-								</div>														
+								</div>	
+								<div class="form-group">
+									<label class="control-label col-md-3">Description</label>
+									<div class="col-md-9">										
+										<input name="descr" class="form-control"/>
+									</div>
+								</div>									
+								
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
-										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 									</div>
 								</div>
@@ -410,9 +376,10 @@
 						<!-- END FORM-->
 					</div>					
 				</div>				
-				<!-- END EDIT MODAL FORM-->				
+				<!-- END EDIT MODAL FORM-->
+				
 				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="delete_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to delete these selected rows ?
@@ -424,9 +391,9 @@
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
-				
+		
 				<!-- BEGIN Activate MODAL FORM-->
-				<div class="modal" id="activate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="activate_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to activate these selected rows ?
@@ -436,11 +403,54 @@
 						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
 						<button id="activateBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
 					</div>					
-				</div>	
-				<!-- END Activate MODAL FORM-->
-				
+				</div>				
+				<!-- END DELETE MODAL FORM-->
+					
 				<!-- BEGIN DEActivate MODAL FORM-->
-				<div class="modal" id="deactivate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				
+				<div class="modal" id="view_log" tabindex="-1"  data-width="760">
+					<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Rules logs</h4>
+					</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+				
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+						<div class="portlet box blue-hoki">
+						<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-edit"></i> Rulelogs Table
+								</div>
+						</div>
+						<div class="portlet box blue-hoki">						
+							<div class="portlet-body">																
+								<table class="table table-striped table-hover table-bordered" id="ruleslog_table">
+									<thead>
+										<tr>
+										
+											<th>ID</th>
+											<th>Rule Id</th>
+											<th>Content</th>
+											<th>Create Time</th>
+											
+										</tr>
+									</thead>
+																						
+								</table>
+							</div>
+						</div>
+					</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+					 
+					</div>
+				</div>
+			</div>
+					
+		
+				<!-- BEGIN DEActivate MODAL FORM-->
+				<div class="modal" id="deactivate_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to deactivate these selected rows ?
@@ -452,6 +462,8 @@
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
+				
+				
 			</div>		
 		</div>
 	</div>	
@@ -459,9 +471,7 @@
 	<!-- BEGIN FOOTER -->
 	<c:import url="/common/footer"/>
 	<!-- END FOOTER -->
-	<div id="dialogDiv" class="container">
-		
-	</div>
+	
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
 	<!--[if lt IE 9]>
@@ -492,15 +502,17 @@
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
-	<script src="../static/js/managersTableData.js"></script>
+	<script src="../static/js/rulesTableData.js"></script>
+	
 	<script>
-	jQuery(document).ready(function() { 
+	jQuery(document).ready(function() {  
 		
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   ManagersTable.init("<c:url value="/"/>");	   
-    	});
+	   RulesTable.init("<c:url value="/"/>");
+	  
+	});
 	</script>
 </body>
 <!-- END BODY -->

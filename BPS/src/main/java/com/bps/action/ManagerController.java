@@ -1,4 +1,8 @@
 package com.bps.action;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,7 +51,23 @@ private Logger logger = Logger.getLogger(UserController.class);
 	public String AdminusersList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminUserService.loadAdminUserList(dtp);
 		pagingData.setSEcho(dtp.sEcho);
-		
+		Object[] aaData=pagingData.getAaData();
+		for(int i=0;i<aaData.length;i++){
+			TadminUser adminuser=(TadminUser)aaData[i];
+			if(adminuser.getCreatedBy()==null){
+				adminuser.setCreatedBy("");
+				adminuser.setCreatedTimeStr("");
+			}
+			if(adminuser.getUpdatedBy()==null){
+				adminuser.setUpdatedBy("");
+				adminuser.setUpdatedTimeStr("");
+			}
+			aaData[i]=adminuser;
+		}
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;
 	
@@ -109,9 +129,18 @@ private Logger logger = Logger.getLogger(UserController.class);
 //		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
 //		adminNode.setDescr(jsonObj.getString("descr"));
 //		adminNode.setStatus(jsonObj.getBooleanValue("status"));
+		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
+		Date sdate = null;
 		try{
+			try {
+				String ss=adminuser.getCreatedTimeStr();
+				sdate = simpleDateFormat.parse(ss);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			adminuser.setCreatedTime(sdate.getTime());
 			adminuser.setUpdatedBy(ad.getAdminId());
 			adminuser.setUpdatedTime(System.currentTimeMillis());
 			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
@@ -134,6 +163,38 @@ private Logger logger = Logger.getLogger(UserController.class);
 		JSONObject respJson = new JSONObject();
 		try{
 			adminUserService.deleteAdminUserByIds(idstrArr);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+	@RequestMapping(value="/activateusers/{ids}",method=RequestMethod.POST)
+	@ResponseBody
+	public String activateRules(@PathVariable String ids,HttpServletRequest request){
+		String[] idstrArr=ids.split(",");		
+	
+		JSONObject respJson = new JSONObject();
+		try{
+			adminUserService.activateUsersByIds(idstrArr);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+	
+	@RequestMapping(value="/deactivateusers/{ids}",method=RequestMethod.POST)
+	@ResponseBody
+	public String deactivateRules(@PathVariable String ids,HttpServletRequest request){
+		String[] idstrArr=ids.split(",");				
+		JSONObject respJson = new JSONObject();
+		try{
+			adminUserService.deactivateUsersByIds(idstrArr);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){

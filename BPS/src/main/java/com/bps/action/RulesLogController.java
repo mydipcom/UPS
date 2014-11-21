@@ -60,8 +60,10 @@ public class RulesLogController extends BaseController {
 		
 		
 		PagingData  pagingData=rulesLogService.loadRuleLogList(dtp);
-	
-		
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
 		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson= JSON.toJSONString(pagingData);
 		
@@ -75,7 +77,10 @@ public class RulesLogController extends BaseController {
 		String[] idstrArr=ids.split(",");		
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
 		PagingData  pagingData=rulesLogService.loadRuleLogList(idArr[0], dtp);
-		
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
 		pagingData.setSEcho(dtp.sEcho);
 		String rightsListJson= JSON.toJSONString(pagingData);
 		
@@ -115,23 +120,6 @@ public class RulesLogController extends BaseController {
 		}	
 		return JSON.toJSONString(respJson);	
 	}
-	@RequestMapping(value="/rulesLogByRuleID/{ids}",method=RequestMethod.POST)
-	@ResponseBody
-	public String rulesLogByRuleID(@PathVariable String ids,DataTableParamter dtp){
-		ModelAndView mav=new ModelAndView();
-		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
-		JSONObject respJson = new JSONObject();
-		try{
-			List<TpointRuleLog> pointrulelog=rulesLogService.getpointRuleLogByRuleId(idArr[0]);
-			respJson.put("status", true);
-			respJson.put("pointrulelog", pointrulelog);
-		}
-		catch(BPSException be){
-			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
-		}	
-		return respJson.toJSONString();
-	}
+
 	
 }

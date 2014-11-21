@@ -88,6 +88,10 @@
 	
 	<bean id="systemSettingService" class="com.bps.service.impl.SystemSettingServiceImpl" autowire="byName"/>
 	
+	<bean id="myLogService" class="com.bps.service.impl.MyLogServiceImpl" autowire="byName"/>
+	
+	<bean id="pointsRuleGroupService" class="com.bps.service.impl.PointsRuleGroupServiceImpl" autowire="byName"/>
+	
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.bps.core.CachedDataProcessor"/>
 </beans>

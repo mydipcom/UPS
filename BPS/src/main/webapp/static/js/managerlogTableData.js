@@ -21,15 +21,19 @@
 
 var rootURI="/";
 var ManagerLogTable = function () {
+	var oTable;
+	var selected = [];
 	var handleTable = function () {
-		var selected = [];
+		
 		var table=$('#managerlog_table');
-		var oTable = table.dataTable({
+			oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"scrollX":"100%",
+        	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -120,27 +124,27 @@ var ManagerLogTable = function () {
         });           
 		//全选
 		
-        table.find('.group-checkable').change(function () {
+		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.id;
-            	alert("in this")
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
+            selected=[];
+            if(checked){            	
+	            var api=oTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	var id = data.id;
+	                var index = $.inArray(id, selected);
+	                selected.push( id );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
             jQuery.uniform.update(set);
         });
         

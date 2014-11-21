@@ -20,6 +20,10 @@ public interface AdminUserService {
 	
 	void deleteAdminUserByIds(String[] ids);
 	
+	void activateUsersByIds(String[] ids);
+	
+	void deactivateUsersByIds(String[] ids);
+	
 	public PagingData loadAdminUserList(DataTableParamter rdtp);
 	
 	int getAdminUserAmount();

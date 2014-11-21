@@ -21,12 +21,13 @@
 
 var rootURI="/";
 var RulesTable = function () {
-	var oLogTables;
 	var oTable;
+	var selected = [];
 	var handleTable = function () {
+		var oLogTables;
 		
 		var viewTable = function(ids){
-			var selected = [];
+			
 			var table=$('#ruleslog_table');
 			oLogTables = table.dataTable({
 				"lengthChange":false,
@@ -37,7 +38,7 @@ var RulesTable = function () {
 		    	"processing":true,
 		        // set the initial value
 		        "displayLength": 3,
-		        "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //		        "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //		        "oLanguage": {
 //		            "sLengthMenu": "_MENU_ records per page",
@@ -47,6 +48,7 @@ var RulesTable = function () {
 //		            	"zeroRecords": "No records to display"
 //		            }
 //		        },
+		     /*   
 		        "columnDefs": [{                    
 		            'targets': 0,   
 		            'render':function(data,type,row){
@@ -63,13 +65,14 @@ var RulesTable = function () {
 		            'class':'center'
 		        }
 		    ],
+		    */
 		    "columns": [
-		       {"orderable": false },
+		    //   {"orderable": false },
 		       { title: "ID",   data: "id" },
 		       { title: "Rule ID",   data: "ruleId" },
 		       { title: "Content",  data: "content"},
 		       { title: "Create Time", data: "createdTimeStr" },
-		       { title: "Action" ,"class":"center"}
+		      // { title: "Action" ,"class":"center"}
 		    ],
 		     	        "serverSide": true,
 		     	        "serverMethod": "GET",
@@ -101,7 +104,7 @@ var RulesTable = function () {
 			});	
 		};
 		
-		var selected = [];
+	
 		var table=$('#rules_table');
 			oTable = table.dataTable({
 			"lengthChange":false,
@@ -109,6 +112,8 @@ var RulesTable = function () {
         	"sort":false,
         	"info":true,
         	"processing":true,
+        	"scrollX":"100%",
+           	"scrollXInner":"100%",
         	//"bDestroy":true,
             // set the initial value
             "displayLength": 10,
@@ -142,6 +147,7 @@ var RulesTable = function () {
                {"orderable": false },
 	           { title: "Rule Id",   data: "ruleId" },
 	           { title: "Rule Name",   data: "ruleName" },
+	           { title: "Rule Group",   data: "groupName" },
 	           { title: "Rule Iutput",  data: "ruleInput"},
 	           { title: "Rule Output", data: "ruleOutput" },
 	           { title: "descr", data: "descr" },
@@ -257,35 +263,7 @@ var RulesTable = function () {
            });
         });  
 		
-		//添加操作
-		$("#addRulesForm").on('submit', function (event) {
-			event.preventDefault();
-			var jsondata=$(this).serializeJson();
-			$.ajax( {
-             "dataType": 'json', 
-             "type":'POST', 
-             "url": rootURI+"addrules", 
-             "data": $(this).serialize(),
-//             "processData":false,
-//             "contentType":"application/json",
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){						 
-		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","");		            	 
-					 }
-					 else{
-						 handleAlerts("Failed to add the data.","danger","");						 
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-			$("#add_rules").modal("hide");
-			//return false;
-        }); 
+
 		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length>1){
@@ -308,61 +286,30 @@ var RulesTable = function () {
 		});
 		
 		
-		//编辑表单提交操作
-		$("#editRulesForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"editrules", 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-			  $("#edit_rules").modal("hide");
-			   return false;
-		});
 				
                        
 		//全选
-		
-        table.find('.group-checkable').change(function () {
+        $(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.ruleId;
-            	alert("in this")
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
+            selected=[];
+            if(checked){            	
+	            var api=oTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	var id = data.ruleId;
+	                var index = $.inArray(id, selected);
+	                selected.push( id );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
             jQuery.uniform.update(set);
         });
         
@@ -382,37 +329,7 @@ var RulesTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-   /*     
-        table.on('click', 'tbody tr a',function(){
-         var data = oTable.api().row($(this).parents('tr')).data();
-         var html="<table class=\"table table-bordered\"><tr class='success'><th>ID</th><th>RuleId</th><th>Content</th><th>Create Time</th></tr>";
-         $.ajax( {
-             "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"rulesLogByRuleID/"+data.ruleId, 
-             "success": function(data,status){
-            	 var pointrulelog=data.pointrulelog;
-            	 if(status == "success"){
-            		 var pointrulelog=data.pointrulelog;
-            		 $.each(pointrulelog,function(i, items){
-            			 html=html+"<tr>";
-            			 html=html+"<td>"+items.id+"</td>";
-            			 html=html+"<td>"+items.ruleId+"</td>";
-            			 html=html+"<td>"+items.content+"</td>";
-            			 html=html+"<td>"+items.createdTimeStr+"</td>"+"</tr>";  
-            		 });
-            		 html=html+"</table>";
-                     $("#dialogDiv").html(html);
-            		 $("#dialogDiv").dialog("open");
- 				}           	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        });
-        
-  */      
+   
         
         table.on('click', 'tbody tr a',function(){
             var data = oTable.api().row($(this).parents('tr')).data();
@@ -454,6 +371,31 @@ var RulesTable = function () {
 
     };
     
+    var AddRules = function(){
+    	$.ajax( {
+            "dataType": 'json', 
+            "type":'POST', 
+            "url": rootURI+"addrules", 
+            "data": $('#addRulesForm').serialize(),
+//            "processData":false,
+//            "contentType":"application/json",
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){						 
+		            	 oTable.api().draw();
+		            	 handleAlerts("Added the data successfully.","success","");		            	 
+					 }
+					 else{
+						 handleAlerts("Failed to add the data.","danger","");						 
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+			$("#add_rules").modal("hide");
+    };
     //处理表单验证方法
     var addFormValidation = function() {
             var addform = $('#addRulesForm');
@@ -464,20 +406,23 @@ var RulesTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    name: {
-                        minlength: 2,
+                	ruleName: {
+                        minlength: 4,
                         required: true
                     },
-                    uri: {
+                    ruleInput: {
+                    	digits:true,
                         required: true,
                         maxlength:60                        
                     },
-                    method: {
-                        required: true                        
-                    },
-                    pid: {
+                    ruleOutput: {
+                    	digits:true,
                         required: true,
-                        number: true
+                        maxlength:60                         
+                    },
+                    descr: {
+                        required: true,
+                        maxlength:1000,
                     }                    
                 },
 
@@ -500,19 +445,171 @@ var RulesTable = function () {
                     label
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
                 },
+                onfocusout:function(element){
+                	$(element).valid();
+                },
 
                 submitHandler: function (form) {                	
                     errorDiv.hide();
+                    AddRules();
                 }
             });
     };
+   
+    
+  //处理表单验证方法
+    var addFormValidation = function() {
+            var addform = $('#addRulesForm');
+            var errorDiv = $('.alert-danger', addform);            
+            addform.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input                
+                rules: {
+                	ruleName: {
+                        minlength: 4,
+                        required: true
+                    },
+                    ruleInput: {
+                    	digits:true,
+                        required: true,
+                        maxlength:60                        
+                    },
+                    ruleOutput: {
+                    	digits:true,
+                        required: true,
+                        maxlength:60                         
+                    },
+                    descr: {
+                        required: true,
+                        maxlength:1000,
+                    }                    
+                },
 
+                invalidHandler: function (event, validator) { //display error alert on form submit              
+                	successDiv.hide();
+                    errorDiv.show();                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+                onfocusout:function(element){
+                	$(element).valid();
+                },
+
+                submitHandler: function (form) {                	
+                    errorDiv.hide();
+                    AddRules();
+                }
+            });
+    };
+    
+    var EditRules = function(){
+    	$.ajax( {
+            "dataType": 'json', 
+            "type": "POST", 
+            "url": rootURI+"editrules", 
+            "data": $('#editRulesForm').serialize(),
+//            "processData":false,
+//            "contentType":"application/json",
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){
+						 selected=[];
+		            	 oTable.api().draw();
+		            	 handleAlerts("Edited the data successfully.","success","");
+					 }
+					 else{
+						 alert(resp.info);
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+		  $("#edit_rules").modal("hide");
+
+    };
+    //处理表单验证方法
+    var editFormValidation = function() {
+            var addform = $('#editRulesForm');
+            var errorDiv = $('.alert-danger', addform);            
+            addform.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input                
+                rules: {
+                	ruleName: {
+                        minlength: 4,
+                        required: true
+                    },
+                    ruleInput: {
+                    	digits:true,
+                        required: true,
+                        maxlength:60                        
+                    },
+                    ruleOutput: {
+                    	digits:true,
+                        required: true,
+                        maxlength:60                         
+                    },
+                    descr: {
+                        required: true,
+                        maxlength:1000,
+                    }                    
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit              
+                	successDiv.hide();
+                    errorDiv.show();                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+                onfocusout:function(element){
+                	$(element).valid();
+                },
+
+                submitHandler: function (form) {                	
+                    errorDiv.hide();
+                    EditRules();
+                }
+            });
+    };
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
         	addFormValidation();
+        	editFormValidation();
         }
 
     };

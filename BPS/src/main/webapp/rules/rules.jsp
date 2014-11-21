@@ -83,21 +83,29 @@
 				<div class="portlet-body">
 					<form id="searchForm" name="searchForm" action="rulelist1" class="form-horizontal" method="post">
 					<div class="row">
-						<!-- 
-						<div class="col-md-6">					
-							<div class="form-group">
-								<label class="col-md-3 control-label">Bonus Rule Group</label>
-								<div class="col-md-9">
-									<input name="name" type="text" class="form-control">							
-								</div>
-							</div>
-						</div>
-						 -->
-						<div class="col-md-6">	
+				 		<div class="col-md-6">	
 							<div class="form-group">
 								<label class="col-md-3 control-label">Rule ID</label>
 								<div class="col-md-9">
 									<input name="ruleId" type="text" class="form-control">							
+								</div>
+							</div>
+						</div>
+					
+			
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Bonus Rule Group</label>
+								<div class="col-md-9">
+									<select name="pointRuleGroup.groupId" class="form-control">
+										<option value="">ALL</option>	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
+									</select>
 								</div>
 							</div>
 						</div>
@@ -164,10 +172,11 @@
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1">Rule Id</label>
 											<label><input type="checkbox" checked data-column="2">Rule Name</label>
-											<label><input type="checkbox" checked data-column="3">Rule Input</label>
-											<label><input type="checkbox" checked data-column="4">Rule Output</label>
-											<label><input type="checkbox" checked data-column="5">descr</label>
-											<label><input type="checkbox" checked data-column="6">status</label>
+											<label><input type="checkbox" checked data-column="3">Rule Group</label>
+											<label><input type="checkbox" checked data-column="4">Rule Input</label>
+											<label><input type="checkbox" checked data-column="5">Rule Output</label>
+											<label><input type="checkbox" checked data-column="6">descr</label>
+											<label><input type="checkbox" checked data-column="7">status</label>
 										</div>
 									</div>								    																
 								</div>
@@ -181,6 +190,7 @@
 											</th>
 											<th>Rule Id</th>
 											<th>Rule Name</th>
+											<th>Rule Group</th>
 											<th>Rule Input</th>
 											<th>Rule Output</th>
 											<th>descr</th>
@@ -207,7 +217,7 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addRulesForm" action="addrules" method="post" name="addRulesForm" class="form-horizontal form-bordered">
+						<form id="addRulesForm" action="" method="post" name="addRulesForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -219,6 +229,20 @@
 										<input name="ruleName" class="form-control"/>										
 									</div>
 								</div>
+							
+							<div class="form-group">
+							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+								<div class="col-md-9">
+									<select name="pointRuleGroup.groupId" class="form-control">	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
+									</select>
+								</div>
+							</div>
 								<div class="form-group">
 									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
 									<div class="col-md-9">																				
@@ -276,7 +300,7 @@
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 							<!-- BEGIN FORM	-->					
-						<form id="editRulesForm" action="editrules" method="post" name="editRulesForm" class="form-horizontal form-bordered">
+						<form id="editRulesForm" action="" method="post" name="editRulesForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -294,6 +318,19 @@
 										<input name="ruleName" class="form-control"/>										
 									</div>
 								</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+								<div class="col-md-9">
+									<select name="pointRuleGroup.groupId" class="form-control">	
+										<c:if test="${not empty group}">
+											<c:forEach items="${group}" var="item">
+												<option value="${item.groupId}">${item.groupName}</option>
+											</c:forEach>
+										</c:if>							
+												
+									</select>
+								</div>
+							</div>
 								<div class="form-group">
 									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
 									<div class="col-md-9">																				
@@ -371,7 +408,7 @@
 					
 				<!-- BEGIN DEActivate MODAL FORM-->
 				
-				<div class="modal" id="view_log" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="view_log" tabindex="-1"  data-width="760">
 					<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title">Rules logs</h4>
@@ -381,27 +418,30 @@
 					<div class="col-md-12">
 				
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						
+						<div class="portlet box blue-hoki">
+						<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-edit"></i> Rulelogs Table
+								</div>
+						</div>
 						<div class="portlet box blue-hoki">						
 							<div class="portlet-body">																
 								<table class="table table-striped table-hover table-bordered" id="ruleslog_table">
 									<thead>
 										<tr>
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#ruleslog_table .checkboxes"/>
-											</th>
+										
 											<th>ID</th>
-											<th>Rrle Id</th>
+											<th>Rule Id</th>
 											<th>Content</th>
 											<th>Create Time</th>
-											<th>Action</th>
+											
 										</tr>
 									</thead>
 																						
 								</table>
 							</div>
 						</div>
-				
+					</div>
 						<!-- END EXAMPLE TABLE PORTLET-->
 					 
 					</div>
@@ -431,9 +471,7 @@
 	<!-- BEGIN FOOTER -->
 	<c:import url="/common/footer"/>
 	<!-- END FOOTER -->
-	<div id="dialogDiv" class="container">
-		
-	</div>
+	
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
 	<!--[if lt IE 9]>
@@ -468,15 +506,7 @@
 	
 	<script>
 	jQuery(document).ready(function() {  
-		$("#dialogDiv").dialog({
-			autoOpen : false,
-			height : 600,
-			width : 1000,
-			modal : true,
-			title : 'RulesLog view',
-			buttons: { 
-			}, 
-		});
+		
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features

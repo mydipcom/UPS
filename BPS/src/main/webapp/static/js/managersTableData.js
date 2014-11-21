@@ -21,11 +21,13 @@
 
 var rootURI="/";
 var ManagersTable = function () {
+	var oTable;
+	var selected = [];
 	var handleTable = function () {
 		var oLogTable;
-		var oTable;
+		
 		var viewTable = function(ids){
-			var selected = [];
+			
 			var table=$('#managerlog_table');
 			oLogTable = table.dataTable({
 				"lengthChange":false,
@@ -37,7 +39,7 @@ var ManagersTable = function () {
 		    	"bDestroy":true,
 		        // set the initial value
 		        "displayLength": 3,
-		        "dom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 //		        "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
 //		        "oLanguage": {
 //		            "sLengthMenu": "_MENU_ records per page",
@@ -47,6 +49,8 @@ var ManagersTable = function () {
 //		            	"zeroRecords": "No records to display"
 //		            }
 //		        },
+		        
+		   /*     
 		        "columnDefs": [{                    
 		            'targets': 0,   
 		            'render':function(data,type,row){
@@ -63,14 +67,15 @@ var ManagersTable = function () {
 		            'class':'center'
 		        }
 		    ],
+		    */
 		    "columns": [
-		                {"orderable": false },
+		      //          {"orderable": false },
 		 	           { title: "ID",   data: "id" },
 		 	           { title: "Admin Name",   data: "adminId" },
 		 	           { title: "Content",  data: "content"},
 		 	           { title: "Level", data: "level"},
 		 	           { title: "Create Time", data: "createdTimeStr" },
-		 	           { title: "Action" ,"class":"center"}
+		 	    //       { title: "Action" ,"class":"center"}
 		 	        ],
 		     	        "serverSide": true,
 		     	        "serverMethod": "GET",
@@ -101,14 +106,16 @@ var ManagersTable = function () {
 
 			});	
 		};
-		var selected = [];
+	
 		var table=$('#adminusers_table');
 		 oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"scrollX":"100%",
+           	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -141,7 +148,7 @@ var ManagersTable = function () {
                {"orderable": false },
 	           { title: "ID",   data: "adminId" },
 	           { title: "Email",   data: "email" },
-	           { title: "Role_Name",    data: "adminRole.roleName" },
+	           { title: "Role_Name",    data: "roleName" },
 	           { title: "Status",  data: "status"},
 	           { title: "CreatedBy", data: "createdBy" },
 	           { title: "CreatedTime", data: "createdTimeStr" },
@@ -201,35 +208,22 @@ var ManagersTable = function () {
            });
         });  
 		
-		//搜索表单提交操作
-		$("#searchForm").on("submit", function(event) {
-			event.preventDefault();
-			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
-			oTable.fnFilter(jsonDataStr);
-			return false;
-		});
-		
-		
-		//添加操作
-		$('#addUsersForm').on('submit', function (event) {
-			event.preventDefault();
-			var jsondata=$(this).serializeJson();
+		//激活规则
+		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
-             "type":'POST', 
-             "url": rootURI+"addUsers", 
-             "data": $(this).serialize(),
-//             "processData":false,
-//             "contentType":"application/json",
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){						 
-		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","");		            	 
+             "type": "POST", 
+             "url": rootURI+"activateusers/"+selected.join(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];						 
+		            	oTable.api().draw();
+		            	oTable.$('th span').removeClass();
+		            	 handleAlerts("activateBtn the rules successfully.","success","");
 					 }
 					 else{
-						 handleAlerts("Failed to add the data.","danger","");						 
+						 alert(data.info);
 					 }
 				}             	 
              },
@@ -237,10 +231,39 @@ var ManagersTable = function () {
             	 alert(errorThrown);
              }
            });
-			$('#add_users').modal('hide');
-			//return false;
         }); 
-		
+		//禁用规则
+		$('#deactivateBtn').on('click', function (e) {
+			$.ajax( {
+             "dataType": 'json', 
+             "type": "POST", 
+             "url": rootURI+"deactivateusers/"+selected.join(), 
+             "success": function(data,status){
+            	 if(status == "success"){					
+					 if(data.status){
+						 selected=[];						 
+		            	 oTable.api().draw();
+		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("deactivateBtn the rules successfully.","success","");
+					 }
+					 else{
+						 alert(data.info);
+					 }
+				}             	 
+             },
+             "error":function(XMLHttpRequest, textStatus, errorThrown){
+            	 alert(errorThrown);
+             }
+           });
+        }); 
+		//搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});	
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
@@ -258,12 +281,12 @@ var ManagersTable = function () {
 	            var creatime=data.createdTimeStr;
 	            $("#editUsersForm input[name='adminId']").val(adminId);
 	            $("#editUsersForm input[name='email']").val(email);
-	            $("#editUsersForm input[name='createby']").val(createby);
-	            $("#editUsersForm input[name='creatime']").val(creatime);
+	            $("#editUsersForm input[name='createdBy']").val(createby);
+	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
 			}
 		});
 		
-		
+		/*
 		//编辑表单提交操作
 		$("#editUsersForm").on("submit", function(event) {
 			  event.stopPropagation();
@@ -272,7 +295,8 @@ var ManagersTable = function () {
 	             "dataType": 'json', 
 	             "type": "POST", 
 	             "url": rootURI+"editUsers", 
-	             "data": $(this).serialize(),
+	             "data" :$(this).serializeJson(),
+//	             "data": $(this).serialize(),
 //	             "processData":false,
 //	             "contentType":"application/json",
 	             "success": function(resp,status){
@@ -295,30 +319,30 @@ var ManagersTable = function () {
 			  return false;
 		});
 				
-                       
+          */             
 		//全选
 		
-        table.find('.group-checkable').change(function () {
-        	alert("in this");
+		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.adminId;
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
+            selected=[];
+            if(checked){            	
+	            var api=oTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	var ids=data.adminId;
+	                var index = $.inArray(id, selected);
+	                selected.push( id );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
             jQuery.uniform.update(set);
         });
         
@@ -328,11 +352,10 @@ var ManagersTable = function () {
            var ids=data.adminId;
            if(oLogTable!=null){
         	   oLogTable.fnDestroy();
+        	   viewTable(ids); 
+           }else{
         	   viewTable(ids);
-        	   oLogTable.api().darw();
-           }else
-        	   viewTable(ids);
-           	   oLogTable.api().darw();
+           }
            });
         
         //单选
@@ -352,37 +375,7 @@ var ManagersTable = function () {
             }
         });
                
-        table.on('click', 'tbody tr button',function(){
-        	alert("in this");
-            var data = oTable.api().row($(this).parents('tr')).data();
-            var html="<table class=\"table table-bordered\"><tr class='success'><th>ID</th><th>Admin Name</th><th>Content</th><th>Level</th><th>Create Time</th></tr>";
-            $.ajax( {
-                "dataType": 'json', 
-                "type": "POST", 
-                "url": rootURI+"managerslogview/"+data.adminId, 
-                "success": function(data,status){
-               	 if(status == "success"){
-               		 alert("test");
-               		 var adminslog=data.adminslog;
-               		 $.each(adminslog,function(i, items){
-               			 html=html+"<tr>";
-               			 html=html+"<td>"+items.id+"</td>";
-               			 html=html+"<td>"+items.adminId+"</td>";
-               			 html=html+"<td>"+items.content+"</td>";
-               			 html=html+"<td>"+items.level+"</td>";
-               			 html=html+"<td>"+items.createdTimeStr+"</td>"+"</tr>";  
-               		 });
-               		 html=html+"</table>";
-                     $("#dialogDiv").html(html);
-               		 $("#dialogDiv").dialog("open");
-    				}           	 
-                },
-                "error":function(XMLHttpRequest, textStatus, errorThrown){
-               	 alert(errorThrown);
-                }
-              });
-         
-           });
+ 
         /* handle show/hide columns*/
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {
@@ -411,39 +404,62 @@ var ManagersTable = function () {
         });        
 
     };
-    
-    //处理表单验证方法
-    var addFormValidation = function() {
-            var addform = $('#addUsersForm');
-            var errorDiv = $('.alert-danger', addform);            
+  //添加操作
+	var AddUsers = function(){
+		event.stopPropagation();
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"addUsers", 
+         "data": $('#addUsersForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 handleAlerts("Added the data successfully.","success","");		            	 
+				 }
+				 else{
+					 handleAlerts("Failed to add the data.","danger","");						 
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+		$('#add_users').modal('hide');
+    };
+    var AddUsersValidation = function() {
+        var form = $('#addUsersForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+             adminId: {
+            	required: true,
+            	minlength:4,
+                		},
+             password: {
+        		
+        		required: true,
+        		minlength:6,
+        		maxlength:12,
+        	
+    				},
+        	 email: {
+        		
+        		required: true,
+        		email:true,
+        		
+    				}
 
-            addform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    uri: {
-                        required: true,
-                        maxlength:60                        
-                    },
-                    method: {
-                        required: true                        
-                    },
-                    pid: {
-                        required: true,
-                        number: true
-                    }                    
-                },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit              
-                	successDiv.hide();
-                    errorDiv.show();                    
-                },
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
 
                 highlight: function (element) { // hightlight error inputs
                     $(element)
@@ -455,23 +471,114 @@ var ManagersTable = function () {
                         .closest('.form-group').removeClass('has-error'); // set error class to the control group
                 },
 
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	AddUsers();
+            }
+        });
+};
+//编辑表单提交操作
+var EditUsers= function() {
+	//  event.stopPropagation();
+	  var jsondata=$(this).serializeJson();
+	  $.ajax( {
+         "dataType": 'json', 
+         "type": "POST", 
+         "url": rootURI+"editUsers", 
+         "data" :$('#editUsersForm').serializeJson(),
+//         "data": $(this).serialize(),
+//         "processData":false,
+//         "contentType":"application/json",
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){
+					 selected=[];
+	            	 oTable.api().draw();
+	            	 handleAlerts("Edited the data successfully.","success","");
+				 }
+				 else{
+					 alert(resp.info);
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+	  $('#edit_users').modal('hide');
+	  return false;
+};
+		
+            
+	var EditUsersValidation = function() {
+		var form = $('#editUsersForm');
+		var errorDiv = $('.alert-danger', form);            
+		form.validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block help-block-error', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+			ignore: "",  // validate all fields including form hidden input                
+			rules: {
+				adminId: {
+					required: true,
+					minlength:4,
+            			},
+            	password: {
+    		
+            		required: true,
+            		minlength:6,
+            		maxlength:12,
+					},
+				email: {
+					required: true,
+					email:true,
+				}
 
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                }
-            });
-    };
+        },
+       invalidHandler: function (event, validator) { //display error alert on form submit              
+            errorDiv.show();                    
+        },
+
+        highlight: function (element) { // hightlight error inputs
+            $(element)
+                .closest('.form-group').addClass('has-error'); // set error class to the control group
+        },
+
+        unhighlight: function (element) { // revert the change done by hightlight
+            $(element)
+                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+        },
+
+        success: function (label) {
+            label
+                .closest('.form-group').removeClass('has-error'); // set success class to the control group
+        },
+        onfocusout:function(element){
+        	$(element).valid();
+        },
+        submitHandler: function (form) { 
+        	errorDiv.hide();
+        	EditUsers();
+        }
+    });
+};
+    
 
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-        	addFormValidation();
+        	AddUsersValidation();
+        	EditUsersValidation();
+        	//addFormValidation();
         }
 
     };

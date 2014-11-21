@@ -141,4 +141,14 @@ public class AdminUserServiceImpl implements AdminUserService {
 	adminUserDao.update(adminUser);
 }
 
+   public void activateUsersByIds(String[] ids) {
+	   adminUserDao.activateusers(ids);
+	
+}
+
+   public void deactivateUsersByIds(String[] ids) {
+	   adminUserDao.deactivateusers(ids);
+	
+}
+
 }

@@ -21,15 +21,19 @@
 
 var rootURI="/";
 var RulesLogTable = function () {
+	var selected = [];
+	var oTable;
 	var handleTable = function () {
-		var selected = [];
+		
 		var table=$('#ruleslog_table');
-		var oTable = table.dataTable({
+		oTable= table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"scrollX":"100%",
+           	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -95,28 +99,7 @@ var RulesLogTable = function () {
 		});		
 	
 		
-		//$("#openrluesviewmodal").on("click",function(event){
-			//var datas = oTable.api().row($(this).parents('tr')).data();
-			//alert("in click");
-			/*if(selected.length>1){
-				handleAlerts("Only one row can be edited.","warning","");
-				event.stopPropagation();
-			}
-			else{
-				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var ruleName = data.ruleName;
-	            var ruleInput = data.ruleInput;
-	            var ruleOutput = data.ruleOutput;
-	            var descr = data.descr;
-	            var ruleId =data.ruleId;
-	            $("#editRulesForm input[name='ruleName']").val(ruleName);
-	            $("#editRulesForm input[name='ruleInput']").val(ruleInput);
-	            $("#editRulesForm input[name='ruleOutput']").val(ruleOutput);
-	            $("#editRulesForm input[name='descr']").val(descr);
-	            $("#editRulesForm input[name='ruleId']").val(ruleId);
-			}
-		*/	
-	//	});
+
 
 		
 		//删除操作
@@ -154,27 +137,27 @@ var RulesLogTable = function () {
 		
 		//全选
 		
-        table.find('.group-checkable').change(function () {
+		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
-            var api=oTable.api();
-            jQuery(set).each(function () {
-            	var data = api.row($(this).parents('tr')).data();
-            	var id = data.id;
-            	alert("in this")
-                var index = $.inArray(id, selected);
-                if (checked) {
-                	selected.push( id );
+            selected=[];
+            if(checked){            	
+	            var api=oTable.api();            
+	            jQuery(set).each(function () {            	
+	            	var data = api.row($(this).parents('tr')).data();
+	            	 var id = data.id;
+	                var index = $.inArray(id, selected);
+	                selected.push( id );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
-                } else {
-                	selected.splice( index, 1 );
-                    $(this).attr("checked", false);
-                    $(this).parents('tr').removeClass("active");
-                    $(this).parents('span').removeClass("checked");
-                }
-            });
+	            });
+            }
+            else{
+            	jQuery(set).removeAttr("checked");
+            	jQuery(set).parents('tr').removeClass("active");
+            	jQuery(set).parents('span').removeClass("checked");
+            }
             jQuery.uniform.update(set);
         });
         

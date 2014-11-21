@@ -24,13 +24,7 @@ public class PointRuleLogDao extends BaseDao<TpointRuleLog> {
 	
 
 	
-	public  List<TpointRuleLog> getpointRuleLogRuleId(Integer id){
-		
-		Query   query= currentSession().createQuery("from TpointRuleLog where ruleId= ?");
-		query.setParameter(0, id);
-		List<TpointRuleLog> list = query.list();	
-		return list;
-	}
+
 	  @SuppressWarnings("rawtypes")
 		public PagingData findPage(final String hql, final int startNo,
 	                         final int pageSize, final Integer params)

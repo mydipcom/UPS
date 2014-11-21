@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>AdminUser List</title>
+<title>RulesGroup List</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -71,78 +71,14 @@
 						<li>
 							<a href="<c:url value="/"/>manager">Admin Users</a>
 						</li>
+						<li>
+							<a href="<c:url value="/"/>rulesgroup">Bonus Rule Group</a>
+						</li>
 					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
-								
-				
-				<!-- BEGIN SEARCH FORM -->
-				<div class="portlet-body">
-					<form id="searchForm" name="searchForm" action="adminuserlist1" class="form-horizontal" method="post">
-					<div class="row">
-						<div class="col-md-6">					
-							<div class="form-group">
-								<label class="col-md-3 control-label">User ID</label>
-								<div class="col-md-9">
-									<input name="adminId" type="text" class="form-control">							
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">	
-							<div class="form-group">
-								<label class="col-md-3 control-label">Email</label>
-								<div class="col-md-9">
-									<input name="email" type="text" class="form-control">							
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">	
-							<div class="form-group">
-								<label class="col-md-3 control-label">Role Name</label>
-								<div class="col-md-9">
-									<select name="adminRole.roleId" class="form-control">
-										<option value="">ALL</option>
-										<option value="1">admin</option>
-										<option value="2">Bonus Point Manager</option>
-										<option value="3">Bonus Point Operator</option>									
-									</select>
-								</div>
-							</div>
-						</div>					
-						<div class="col-md-6">	
-							<div class="form-group">
-								<label class="col-md-3 control-label">Status</label>
-								<div class="col-md-9">
-									<div class="radio-list">
-										<label class="radio-inline">
-										<input type="radio" name="status" value="" checked/>All </label>
-										<label class="radio-inline">
-										<input type="radio" name="status" value="true"/>Enable </label>
-										<label class="radio-inline">
-										<input type="radio" name="status" value="false"/>Disable </label>
-									</div>									
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">	
-						<div class="col-md-6">	
-							<div class="form-group">								
-								<div class="col-md-offset-3 col-md-9">
-									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
-								</div>
-							</div>					
-						</div>
-					</div>	
-					</form>
-				</div>
-				<!-- END SEARCH FORM -->
-				
-				
+					
 				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
@@ -151,14 +87,12 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Admin Users Table
+									<i class="fa fa-edit"></i>Rules Group Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users"><i class="fa fa-key"></i> Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users"><i class="fa fa-lock"></i> Deactivate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_groups"><i class="fa fa-plus"></i> Add</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_groups" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_groups"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -166,33 +100,24 @@
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Email</label>
-											<label><input type="checkbox" checked data-column="3">Role_Name</label>
-											<label><input type="checkbox" checked data-column="4">Status</label>
-											<label><input type="checkbox" checked data-column="5">CreatedBy</label>
-											<label><input type="checkbox" checked data-column="6">CreatedTime</label>
-											<label><input type="checkbox" checked data-column="7">UpdatedBy</label>
-											<label><input type="checkbox" checked data-column="8">UpdatedTime</label>
+											<label><input type="checkbox" checked data-column="2">Group Name</label>
+											<label><input type="checkbox" checked data-column="3">Describe</label>
+											
 										</div>
 									</div>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="adminusers_table">
+								<table class="table table-striped table-hover table-bordered" id="rulesgroup_table">
 									<thead>
 										<tr>
 											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
+												<input type="checkbox" class="group-checkable" data-set="#rulesgroup_table .checkboxes"/>
 											</th>
 											<th>ID</th>
-											<th>Email</th>
-											<th>Role_Name</th>
-											<th>Status</th>
-											<th>CreatedBy</th>
-											<th>CreatedTime</th>
-											<th>UpdatedBy</th>
-											<th>UpdatedTime</th>
-											<th>Action</th>
+											<th>Group Name</th>
+											<th>Describe</th>
+											
 										</tr>
 									</thead>
 																						
@@ -205,64 +130,35 @@
 				<!-- END PAGE CONTENT -->
 				
 				<!-- BEGIN ADD MODAL FORM-->
-				<div class="modal" id="add_users" tabindex="-1" data-width="760">
+				<div class="modal" id="add_groups" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add AdminUsers</h4>
+						<h4 class="modal-title">Add NewruleGroup</h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM	-->					
-						<form id="addUsersForm" action="" method="post" name="addUsersForm" class="form-horizontal form-bordered">
+						<form id="addGroupsForm" action="" method="post" name="addGroupsForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									You have some form errors. Please check below.
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3">Group Name<span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
+										<input name="groupName" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Password<span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="password" class="form-control"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Email<span class="required">* </span></label>
+									<label class="control-label col-md-3">Describe<span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="descr" type="text" class="form-control"/>
 										<span class="help-block">
 										Please input the email that access this rights page</span>
 									</div>
 								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3">Role_Name<span class="required">* </span></label>
-									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Status <span class="required">* </span></label>
-									<div class="col-md-9">										
-										<div class="radio-list">
-											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
-											<label>
-											<input type="radio" name="status" value="0"/>false </label>
-										</div>
-									</div>
-								</div>	
 							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
@@ -278,126 +174,41 @@
 				</div>				
 				<!-- END ADD MODAL FORM-->
 				
-				
-			<div class="modal" id="view_log" tabindex="-1" data-width="760">
-					<div class="modal-body">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Rules logs</h4>
-					</div>
-				
-				<div class="row">
-					<div class="col-md-12">
-				
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-							<!-- BEGIN EXAMPLE TABLE PORTLET-->
-					<div class="portlet box blue-hoki">
-						<div class="portlet-title">
-								<div class="caption">
-									<i class="fa fa-edit"></i> Rulelogs Table
-								</div>
-						</div>
-						<div class="portlet box blue-hoki">
-						<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
-									<thead>
-										<tr>
-										<!-- 
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#managerlog_table .checkboxes"/>
-											</th>
-										-->
-											<th>ID</th>
-											<th>Admin Name</th>
-											<th>Content</th>
-											<th>Level</th>
-											<th>Create Time</th>
-											
-										</tr>
-									</thead>
-																						
-								</table>
-							</div>
-					</div>
-						<!-- END EXAMPLE TABLE PORTLET-->
-					</div> 
-					</div>
-				</div>
-			</div>
-				
-			<div class="modal" id="edit_users" tabindex="-1" data-width="760">
+			<div class="modal" id="edit_groups" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Users</h4>
+						<h4 class="modal-title">Edit Rules Group</h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 						<!-- BEGIN FORM-->						
-						<form id="editUsersForm" action="editUsers" method="post" name="editUsersForm" class="form-horizontal form-bordered">
+						<form id="editGroupsForm" action="" method="post" name="editGroupsForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									You have some form errors. Please check below.
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">ID<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="groupId" class="form-control " readonly="true"/>										
+									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">ID</label>
+									<label class="control-label col-md-3">Group Name<span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
+										<input name="groupName" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Password</label>
+									<label class="control-label col-md-3">Describe<span class="required">* </span></label>
 									<div class="col-md-9">																				
-										<input name="password" class="form-control"/>
-										
-									</div>
-								</div>	
-								<div class="form-group">
-									<label class="control-label col-md-3">CreateBy</label>
-									<div class="col-md-9">																				
-										<input name="createdBy" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>			
-								<div class="form-group">
-									<label class="control-label col-md-3">Create Time</label>
-									<div class="col-md-9">																				
-										<input name="createdTimeStr" class="form-control" readonly="true"/>
-										
-									</div>
-								</div>						
-								<div class="form-group">
-									<label class="control-label col-md-3">Eamil</label>
-									<div class="col-md-9">																				
-										<input name="email" class="form-control"/>
+										<input name="descr" class="form-control"/>
 										<span class="help-block">
-										Please input the uri that access this rights page</span>
-									</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3">Role Name</label>
-									<div class="col-md-9">
-										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
+										Please input the email that access this rights page</span>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Status</label>
-									<div class="col-md-9">										
-										<div class="radio-list">
-											<label>
-											<input type="radio" name="status" value="1" checked/>true </label>
-											<label>
-											<input type="radio" name="status" value="0"/>false </label>
-										</div>
-									</div>
-								</div>														
-							</div>
 							<div class="form-actions" style="border-top:0;">
 								<div class="row">
 									<div class="col-md-offset-6 col-md-6">
@@ -406,13 +217,16 @@
 									</div>
 								</div>
 							</div>
+							</div>
 						</form>
+						
 						<!-- END FORM-->
+						
 					</div>					
 				</div>				
 				<!-- END EDIT MODAL FORM-->				
 				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="delete_groups" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to delete these selected rows ?
@@ -424,34 +238,6 @@
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
-				
-				<!-- BEGIN Activate MODAL FORM-->
-				<div class="modal" id="activate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
-					<div class="modal-body">
-						<p>
-							 Are you sure to activate these selected rows ?
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="activateBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>	
-				<!-- END Activate MODAL FORM-->
-				
-				<!-- BEGIN DEActivate MODAL FORM-->
-				<div class="modal" id="deactivate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
-					<div class="modal-body">
-						<p>
-							 Are you sure to deactivate these selected rows ?
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deactivateBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>				
-				<!-- END DELETE MODAL FORM-->
 			</div>		
 		</div>
 	</div>	
@@ -459,9 +245,6 @@
 	<!-- BEGIN FOOTER -->
 	<c:import url="/common/footer"/>
 	<!-- END FOOTER -->
-	<div id="dialogDiv" class="container">
-		
-	</div>
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
 	<!--[if lt IE 9]>
@@ -492,14 +275,13 @@
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
-	<script src="../static/js/managersTableData.js"></script>
+	<script src="../static/js/RulesGroupTableData.js"></script>
 	<script>
-	jQuery(document).ready(function() { 
-		
+	jQuery(document).ready(function() { 	
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   ManagersTable.init("<c:url value="/"/>");	   
+	   GroupsTable.init("<c:url value="/"/>");	   
     	});
 	</script>
 </body>

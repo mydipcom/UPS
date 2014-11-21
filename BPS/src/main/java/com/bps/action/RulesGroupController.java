@@ -1,10 +1,10 @@
 package com.bps.action;
+
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,56 +20,35 @@ import com.bps.dto.TpointRule;
 import com.bps.dto.TpointRuleGroup;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
-import com.bps.service.BonusRuleService;
 import com.bps.service.PointsRuleGroupService;
 
-
 @Controller
-public class RuleController extends BaseController {
-private Logger logger = Logger.getLogger(UserController.class);
-	
-	
-	@Resource
-	private BonusRuleService bonusRuleService;
-	
-	@Resource
+public class RulesGroupController extends BaseController{
+	@Autowired
 	private PointsRuleGroupService pointsRuleGroupService;
 	
-	@RequestMapping(value="/rules",method=RequestMethod.GET)
+	@RequestMapping(value="/rulesgroup",method=RequestMethod.GET)
 	public ModelAndView rules(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		List<TpointRuleGroup> list=pointsRuleGroupService.getAllGroups();
-		mav.addObject("group", list);
-		mav.setViewName("rules/rules");
+		
+		mav.setViewName("rulesgroup/rulesgroup");
 		return mav;
-	}	
-	@RequestMapping(value="/rulesList",method=RequestMethod.GET)
+	}
+	@RequestMapping(value="/rulesgroupList",method=RequestMethod.GET)
 	@ResponseBody
 	public String rulesList(HttpServletRequest request,DataTableParamter dtp){		
-		PagingData pagingData=bonusRuleService.loadAdminUserList(dtp);
+		PagingData pagingData=pointsRuleGroupService.loadGroupList(dtp);
 		pagingData.setSEcho(dtp.sEcho);
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
 			pagingData.setAaData(objs);
 		}
 		String rightsListJson= JSON.toJSONString(pagingData);
-		return rightsListJson;
-	
-		
+		return rightsListJson;	
 	}
-		
-	
-	/**
-	 * <p>Description: 处理新增数据的ajax请求</p>
-	 * @Title: addRights 
-	 * @param jsonStr
-	 * @param request
-	 * @return String
-	 * @throws
-	 */
-	@RequestMapping(value="/addrules",method=RequestMethod.POST)
+	@RequestMapping(value="/addrulesgroup",method=RequestMethod.POST)
 	@ResponseBody
-	public String addRules(HttpServletRequest request,TpointRule pointRule){
+	public String addRulesGroup(HttpServletRequest request,TpointRuleGroup pointRuleGroup){
 //		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
 //		TadminNodes adminNode=new TadminNodes();
 //		ConvertTools.json2Model(jsonObj, adminNode);
@@ -85,7 +64,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 			
 		JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.createAdminRole(pointRule);
+			pointsRuleGroupService.createPointRuleGroup(pointRuleGroup);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){
@@ -95,9 +74,9 @@ private Logger logger = Logger.getLogger(UserController.class);
 		return JSON.toJSONString(respJson);
 	}
 	
-	@RequestMapping(value="/editrules",method=RequestMethod.POST)
+	@RequestMapping(value="/editrulesgroup",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateRules(HttpServletRequest request,TpointRule pointRule){		
+	public String updateRulesGroup(HttpServletRequest request,TpointRuleGroup pointRuleGroup){		
 //		TadminNodes adminNode=new TadminNodes();		
 //		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
 //		ConvertTools.json2Model(jsonObj, adminNode);
@@ -113,7 +92,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 
 		JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.updateAdminRole(pointRule);
+			pointsRuleGroupService.updatePointRuleGroup(pointRuleGroup);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){
@@ -123,47 +102,14 @@ private Logger logger = Logger.getLogger(UserController.class);
 		return JSON.toJSONString(respJson);		
 	}
 
-	@RequestMapping(value="/rules/{ids}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/rulesgroup/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteRules(@PathVariable String ids,HttpServletRequest request){
+	public String deleteRulesGroup(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.deleteAdminNodesByIds(idArr);
-			respJson.put("status", true);
-		}
-		catch(BPSException be){
-			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
-		}	
-		return JSON.toJSONString(respJson);	
-	}
-	@RequestMapping(value="/activaterules/{ids}",method=RequestMethod.POST)
-	@ResponseBody
-	public String activateRules(@PathVariable String ids,HttpServletRequest request){
-		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
-		JSONObject respJson = new JSONObject();
-		try{
-			bonusRuleService.activateRulesByIds(idArr);
-			respJson.put("status", true);
-		}
-		catch(BPSException be){
-			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
-		}	
-		return JSON.toJSONString(respJson);	
-	}
-	
-	@RequestMapping(value="/deactivaterules/{ids}",method=RequestMethod.POST)
-	@ResponseBody
-	public String deactivateRules(@PathVariable String ids,HttpServletRequest request){
-		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
-		JSONObject respJson = new JSONObject();
-		try{
-			bonusRuleService.deactivateRulesByIds(idArr);
+			pointsRuleGroupService.deletePointRuleGroupByIds(idArr);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){

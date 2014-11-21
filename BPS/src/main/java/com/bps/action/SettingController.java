@@ -60,7 +60,7 @@ public class SettingController extends BaseController {
 	 */
 	@RequestMapping(value="/addsetting",method=RequestMethod.POST)
 	@ResponseBody
-	public String addRights(HttpServletRequest request,Tsetting setting){
+	public String addSettings(HttpServletRequest request,Tsetting setting){
 		
 		JSONObject respJson = new JSONObject();
 		try{
@@ -76,7 +76,7 @@ public class SettingController extends BaseController {
 	
 	@RequestMapping(value="/editsetting",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateRights(HttpServletRequest request,Tsetting setting){		
+	public String updateSettings(HttpServletRequest request,Tsetting setting){		
 
 
 		JSONObject respJson = new JSONObject();
@@ -93,7 +93,7 @@ public class SettingController extends BaseController {
 
 	@RequestMapping(value="/setting/{ids}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteRights(@PathVariable String ids,HttpServletRequest request){
+	public String deleteSettings(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();

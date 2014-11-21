@@ -25,5 +25,5 @@ public interface RulesLogService {
 	
 	public PagingData loadRuleLogList(Integer id,DataTableParamter rdtp);
 	
-	public   List<TpointRuleLog>  getpointRuleLogByRuleId(Integer id);
+
 }

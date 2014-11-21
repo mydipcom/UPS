@@ -20,17 +20,20 @@
 })(jQuery);
 
 var rootURI="/";
-var RightsTable = function () {
+var GroupsTable = function () {
 	var oTable;
-	var handleTable = function () {
-		var selected = [];
-		var table=$('#rights_table');
-		oTable = table.dataTable({
+	var selected = [];
+	var handleTable = function () {	
+		
+		var table=$('#rulesgroup_table');
+			oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"processing":true,                
+        	"processing":true,
+        	"scrollX":"100%",
+           	"scrollXInner":"100%",
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -50,32 +53,17 @@ var RightsTable = function () {
                     },
                     //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
                 },
-                {                	
-                	'targets':-1,
-                	'data':null,//定义列名
-                	'render':function(data,type,row){
-                    	return '<button>View</button>';
-                    },
-                    'class':'center'
-                }
+             
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
-	           { title: "Rights Name",  data: "name"},
-	           { title: "URI", data: "uri" },
-	           { title: "Request Method", data: "method" },
-	           { title: "Parent ID",  data: "pid" },
-	           { title: "Is Menu",    data: "isMenu" },
-	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
-	           { title: "Status",    data: "status" },
-	           { title: "Action" ,"class":"center"}
+	           { title: "ID",   data: "groupId" },
+	           { title: "Group Name",   data: "groupName" },
+	           { title: "Describe",  data: "descr"},
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"rulesgroupList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -99,14 +87,13 @@ var RightsTable = function () {
 //				return nRow;
 //			},
 
-		});		
-
+		});	
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"rulesgroup/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -125,67 +112,28 @@ var RightsTable = function () {
            });
         });  
 		
-		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
-			event.preventDefault();			
-			//return false;
-        }); 
-		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
 				event.stopPropagation();
+			}else if(selected.length==0)
+			{
+				handleAlerts("Please choose one row.","warning","");
+				event.stopPropagation();
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-	            var name = data.name;
-	            var uri  = data.uri;
-	            $("#editRightsForm input[name='name']").val(name);
-	            $("#editRightsForm input[name='uri']").val(uri);
+	            var groupId = data.groupId;
+	            var groupName =data.groupName;
+	            var descr=data.descr;
+	            $("#editGroupsForm input[name='groupId']").val(groupId);
+	            $("#editGroupsForm input[name='groupName']").val(groupName);
+	            $("#editGroupsForm input[name='descr']").val(descr);
+	   
 			}
 		});
 		
-		
-		//编辑表单提交操作
-		$("#editRightsForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"editRights", 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-		});
-		
-		
-		//搜索表单提交操作
-		$("#searchForm").on("submit", function(event) {
-			event.preventDefault();
-			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
-			oTable.fnFilter(jsonDataStr);
-			return false;
-		});
-				
-                       
+	          
 		$(".group-checkable").on('change',function () {
             var set = jQuery(this).attr("data-set");
             var checked = jQuery(this).is(":checked");
@@ -194,7 +142,7 @@ var RightsTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.nodeId;
+	            	 var id = data.groupId;
 	                var index = $.inArray(id, selected);
 	                selected.push( id );
                     $(this).attr("checked", true);
@@ -209,12 +157,15 @@ var RightsTable = function () {
             }
             jQuery.uniform.update(set);
         });
+
         
+        
+     
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.nodeId;
+            var id = data.groupId;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -226,7 +177,8 @@ var RightsTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-                
+               
+      
         /* handle show/hide columns*/
         var tableColumnToggler = $('#column_toggler');		
 		$('input[type="checkbox"]', tableColumnToggler).change(function () {
@@ -238,30 +190,6 @@ var RightsTable = function () {
         
         
 	};
-	
-	//添加操作
-	var ajaxAddRights=function(){		
-		$.ajax( {
-         "dataType": 'json', 
-         "type":'POST', 
-         "url": rootURI+"addRights", 
-         "data": $('#addRightsForm').serialize(),
-         "success": function(resp,status){
-        	 if(status == "success"){  
-        		 if(resp.status){						 
-	            	 oTable.api().draw();
-	            	 handleAlerts("Added the data successfully.","success","#addFormMsg");		            	 
-				 }
-				 else{
-					 handleAlerts("Failed to add the data.","danger","#addFormMsg");						 
-				 }
-			}             	 
-         },
-         "error":function(XMLHttpRequest, textStatus, errorThrown){
-        	 alert(errorThrown);
-         }
-       });		
-    };
 	
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
@@ -279,67 +207,162 @@ var RightsTable = function () {
         });        
 
     };
+
+    var AddGroup = function(){
+    	$.ajax( {
+            "dataType": 'json', 
+            "type":'POST', 
+            "url": rootURI+"addrulesgroup", 
+            "data": $('#addGroupsForm').serialize(),
+//            "processData":false,
+//            "contentType":"application/json",
+            "success": function(resp,status){
+           	 if(status == "success"){  
+           		 if(resp.status){						 
+		            	 oTable.api().draw();
+		            	 handleAlerts("Added the data successfully.","success","");		            	 
+					 }
+					 else{
+						 handleAlerts("Failed to add the data.","danger","");						 
+					 }
+				}             	 
+            },
+            "error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+          });
+			$('#add_groups').modal('hide');
+    }
     
-    //处理表单验证方法
-    var addFormValidation = function() {
-            var addform = $('#addRightsForm');
-            var errorDiv = $('.alert-danger', addform);            
+    
+    var AddGroupValidation = function() {
+        var form = $('#addGroupsForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+            	groupName: {
+            	required: true,
+            	maxlength:50,
+                		},
+            descr: {
+        		required: true,
+        		maxlength:1000,
+    				}
+       
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
 
-            addform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    uri: {
-                        required: true,
-                        maxlength:60                        
-                    },
-                    method: {
-                        required: true                        
-                    },
-                    pid: {
-                        required: true,
-                        number: true
-                    }                    
-                },
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
 
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
-                },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
 
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	AddGroup();
+            }
+        });
+};
 
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
+var EditGroup = function(){
+	 $.ajax( {
+         "dataType": 'json', 
+         "type": "POST", 
+         "url": rootURI+"editrulesgroup", 
+         "data": $('#editGroupsForm').serialize(),
+//         "processData":false,
+//         "contentType":"application/json",
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){
+					 selected=[];
+	            	 oTable.api().draw();
+	            	 handleAlerts("Edited the data successfully.","success","");
+				 }
+				 else{
+					 alert(resp.info);
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+	  $('#edit_groups').modal('hide');
+}
+	
+var EditGroupValidation = function() {
+    var form = $('#editGroupsForm');
+    var errorDiv = $('.alert-danger', form);            
+    form.validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block help-block-error', // default input error message class
+        focusInvalid: false, // do not focus the last invalid input
+        ignore: "",  // validate all fields including form hidden input                
+        rules: {
+        	groupName: {
+        	required: true,
+        	maxlength:50,
+            		},
+        descr: {
+    		required: true,
+    		maxlength:1000,
+				}
+   
+        },
+       invalidHandler: function (event, validator) { //display error alert on form submit              
+            errorDiv.show();                    
+        },
 
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
+        highlight: function (element) { // hightlight error inputs
+            $(element)
+                .closest('.form-group').addClass('has-error'); // set error class to the control group
+        },
 
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    ajaxAddRights();                    
-                }
-            });
-    };
+        unhighlight: function (element) { // revert the change done by hightlight
+            $(element)
+                .closest('.form-group').removeClass('has-error'); // set error class to the control group
+        },
 
+        success: function (label) {
+            label
+                .closest('.form-group').removeClass('has-error'); // set success class to the control group
+        },
+        onfocusout:function(element){
+        	$(element).valid();
+        },
+        submitHandler: function (form) { 
+        	errorDiv.hide();
+        	EditGroup();
+        }
+    });
+};
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
-        	handleTable();  
-        	addFormValidation();
+        	handleTable(); 
+        	AddGroupValidation();
+        	EditGroupValidation();
+        	
         }
 
     };

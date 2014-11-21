@@ -17,17 +17,39 @@ public class TpointRule implements java.io.Serializable {
 	private int ruleOutput;
 	private String descr;
 	private boolean status;
+	private TpointRuleGroup pointRuleGroup;
+	private String groupName;
 
 	public TpointRule() {
 	}
 
 	public TpointRule(String ruleName, int ruleInput, int ruleOutput,
-			String descr, boolean status) {
+			String descr, boolean status ,TpointRuleGroup pointRuleGroup) {
 		this.ruleName = ruleName;
 		this.ruleInput = ruleInput;
 		this.ruleOutput = ruleOutput;
 		this.descr = descr;
 		this.status = status;
+		this.pointRuleGroup=pointRuleGroup;
+	}
+
+	
+	
+	public String getGroupName() {
+		return pointRuleGroup.getGroupName();
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+
+	public TpointRuleGroup getPointRuleGroup() {
+		return this.pointRuleGroup;
+	}
+
+	public void setPointRuleGroup(TpointRuleGroup pointRuleGroup) {
+		this.pointRuleGroup = pointRuleGroup;
 	}
 
 	public Integer getRuleId() {

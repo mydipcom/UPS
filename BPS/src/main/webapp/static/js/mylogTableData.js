@@ -20,18 +20,18 @@
 })(jQuery);
 
 var rootURI="/";
-var PointLogTable = function () {
+var MyLogTable = function () {
 	var oTable;
 	var selected = [];
 	var handleTable = function () {
 		
-		var table=$('#pointlog_table');
-		oTable= table.dataTable({
+		var table=$('#mylog_table');
+		oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"processing":false,
+        	"processing":true,
         	"scrollX":"100%",
            	"scrollXInner":"100%",
             // set the initial value
@@ -65,17 +65,15 @@ var PointLogTable = function () {
             "columns": [
                {"orderable": false },
 	           { title: "ID",   data: "id" },
-	           { title: "Pointuser Name",   data: "pointUser.userId" },
-	           { title: "Point",  data: "points"},
-	           { title: "pointBalance", data: "pointsBalance"},
-	           { title: "Content", data: "content"},
-	           { title: "From", data:"from"},
+	           { title: "Admin Name",   data: "adminId" },
+	           { title: "Content",  data: "content"},
+	           { title: "Level", data: "level"},
 	           { title: "Create Time", data: "createdTimeStr" },
 	           { title: "Action" ,"class":"center"}
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"pointlogList?rand="+Math.random(),
+	        "ajaxSource": rootURI+"mylogList?rand="+Math.random(),
 //	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 //	           $.ajax( {
 //	             "dataType": 'json', 
@@ -101,40 +99,7 @@ var PointLogTable = function () {
 
 		});		
 
-		//删除操作
-		$('#deleteBtn').on('click', function (e) {
-			$.ajax( {
-             "dataType": 'json', 
-             "type": "DELETE", 
-             "url": rootURI+"pointslog/"+selected.join(), 
-             "success": function(data,status){
-            	 if(status == "success"){					
-					 if(data.status){
-						 selected=[];						 
-		            	 oTable.api().draw();
-		            	 oTable.$('th span').removeClass();
-					 }
-					 else{
-						 alert(data.info);
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
-        }); 
-		
-		//搜索表单提交操作
-		$("#searchForm").on("submit", function(event) {
-			event.preventDefault();
-			var jsonData=$(this).serializeJson();
-			var jsonDataStr=JSON.stringify(jsonData);			
-			oTable.fnFilter(jsonDataStr);
-			return false;
-		});
-		
-		
+        
 		//全选
 		
 		$(".group-checkable").on('change',function () {
@@ -145,7 +110,7 @@ var PointLogTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	  var id = data.id;
+	            	 var id = data.id;
 	                var index = $.inArray(id, selected);
 	                selected.push( id );
                     $(this).attr("checked", true);
@@ -160,6 +125,16 @@ var PointLogTable = function () {
             }
             jQuery.uniform.update(set);
         });
+
+        
+      //搜索表单提交操作
+		$("#searchForm").on("submit", function(event) {
+			event.preventDefault();
+			var jsonData=$(this).serializeJson();
+			var jsonDataStr=JSON.stringify(jsonData);			
+			oTable.fnFilter(jsonDataStr);
+			return false;
+		});
         
         //单选
         table.on('change', 'tbody tr .checkboxes', function () {
@@ -177,22 +152,21 @@ var PointLogTable = function () {
                 $(this).removeAttr("checked");
             }
         });
-          
+          //查看日志详情 
         table.on('click', 'tbody tr a', function () {
-            var datas = oTable.api().row($(this).parents('tr')).data();
+            var data = oTable.api().row($(this).parents('tr')).data();
             $.ajax( {
                 "dataType": 'json', 
                 "type": "POST", 
-                "url": rootURI+"pointslogview/"+datas.id, 
+                "url": rootURI+"managerslogview/"+data.id, 
                 "success": function(data,status){
                	 if(status == "success"){
-               		var pointslogs=data.pointslog;
-               		$("#viewPointLogForm input[name='id']").val(pointslogs.id);
-    	            $("#viewPointLogForm input[name='userId']").val((pointslogs.pointUser).userId);
-    	            $("#viewPointLogForm input[name='points']").val(pointslogs.points);
-    	            $("#viewPointLogForm textarea[name='content']").val(pointslogs.content);
-    	            $("#viewPointLogForm input[name='createdTime']").val(pointslogs.createdTimeStr);
-    	            $("#viewPointLogForm input[name='pointsBalance']").val(pointslogs.pointsBalance);
+               		var adminslogs=data.adminslog;
+               		$("#viewMylogForm input[name='id']").val(adminslogs.id);
+    	            $("#viewMylogForm input[name='adminId']").val(adminslogs.adminId);
+    	            $("#viewMylogForm textarea[name='content']").val(adminslogs.content);
+    	            $("#viewMylogForm input[name='level']").val(adminslogs.level);
+    	            $("#viewMylogForm input[name='createdTime']").val(adminslogs.createdTimeStr);
     				}             	 
                 },
                 "error":function(XMLHttpRequest, textStatus, errorThrown){

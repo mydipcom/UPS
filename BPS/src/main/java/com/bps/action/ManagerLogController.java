@@ -44,7 +44,11 @@ public class ManagerLogController extends BaseController {
 	@ResponseBody
 	public String AdminuserlogsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminuserLogService.loadAdminLogList(dtp);
-		pagingData.setSEcho(dtp.sEcho);		
+		pagingData.setSEcho(dtp.sEcho);	
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;
 			
@@ -55,8 +59,11 @@ public class ManagerLogController extends BaseController {
 	public String AdminuserlogsList(HttpServletRequest request,@PathVariable String ids,DataTableParamter dtp){		
 		
 		PagingData pagingData=adminuserLogService.loadAdminLogList(ids, dtp);
-		
-		pagingData.setSEcho(dtp.sEcho);		
+		pagingData.setSEcho(dtp.sEcho);	
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}	
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;
 			
