@@ -20,31 +20,22 @@
 })(jQuery);
 
 var rootURI="/";
-var RightsTable = function () {
+var RolesTable = function () {
 	var oTable;
-	var handleTable = function () {
-		var selected = [];
-		var table=$('#rights_table');
+	var selected=[];
+	var handleTable = function () {		
+		var table=$('#roles_table');
 		oTable = table.dataTable({
 			"lengthChange":false,
         	"filter":true,
         	"sort":false,
         	"info":true,
-        	"scrollX":"100%",
-        	"scrollXInner":"100%",         	
+//        	"scrollX":"100%",
+//        	"scrollXInner":"100%",
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -53,48 +44,45 @@ var RightsTable = function () {
                     //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
                 },
                 {                	
-                	'targets':-1,
-                	'data':null,//定义列名
+                	'targets':-1,                	
                 	'render':function(data,type,row){
-                    	return '<button>View</button>';
-                    },
-                    'class':'center'
+                		if(data==null){
+                			return '0';
+                		}
+                		else{
+                			return data["roleRights"];
+                		}
+                    }                    
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
-	           { title: "Rights Name",  data: "name"},
-	           { title: "URI", data: "uri" },
-	           { title: "Request Method", data: "method" },
-	           { title: "Parent ID",  data: "pid" },
-	           { title: "Is Menu",    data: "isMenu" },
-	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
-	           { title: "Status",    data: "status" },
-	           { title: "Action" ,"class":"center"}
+	           { title: "ID",   data: "roleId" },	           
+	           { title: "Role Name",  data: "roleName"},	           
+	           { title: "Parent ID",  data: "pid" },	           
+	           { title: "Status",  data: "status" },
+	           { title: "Role Rights",  data: "adminRoleRights" }
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"rightsList?rand="+Math.random()
+	        "ajaxSource": rootURI+"rolesList?rand="+Math.random()
 
-		});		
-
+		});	
+		
 		//打开删除对话框前判断是否已选择要删除的行
-		$("#openDeleteRightsModal").on("click",function(event){
+		$("#openDeleteRoleModal").on("click",function(event){
 			if(selected.length==0){
 				handleAlerts("Please select the rows which you want to delete.","warning","");				
 				return false;
 			}
 		});
-		
+
 		//删除操作
-		$('#deleteBtn').on('click', function (e) {
+		$('#deleteBtn').on('click', function (e) {			
 			$.ajax( {
              "dataType": 'json', 
              "type": "DELETE", 
-             "url": rootURI+"rights/"+selected.join(), 
+             "url": rootURI+"roles/"+selected.join(), 
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
@@ -113,50 +101,91 @@ var RightsTable = function () {
            });
         });  
 		
-		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
-			event.preventDefault();			
-			//return false;
-        }); 
-		
-		$("#openEditRightModal").on("click",function(event){
+		//打开编辑对话框前的表单数据加载处理
+		$("#openEditRoleModal").on("click",function(event){
 			if(selected.length!=1){
 				handleAlerts("One and only one row can be edited.","warning","");		
 				return false;				
 			}
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
-				var nodeId = data.nodeId;
-	            var name = data.name;
-	            var uri  = data.uri;
-	            var method  = data.method;
-	            var groupName  = data.groupName;
-	            var groupSort  = data.groupSort;
-	            var descr  = data.descr;
+				var roleId = data.roleId;
+	            var roleName = data.roleName;
 	            var pid  = data.pid;
-	            var isMenu  = data.isMenu;
 	            var status=data.status;
-	            $("#editRightsForm option").removeAttr("selected");
-	            $("#editRightsForm :radio").removeAttr("checked");
-	            $("#editRightsForm :radio").parents('span').removeClass("checked");
+	            $("#editRoleForm option").removeAttr("selected");
+	            $("#editRoleForm :radio").removeAttr("checked");
+	            $("#editRoleForm :radio").parents('span').removeClass("checked");
 	            
-	            $("#editRightsForm input[name='nodeId']").val(nodeId);
-	            $("#editRightsForm input[name='name']").val(name);
-	            $("#editRightsForm input[name='uri']").val(uri);
-	            
-	            $("#editRightsForm select[name='method']").children("option[value='"+method+"']").attr("selected","true");
-	            $("#editRightsForm input[name='groupName']").val(groupName);
-	            $("#editRightsForm input[name='groupSort']").val(groupSort);
-	            $("#editRightsForm input[name='descr']").val(descr);
-	            $("#editRightsForm input[name='pid']").val(pid);
-	            	            	            
-	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").attr("checked","true");
-	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").parents('span').addClass("checked");
-	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
-	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            
+	            $("#editRoleForm input[name='roleId']").val(roleId);
+	            $("#editRoleForm input[name='roleName']").val(roleName);
+	            $("#editRoleForm input[name='pid']").val(pid);	            
+	            $("#editRoleForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
+	            $("#editRoleForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
 			}
-		});								
+			
+		});	
+		
+		//打开编辑分配角色权限的对话框
+		$("#openRoleRigthsModal").on("click",function(event){
+			if(selected.length!=1){
+				handleAlerts("One and only one row can be edited.","warning","");		
+				return false;				
+			}
+			else{
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+				var roleId = data.roleId;
+				var roleRights=0;
+				if(data.adminRoleRights){
+					roleRights= data.adminRoleRights.roleRights;
+				}
+				$("#editRoleRightsForm input[name='roleId']").val(roleId); 
+				$("#editRoleRightsForm input[name='roleRights']").val(roleRights); 
+				
+				var allRightsBox=$("#editRoleRightsForm :checkbox");
+				allRightsBox.removeAttr("checked");
+				allRightsBox.parents('span').removeClass("checked");
+				jQuery(allRightsBox).each(function () {
+					var rightsVal=$(this).val();
+					if((rightsVal&roleRights)>0){
+						$(this).attr("checked","true");
+						$(this).parents('span').addClass("checked");
+					}
+				});	           	            
+			}						
+		});
+		
+		//分配角色权限表单提交操作
+		$("#editRoleRightsForm").on("submit", function(event) {
+			event.preventDefault();
+			var rightsVal=$(this).find("input[name='roleRights']");
+			$(this).find(":checkbox:checked").each(function(){
+				rightsVal.val(rightsVal.val()|$(this).val());
+			});			
+			$.ajax( {
+				 "dataType": 'json', 
+				 "type": "POST", 
+				 "url": rootURI+"editRoleRights", 
+				 "data": $('#editRoleRightsForm').serialize(),
+				 "success": function(resp,status){
+					 if(status == "success"){  
+						 if(resp.status){
+							 selected=[];
+				        	 oTable.api().draw();
+				        	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+						 }
+						 else{
+							 handleAlerts("Failed to edit the data.","danger","#editFormMsg");
+						 }
+					}             	 
+				 },
+				 "error":function(XMLHttpRequest, textStatus, errorThrown){
+				    	 alert(errorThrown);
+				  }
+			});
+			return false;
+		});
+		
 		
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
@@ -177,7 +206,7 @@ var RightsTable = function () {
 	            var api=oTable.api();            
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
-	            	var id = data.nodeId;
+	            	var id = data.roleId;
 	                var index = $.inArray(id, selected);
 	                selected.push( id );
                     $(this).attr("checked", true);
@@ -197,7 +226,7 @@ var RightsTable = function () {
         table.on('change', 'tbody tr .checkboxes', function () {
             $(this).parents('tr').toggleClass("active");            
             var data = oTable.api().row($(this).parents('tr')).data();
-            var id = data.nodeId;
+            var id = data.roleId;
             var index = $.inArray(id, selected);     
             if ( index === -1 ) {
                 selected.push( id );
@@ -223,12 +252,12 @@ var RightsTable = function () {
 	};
 	
 	//添加操作
-	var ajaxAddRights=function(){		
+	var ajaxAddRole=function(){		
 		$.ajax( {
          "dataType": 'json', 
          "type":'POST', 
-         "url": rootURI+"addRights", 
-         "data": $('#addRightsForm').serialize(),
+         "url": rootURI+"addRole", 
+         "data": $('#addRoleForm').serialize(),
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){						 
@@ -246,30 +275,29 @@ var RightsTable = function () {
        });		
     };
 	
-    
     //编辑表单提交操作
-    var ajaxEditRights=function(){			  
-		  $.ajax( {
-             "dataType": 'json', 
-             "type": "POST", 
-             "url": rootURI+"editRights", 
-             "data": $('#editRightsForm').serialize(),
-             "success": function(resp,status){
-            	 if(status == "success"){  
-            		 if(resp.status){
-						 selected=[];
-		            	 oTable.api().draw();
-		            	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
-					 }
-					 else{
-						 handleAlerts("Failed to edit the data.","danger","#editFormMsg");
-					 }
-				}             	 
-             },
-             "error":function(XMLHttpRequest, textStatus, errorThrown){
-            	 alert(errorThrown);
-             }
-           });
+    var ajaxEditRole=function(){				
+		$.ajax( {
+		  "dataType": 'json', 
+		 "type": "POST", 
+		 "url": rootURI+"editRole", 
+		 "data": $('#editRoleForm').serialize(),
+		 "success": function(resp,status){
+			 if(status == "success"){  
+				 if(resp.status){
+					 selected=[];
+		        	 oTable.api().draw();
+		        	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+				 }
+				 else{
+					 handleAlerts("Failed to edit the data.","danger","#editFormMsg");
+				 }
+			}             	 
+		 },
+		 "error":function(XMLHttpRequest, textStatus, errorThrown){
+		    	 alert(errorThrown);
+		  }
+		});
 	};
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
@@ -290,7 +318,7 @@ var RightsTable = function () {
     
     //处理表单验证方法
     var addFormValidation = function() {
-            var addform = $('#addRightsForm');
+            var addform = $('#addRoleForm');
             var errorDiv = $('.alert-danger', addform);            
 
             addform.validate({
@@ -299,21 +327,18 @@ var RightsTable = function () {
                 focusInvalid: false, // do not focus the last invalid input
                 ignore: "",  // validate all fields including form hidden input                
                 rules: {
-                    name: {
+                    roleName: {
                         minlength: 2,
+                        maxlength: 40,
                         required: true
-                    },
-                    uri: {
-                        required: true,
-                        maxlength:60                        
-                    },
-                    method: {
-                        required: true                        
                     },
                     pid: {
                         required: true,
-                        number: true
-                    }                    
+                        number: true                        
+                    },
+                    status:{
+                    	required: true
+                    }
                 },
 
                 invalidHandler: function (event, validator) { //display error alert on form submit                	
@@ -329,9 +354,7 @@ var RightsTable = function () {
                     $(element)
                         .closest('.form-group').removeClass('has-error'); // set error class to the control group
                 },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
+
                 success: function (label) {
                     label
                         .closest('.form-group').removeClass('has-error'); // set success class to the control group
@@ -339,74 +362,68 @@ var RightsTable = function () {
 
                 submitHandler: function (form) {                	
                     errorDiv.hide();
-                    ajaxAddRights();                    
+                    ajaxAddRole();                    
                 }
             });
     };
-    
+
   //处理表单验证方法
     var editFormValidation = function() {
-            var editform = $('#editRightsForm');
-            var errorDiv = $('.alert-danger', editform);            
+        var editform = $('#editRoleForm');
+        var errorDiv = $('.alert-danger', editform);            
 
-            editform.validate({
-                errorElement: 'span', //default input error message container
-                errorClass: 'help-block help-block-error', // default input error message class
-                focusInvalid: false, // do not focus the last invalid input
-                ignore: "",  // validate all fields including form hidden input                
-                rules: {
-                    name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    uri: {
-                        required: true,
-                        maxlength:60                        
-                    },
-                    method: {
-                        required: true                        
-                    },
-                    pid: {
-                        required: true,
-                        number: true
-                    }                    
+        editform.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+            	roleName: {
+                    minlength: 2,
+                    maxlength: 40,
+                    required: true
                 },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit                	
-                    errorDiv.show();                    
+                pid: {
+                    required: true,
+                    number: true                        
                 },
-
-                highlight: function (element) { // hightlight error inputs
-                    $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-                },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-                    $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-                },
-                onfocusout: function (element) { // hightlight error inputs
-                    $(element).valid();
-                },
-                success: function (label) {
-                    label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-                },
-
-                submitHandler: function (form) {                	
-                    errorDiv.hide();
-                    ajaxEditRights();                    
+                status:{
+                	required: true
                 }
-            });
-    };
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit                	
+                errorDiv.show();                    
+            },
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },            
+            onfocusout: function (element) { // hightlight error inputs
+                $(element).valid();
+            },
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
 
+            submitHandler: function (form) {                	
+                errorDiv.hide();
+                ajaxEditRole();                    
+            }
+        });
+    };
+    
     return {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
         	addFormValidation();
-		editFormValidation();
+        	editFormValidation();
         }
 
     };

@@ -15,5 +15,7 @@ public class SystemConfig {
 					
 	public static Map<TadminNodes,List<TadminNodes>> Admin_Nodes_Menu_Map=new Hashtable<TadminNodes,List<TadminNodes>>();
 	
+	public static Map<String,List<TadminNodes>> Admin_Nodes_Group_Map=new Hashtable<String,List<TadminNodes>>();
+	
 	public static Map<String,String> Admin_Setting_Map=new Hashtable<String,String>();
 }

@@ -17,6 +17,8 @@ public class TadminRole implements Serializable {
 	private String roleName;
 
 	private boolean status;	
+	
+	private TadminRoleRights adminRoleRights;
 
 	public TadminRole() {
 	}
@@ -58,6 +60,14 @@ public class TadminRole implements Serializable {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public TadminRoleRights getAdminRoleRights() {
+		return adminRoleRights;
+	}
+
+	public void setAdminRoleRights(TadminRoleRights adminRoleRights) {
+		this.adminRoleRights = adminRoleRights;
 	}	
 
 }

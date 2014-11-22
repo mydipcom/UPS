@@ -57,6 +57,10 @@ public class RightsController extends BaseController {
 	@ResponseBody
 	public String rightsList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminNodesService.loadAdminNodesList(dtp);
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
 		pagingData.setSEcho(dtp.sEcho);
 		
 		String rightsListJson= JSON.toJSONString(pagingData);

@@ -9,6 +9,7 @@
  */ 
 package com.bps.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationListener;
@@ -25,7 +26,7 @@ import com.bps.service.AdminNodesService;
  * 
  */
 public class CachedDataProcessor implements ApplicationListener<ContextRefreshedEvent> {
-	
+	@Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 		//root application context
     	if(event.getApplicationContext().getParent() == null){
@@ -40,6 +41,15 @@ public class CachedDataProcessor implements ApplicationListener<ContextRefreshed
     					List<TadminNodes> menuList=adminNodesService.getAdminNodesMenuByPid(adminNodes.getNodeId());
     					SystemConfig.Admin_Nodes_Menu_Map.put(adminNodes, menuList);   	    					
     				}
+    				
+    				//Build group nodes mapping
+    				String groupName=adminNodes.getGroupName();
+    				List<TadminNodes> groupList=SystemConfig.Admin_Nodes_Group_Map.get(groupName);
+    				if(groupList==null){
+    					groupList=new ArrayList<TadminNodes>();
+    					SystemConfig.Admin_Nodes_Group_Map.put(groupName, groupList);
+    				}    				
+    				groupList.add(adminNodes);
 				}
     		}
     	}

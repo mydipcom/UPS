@@ -1,1369 +1,337 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%><%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%><%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><%@ taglib prefix="s" uri="http://www.springframework.org/tags"%><!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-	<meta charset="utf-8" />
-	<title>Metronic | Form Stuff - Advance Form Samples</title>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
-	<!-- BEGIN GLOBAL MANDATORY STYLES -->
-	<link href="../media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/style-metro.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/style.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
-	<link href="../media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="../media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-	<!-- END GLOBAL MANDATORY STYLES -->
-	<!-- BEGIN PAGE LEVEL STYLES --> 
-	<link rel="stylesheet" type="text/css" href="../media/css/select2_metro.css" />
-	<!-- END PAGE LEVEL SCRIPTS -->
-	<link rel="shortcut icon" href="../media/image/favicon.ico" />
+<meta charset="utf-8"/>
+<title>Roles List</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="../assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/><link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/><link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/><!-- END PAGE LEVEL STYLES -->
+<!-- BEGIN THEME STYLES --><link href="../assets/global/css/components.css" rel="stylesheet" type="text/css"/><link href="../assets/global/css/plugins.css" rel="stylesheet" type="text/css"/><link href="../assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/><link id="style_color" href="../assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"/><link href="../assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/><!-- END THEME STYLES --><link rel="shortcut icon" href="../media/image/favicon.ico"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="page-header-fixed">
-	<!-- BEGIN HEADER -->	    <c:import url="/common/header"/>
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices --><!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default --><!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle --><!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle --><!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle --><!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar --><!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer --><!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side --><!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu --><body class="page-header-fixed">
+	<!-- BEGIN HEADER -->	<c:import url="/common/header"/>
 	<!-- END HEADER -->
 	<!-- BEGIN CONTAINER -->
-	<div class="page-container row-fluid">
+	<div class="page-container">
 		<!-- BEGIN SIDEBAR -->
 		<c:import url="/common/left"/>
 		<!-- END SIDEBAR -->
-		<!-- BEGIN PAGE -->  
-		<div class="page-content">
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div id="portlet-config" class="modal hide">
-				<div class="modal-header">
-					<button data-dismiss="modal" class="close" type="button"></button>
-					<h3>portlet Settings</h3>
+		<!-- BEGIN CONTENT -->
+		<div class="page-content-wrapper">				<div class="page-content">								
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<div class="page-bar">
+					<ul class="page-breadcrumb">
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="<c:url value="/"/>home">Home</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="<c:url value="/"/>manager">System Management</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>							<a href="<c:url value="/"/>rights">Roles List</a>
+						</li>					</ul>					
 				</div>
-				<div class="modal-body">
-					<p>Here will be a configuration form</p>
-				</div>
-			</div>
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<!-- BEGIN PAGE CONTAINER-->
-			<div class="container-fluid">
-				<!-- BEGIN PAGE HEADER-->   
-				<div class="row-fluid">
-					<div class="span12">
-						<!-- BEGIN STYLE CUSTOMIZER -->
-						<div class="color-panel hidden-phone">
-							<div class="color-mode-icons icon-color"></div>
-							<div class="color-mode-icons icon-color-close"></div>
-							<div class="color-mode">
-								<p>THEME COLOR</p>
-								<ul class="inline">
-									<li class="color-black current color-default" data-style="default"></li>
-									<li class="color-blue" data-style="blue"></li>
-									<li class="color-brown" data-style="brown"></li>
-									<li class="color-purple" data-style="purple"></li>
-									<li class="color-grey" data-style="grey"></li>
-									<li class="color-white color-light" data-style="light"></li>
-								</ul>
-								<label>
-									<span>Layout</span>
-									<select class="layout-option m-wrap small">
-										<option value="fluid" selected>Fluid</option>
-										<option value="boxed">Boxed</option>
-									</select>
-								</label>
-								<label>
-									<span>Header</span>
-									<select class="header-option m-wrap small">
-										<option value="fixed" selected>Fixed</option>
-										<option value="default">Default</option>
-									</select>
-								</label>
-								<label>
-									<span>Sidebar</span>
-									<select class="sidebar-option m-wrap small">
-										<option value="fixed">Fixed</option>
-										<option value="default" selected>Default</option>
-									</select>
-								</label>
-								<label>
-									<span>Footer</span>
-									<select class="footer-option m-wrap small">
-										<option value="fixed">Fixed</option>
-										<option value="default" selected>Default</option>
-									</select>
-								</label>
-							</div>
-						</div>
-						<!-- END BEGIN STYLE CUSTOMIZER -->  
-						<h3 class="page-title">
-							Advance Form Samples
-							 <small>advance form layout samples</small>
-						</h3>
-						<ul class="breadcrumb">
-							<li>
-								<i class="icon-home"></i>
-								<a href="index.html">Home</a> 
-								<span class="icon-angle-right"></span>
-							</li>
-							<li>
-								<a href="#">Form Stuff</a>
-								<span class="icon-angle-right"></span>
-							</li>
-							<li><a href="#">Form Layouts</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- END PAGE HEADER-->
-				<!-- BEGIN PAGE CONTENT-->
-				<div class="row-fluid">
-					<div class="span12">
-						<div class="tabbable tabbable-custom boxless">
-							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_1" data-toggle="tab">2 Columns</a></li>
-								<li><a class="" href="#tab_2" data-toggle="tab">2 Columns Horizontal</a></li>
-								<li><a href="#tab_3" data-toggle="tab">2 Columns View Only</a></li>
-								<li><a class="" href="#tab_4" data-toggle="tab">Row Seperated</a></li>
-								<li><a class="" href="#tab_5" data-toggle="tab">Bordered</a></li>
-								<li><a class="" href="#tab_6" data-toggle="tab">Bordered & Row Stripped</a></li>
-								<li><a class="" href="#tab_7" data-toggle="tab">Bordered & Label Stripped</a></li>
-							</ul>
-							<div class="tab-content">
-								<div class="tab-pane active" id="tab_1">
-									<div class="portlet box blue">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="horizontal-form">
-												<h3 class="form-section">Person Info</h3>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" for="firstName">First Name</label>
-															<div class="controls">
-																<input type="text" id="firstName" class="m-wrap span12" placeholder="Chee Kin">
-																<span class="help-block">This is inline help</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group error">
-															<label class="control-label" for="lastName">Last Name</label>
-															<div class="controls">
-																<input type="text" id="lastName" class="m-wrap span12" placeholder="Lim">
-																<span class="help-block">This field has error.</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Gender</label>
-															<div class="controls">
-																<select  class="m-wrap span12">
-																	<option value="">Male</option>
-																	<option value="">Female</option>
-																</select>
-																<span class="help-block">Select your gender.</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Date of Birth</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12"  placeholder="dd/mm/yyyy">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->        
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Category</label>
-															<div class="controls">
-																<select class="span12 select2_category" data-placeholder="Choose a Category" tabindex="1">
-																	<option value=""></option>
-																	<option value="Category 1">Category 1</option>
-																	<option value="Category 2">Category 2</option>
-																	<option value="Category 3">Category 5</option>
-																	<option value="Category 4">Category 4</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Membership</label>
-															<div class="controls">                                                
-																<label class="radio">
-																<input type="radio" name="optionsRadios2" value="option1" />
-																Free
-																</label>
-																<label class="radio">
-																<input type="radio" name="optionsRadios2" value="option2" checked />
-																Professional
-																</label>  
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row--> 
-												<h3 class="form-section">Address</h3>
-												<div class="row-fluid">
-													<div class="span12 ">
-														<div class="control-group">
-															<label class="control-label" >Street</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12" >
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >City</label>
-															<div class="controls">
-																<input type="text"  class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >State</label>
-															<div class="controls">
-																<input type="text"  class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->           
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Post Code</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Country</label>
-															<div class="controls">
-																<select  class="m-wrap span12"></select>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM--> 
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane " id="tab_2">
-									<div class="portlet box green">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="form-horizontal">
-												<h3 class="form-section">Person Info</h3>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">First Name</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12" placeholder="Chee Kin">
-																<span class="help-block">This is inline help</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group error">
-															<label class="control-label">Last Name</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12" placeholder="Lim">
-																<span class="help-block">This field has error.</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">Gender</label>
-															<div class="controls">
-																<select class="m-wrap span12">
-																	<option value="">Male</option>
-																	<option value="">Female</option>
-																</select>
-																<span class="help-block">Select your gender.</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Date of Birth</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12" placeholder="dd/mm/yyyy">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->        
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">Category</label>
-															<div class="controls">
-																<select class="span12 select2_category"  data-placeholder="Choose a Category" tabindex="1">
-																	<option value=""></option>
-																	<option value="Category 1">Category 1</option>
-																	<option value="Category 2">Category 2</option>
-																	<option value="Category 3">Category 5</option>
-																	<option value="Category 4">Category 4</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">Membership</label>
-															<div class="controls">                                                
-																<label class="radio">
-																<input type="radio" name="optionsRadios2" value="option1" />
-																Free
-																</label>
-																<label class="radio">
-																<input type="radio" name="optionsRadios2" value="option2" checked />
-																Professional
-																</label>  
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<h3 class="form-section">Address</h3>
-												<!--/row-->                   
-												<div class="row-fluid">
-													<div class="span12 ">
-														<div class="control-group">
-															<label class="control-label">Street</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12" >
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">City</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >State</label>
-															<div class="controls">
-																<input type="text"  class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->           
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">Post Code</label>
-															<div class="controls">
-																<input type="text" class="m-wrap span12"> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label">Country</label>
-															<div class="controls">
-																<select class="m-wrap span12">
-																	<option>Country 1</option>
-																	<option>Country 2</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM-->                
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane " id="tab_3">
-									<div class="portlet box blue">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<div class="form-horizontal form-view">
-												<h3> View User Info - Bob Nilson </h3>
-												<h3 class="form-section">Person Info</h3>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" for="firstName">First Name:</label>
-															<div class="controls">
-																<span class="text">Bob</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" for="lastName">Last Name:</label>
-															<div class="controls">
-																<span class="text">Nilson</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Gender:</label>
-															<div class="controls">
-																<span class="text">Male</span> 
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Date of Birth:</label>
-															<div class="controls">
-																<span class="text bold">20.01.1984</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->        
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Category:</label>
-															<div class="controls">
-																<span class="text bold">Category1</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Membership:</label>
-															<div class="controls">                                                
-																<span class="text bold">Free</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->                
-												<h3 class="form-section">Address</h3>
-												<div class="row-fluid">
-													<div class="span12 ">
-														<div class="control-group">
-															<label class="control-label" >Street:</label>
-															<div class="controls">
-																<span class="text">#24 Sun Park Avenue, Rolton Str</span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >City:</label>
-															<div class="controls">
-																<span class="text">New York</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6">
-														<div class="control-group">
-															<label class="control-label" >State:</label>
-															<div class="controls">
-																<span class="text">New York</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->           
-												<div class="row-fluid">
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Post Code:</label>
-															<div class="controls">
-																<span class="text">457890</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="span6 ">
-														<div class="control-group">
-															<label class="control-label" >Country:</label>
-															<div class="controls">
-																<span class="text">USA</span>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-pencil"></i> Edit</button>
-													<button type="button" class="btn">Back</button>
-												</div>
-											</div>
-											<!-- END FORM-->  
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane"  id="tab_4">
-									<div class="portlet box blue">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="form-horizontal form-row-seperated">
-												<div class="control-group">
-													<label class="control-label">First Name</label>
-													<div class="controls">
-														<input type="text" placeholder="small" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Last Name</label>
-													<div class="controls">
-														<input type="text" placeholder="medium" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Gender</label>
-													<div class="controls">
-														<select  class="m-wrap span12">
-															<option value="">Male</option>
-															<option value="">Female</option>
-														</select>
-														<span class="help-block">Select your gender.</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Date of Birth</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"  placeholder="dd/mm/yyyy">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Category</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_category">
-																<option value=""></option>
-																<option value="Category 1">Category 1</option>
-																<option value="Category 2">Category 2</option>
-																<option value="Category 3">Category 5</option>
-																<option value="Category 4">Category 4</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Multi-Value Select</label>
-													<div class="controls">
-														<select class="span12 select2_sample1" multiple>
-															<option value=""></option>
-															<optgroup label="NFC EAST">
-																<option>Dallas Cowboys</option>
-																<option>New York Giants</option>
-																<option>Philadelphia Eagles</option>
-																<option>Washington Redskins</option>
-															</optgroup>
-															<optgroup label="NFC NORTH">
-																<option>Chicago Bears</option>
-																<option>Detroit Lions</option>
-																<option>Green Bay Packers</option>
-																<option>Minnesota Vikings</option>
-															</optgroup>
-															<optgroup label="NFC SOUTH">
-																<option>Atlanta Falcons</option>
-																<option>Carolina Panthers</option>
-																<option>New Orleans Saints</option>
-																<option>Tampa Bay Buccaneers</option>
-															</optgroup>
-															<optgroup label="NFC WEST">
-																<option>Arizona Cardinals</option>
-																<option>St. Louis Rams</option>
-																<option>San Francisco 49ers</option>
-																<option>Seattle Seahawks</option>
-															</optgroup>
-															<optgroup label="AFC EAST">
-																<option>Buffalo Bills</option>
-																<option>Miami Dolphins</option>
-																<option>New England Patriots</option>
-																<option>New York Jets</option>
-															</optgroup>
-															<optgroup label="AFC NORTH">
-																<option>Baltimore Ravens</option>
-																<option>Cincinnati Bengals</option>
-																<option>Cleveland Browns</option>
-																<option>Pittsburgh Steelers</option>
-															</optgroup>
-															<optgroup label="AFC SOUTH">
-																<option>Houston Texans</option>
-																<option>Indianapolis Colts</option>
-																<option>Jacksonville Jaguars</option>
-																<option>Tennessee Titans</option>
-															</optgroup>
-															<optgroup label="AFC WEST">
-																<option>Denver Broncos</option>
-																<option>Kansas City Chiefs</option>
-																<option>Oakland Raiders</option>
-																<option>San Diego Chargers</option>
-															</optgroup>
-														</select>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Loading Data</label>
-													<div class="controls">
-														<input type="hidden" class="span12 select2_sample2">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Tags Support List</label>
-													<div class="controls">
-														<input type="hidden" class="span12 select2_sample3" value="red, blue">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Membership</label>
-													<div class="controls">                                                
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option1" />
-														Free
-														</label>
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option2" checked />
-														Professional
-														</label>  
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Street</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12" >
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >City</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >State</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Post Code</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group last">
-													<label class="control-label" >Country</label>
-													<div class="controls">
-														<select  class="m-wrap span12"></select>
-													</div>
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM-->  
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane"  id="tab_5">
-									<div class="portlet box blue ">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="form-horizontal form-bordered">
-												<div class="control-group">
-													<label class="control-label">First Name</label>
-													<div class="controls">
-														<input type="text" placeholder="small" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Last Name</label>
-													<div class="controls">
-														<input type="text" placeholder="medium" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Gender</label>
-													<div class="controls">
-														<select  class="m-wrap span12">
-															<option value="">Male</option>
-															<option value="">Female</option>
-														</select>
-														<span class="help-block">Select your gender.</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Date of Birth</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"  placeholder="dd/mm/yyyy">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Category</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_category">
-																<option value=""></option>
-																<option value="Category 1">Category 1</option>
-																<option value="Category 2">Category 2</option>
-																<option value="Category 3">Category 5</option>
-																<option value="Category 4">Category 4</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Multi-Value Select</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_sample1" multiple>
-																<option value=""></option>
-																<optgroup label="NFC EAST">
-																	<option>Dallas Cowboys</option>
-																	<option>New York Giants</option>
-																	<option>Philadelphia Eagles</option>
-																	<option>Washington Redskins</option>
-																</optgroup>
-																<optgroup label="NFC NORTH">
-																	<option>Chicago Bears</option>
-																	<option>Detroit Lions</option>
-																	<option>Green Bay Packers</option>
-																	<option>Minnesota Vikings</option>
-																</optgroup>
-																<optgroup label="NFC SOUTH">
-																	<option>Atlanta Falcons</option>
-																	<option>Carolina Panthers</option>
-																	<option>New Orleans Saints</option>
-																	<option>Tampa Bay Buccaneers</option>
-																</optgroup>
-																<optgroup label="NFC WEST">
-																	<option>Arizona Cardinals</option>
-																	<option>St. Louis Rams</option>
-																	<option>San Francisco 49ers</option>
-																	<option>Seattle Seahawks</option>
-																</optgroup>
-																<optgroup label="AFC EAST">
-																	<option>Buffalo Bills</option>
-																	<option>Miami Dolphins</option>
-																	<option>New England Patriots</option>
-																	<option>New York Jets</option>
-																</optgroup>
-																<optgroup label="AFC NORTH">
-																	<option>Baltimore Ravens</option>
-																	<option>Cincinnati Bengals</option>
-																	<option>Cleveland Browns</option>
-																	<option>Pittsburgh Steelers</option>
-																</optgroup>
-																<optgroup label="AFC SOUTH">
-																	<option>Houston Texans</option>
-																	<option>Indianapolis Colts</option>
-																	<option>Jacksonville Jaguars</option>
-																	<option>Tennessee Titans</option>
-																</optgroup>
-																<optgroup label="AFC WEST">
-																	<option>Denver Broncos</option>
-																	<option>Kansas City Chiefs</option>
-																	<option>Oakland Raiders</option>
-																	<option>San Diego Chargers</option>
-																</optgroup>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Loading Data</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample2">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Tags Support List</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample3" value="red, blue">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Membership</label>
-													<div class="controls">                                                
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option1" />
-														Free
-														</label>
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option2" checked />
-														Professional
-														</label>  
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Street</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12" >
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >City</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >State</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Post Code</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group last">
-													<label class="control-label" >Country</label>
-													<div class="controls">
-														<select  class="m-wrap span12"></select>
-													</div>
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM-->  
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane"  id="tab_6">
-									<div class="portlet box blue ">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="form-horizontal form-bordered form-row-stripped">
-												<div class="control-group">
-													<label class="control-label">First Name</label>
-													<div class="controls">
-														<input type="text" placeholder="small" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Last Name</label>
-													<div class="controls">
-														<input type="text" placeholder="medium" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Gender</label>
-													<div class="controls">
-														<select  class="m-wrap span12">
-															<option value="">Male</option>
-															<option value="">Female</option>
-														</select>
-														<span class="help-block">Select your gender.</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Date of Birth</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"  placeholder="dd/mm/yyyy">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Category</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_category">
-																<option value=""></option>
-																<option value="Category 1">Category 1</option>
-																<option value="Category 2">Category 2</option>
-																<option value="Category 3">Category 5</option>
-																<option value="Category 4">Category 4</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Multi-Value Select</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_sample1" multiple>
-																<option value=""></option>
-																<optgroup label="NFC EAST">
-																	<option>Dallas Cowboys</option>
-																	<option>New York Giants</option>
-																	<option>Philadelphia Eagles</option>
-																	<option>Washington Redskins</option>
-																</optgroup>
-																<optgroup label="NFC NORTH">
-																	<option>Chicago Bears</option>
-																	<option>Detroit Lions</option>
-																	<option>Green Bay Packers</option>
-																	<option>Minnesota Vikings</option>
-																</optgroup>
-																<optgroup label="NFC SOUTH">
-																	<option>Atlanta Falcons</option>
-																	<option>Carolina Panthers</option>
-																	<option>New Orleans Saints</option>
-																	<option>Tampa Bay Buccaneers</option>
-																</optgroup>
-																<optgroup label="NFC WEST">
-																	<option>Arizona Cardinals</option>
-																	<option>St. Louis Rams</option>
-																	<option>San Francisco 49ers</option>
-																	<option>Seattle Seahawks</option>
-																</optgroup>
-																<optgroup label="AFC EAST">
-																	<option>Buffalo Bills</option>
-																	<option>Miami Dolphins</option>
-																	<option>New England Patriots</option>
-																	<option>New York Jets</option>
-																</optgroup>
-																<optgroup label="AFC NORTH">
-																	<option>Baltimore Ravens</option>
-																	<option>Cincinnati Bengals</option>
-																	<option>Cleveland Browns</option>
-																	<option>Pittsburgh Steelers</option>
-																</optgroup>
-																<optgroup label="AFC SOUTH">
-																	<option>Houston Texans</option>
-																	<option>Indianapolis Colts</option>
-																	<option>Jacksonville Jaguars</option>
-																	<option>Tennessee Titans</option>
-																</optgroup>
-																<optgroup label="AFC WEST">
-																	<option>Denver Broncos</option>
-																	<option>Kansas City Chiefs</option>
-																	<option>Oakland Raiders</option>
-																	<option>San Diego Chargers</option>
-																</optgroup>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Loading Data</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample2">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Tags Support List</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample3" value="red, blue">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Membership</label>
-													<div class="controls">                                                
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option1" />
-														Free
-														</label>
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option2" checked />
-														Professional
-														</label>  
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Street</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12" >
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >City</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >State</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Post Code</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group last">
-													<label class="control-label" >Country</label>
-													<div class="controls">
-														<select  class="m-wrap span12"></select>
-													</div>
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM-->  
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane"  id="tab_7">
-									<div class="portlet box blue ">
-										<div class="portlet-title">
-											<div class="caption"><i class="icon-reorder"></i>Form Sample</div>
-											<div class="tools">
-												<a href="javascript:;" class="collapse"></a>
-												<a href="#portlet-config" data-toggle="modal" class="config"></a>
-												<a href="javascript:;" class="reload"></a>
-												<a href="javascript:;" class="remove"></a>
-											</div>
-										</div>
-										<div class="portlet-body form">
-											<!-- BEGIN FORM-->
-											<form action="#" class="form-horizontal form-bordered form-label-stripped">
-												<div class="control-group">
-													<label class="control-label">First Name</label>
-													<div class="controls">
-														<input type="text" placeholder="small" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Last Name</label>
-													<div class="controls">
-														<input type="text" placeholder="medium" class="m-wrap span12" />
-														<span class="help-inline">This is inline help</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Gender</label>
-													<div class="controls">
-														<select  class="m-wrap span12">
-															<option value="">Male</option>
-															<option value="">Female</option>
-														</select>
-														<span class="help-block">Select your gender.</span>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Date of Birth</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"  placeholder="dd/mm/yyyy">
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Category</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_category">
-																<option value=""></option>
-																<option value="Category 1">Category 1</option>
-																<option value="Category 2">Category 2</option>
-																<option value="Category 3">Category 5</option>
-																<option value="Category 4">Category 4</option>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Multi-Value Select</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<select class="span12 select2_sample1" multiple>
-																<option value=""></option>
-																<optgroup label="NFC EAST">
-																	<option>Dallas Cowboys</option>
-																	<option>New York Giants</option>
-																	<option>Philadelphia Eagles</option>
-																	<option>Washington Redskins</option>
-																</optgroup>
-																<optgroup label="NFC NORTH">
-																	<option>Chicago Bears</option>
-																	<option>Detroit Lions</option>
-																	<option>Green Bay Packers</option>
-																	<option>Minnesota Vikings</option>
-																</optgroup>
-																<optgroup label="NFC SOUTH">
-																	<option>Atlanta Falcons</option>
-																	<option>Carolina Panthers</option>
-																	<option>New Orleans Saints</option>
-																	<option>Tampa Bay Buccaneers</option>
-																</optgroup>
-																<optgroup label="NFC WEST">
-																	<option>Arizona Cardinals</option>
-																	<option>St. Louis Rams</option>
-																	<option>San Francisco 49ers</option>
-																	<option>Seattle Seahawks</option>
-																</optgroup>
-																<optgroup label="AFC EAST">
-																	<option>Buffalo Bills</option>
-																	<option>Miami Dolphins</option>
-																	<option>New England Patriots</option>
-																	<option>New York Jets</option>
-																</optgroup>
-																<optgroup label="AFC NORTH">
-																	<option>Baltimore Ravens</option>
-																	<option>Cincinnati Bengals</option>
-																	<option>Cleveland Browns</option>
-																	<option>Pittsburgh Steelers</option>
-																</optgroup>
-																<optgroup label="AFC SOUTH">
-																	<option>Houston Texans</option>
-																	<option>Indianapolis Colts</option>
-																	<option>Jacksonville Jaguars</option>
-																	<option>Tennessee Titans</option>
-																</optgroup>
-																<optgroup label="AFC WEST">
-																	<option>Denver Broncos</option>
-																	<option>Kansas City Chiefs</option>
-																	<option>Oakland Raiders</option>
-																	<option>San Diego Chargers</option>
-																</optgroup>
-															</select>
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Loading Data</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample2">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label">Tags Support List</label>
-													<div class="controls">
-														<div class="select2-wrapper">
-															<input type="hidden" class="span12 select2_sample3" value="red, blue">
-														</div>
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Membership</label>
-													<div class="controls">                                                
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option1" />
-														Free
-														</label>
-														<label class="radio">
-														<input type="radio" name="optionsRadios2" value="option2" checked />
-														Professional
-														</label>  
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Street</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12" >
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >City</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >State</label>
-													<div class="controls">
-														<input type="text"  class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group">
-													<label class="control-label" >Post Code</label>
-													<div class="controls">
-														<input type="text" class="m-wrap span12"> 
-													</div>
-												</div>
-												<div class="control-group last">
-													<label class="control-label" >Country</label>
-													<div class="controls">
-														<select  class="m-wrap span12"></select>
-													</div>
-												</div>
-												<div class="form-actions">
-													<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-													<button type="button" class="btn">Cancel</button>
-												</div>
-											</form>
-											<!-- END FORM-->  
-										</div>
-									</div>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+				
+				<!-- BEGIN SEARCH FORM -->
+				<div class="portlet-body">
+					<form id="searchForm" name="searchForm" action="rolelist" class="form-horizontal" method="post">
+					<div class="row">
+						<div class="col-md-6">					
+							<div class="form-group">
+								<label class="col-md-3 control-label">Roles Name</label>
+								<div class="col-md-9">
+									<input name="roleName" type="text" class="form-control">							
 								</div>
 							</div>
 						</div>
+						<div class="col-md-6">	
+							<div class="form-group">
+								<label class="col-md-3 control-label">Status</label>
+								<div class="col-md-9">
+									<div class="radio-list">
+										<label class="radio-inline">
+										<input type="radio" name="status" value="" checked/>All </label>
+										<label class="radio-inline">
+										<input type="radio" name="status" value="true"/>Enable </label>
+										<label class="radio-inline">
+										<input type="radio" name="status" value="false"/>Disable </label>
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>					
+					<div class="row">	
+						<div class="col-md-6">	
+							<div class="form-group">								
+								<div class="col-md-offset-3 col-md-9">
+									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
+									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+								</div>
+							</div>					
+						</div>
+					</div>	
+					</form>
+				</div>
+				<!-- END SEARCH FORM -->
+								<!-- BEGIN PAGE CONTENT-->				<div class="row">
+					<div class="col-md-12">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box blue-hoki">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-edit"></i>Managed Rights Table
+								</div>
+								<div class="actions">									
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i> Add</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i> Edit</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> Delete</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> Assign Rights</a>								    <div class="btn-group">
+										<a class="btn default" href="#" data-toggle="dropdown">
+										Columns <i class="fa fa-angle-down"></i>
+										</a>
+										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+											<label><input type="checkbox" checked data-column="0">Checkbox</label>
+											<label><input type="checkbox" checked data-column="1">ID</label>
+											<label><input type="checkbox" checked data-column="2">Role Name</label>											
+											<label><input type="checkbox" checked data-column="3">Parent ID</label>
+											<label><input type="checkbox" checked data-column="4">Status</label>
+											<label><input type="checkbox" checked data-column="4">Role Rights</label>
+										</div>
+									</div>								    																
+								</div>
+							</div>							
+							<div class="portlet-body">																
+								<table class="table table-striped table-hover table-bordered" id="roles_table">
+									<thead>
+										<tr>
+											<th class="table-checkbox">
+												<input type="checkbox" class="group-checkable" data-set="#roles_table .checkboxes"/>
+											</th>
+											<th>ID</th>											
+											<th>Role Name</th>											
+											<th>Parent ID</th>											
+											<th>Status</th>	
+											<th>Role Rights</th>										
+										</tr>
+									</thead>
+																						
+								</table>
+							</div>
+						</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
 					</div>
 				</div>
-				<!-- END PAGE CONTENT-->         
-			</div>
-			<!-- END PAGE CONTAINER-->
+				<!-- END PAGE CONTENT -->
+								<!-- BEGIN ADD MODAL FORM-->
+				<div class="modal" id="add_role" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Add Role</h4>
+					</div>
+					<div id="addFormMsg"></div>
+					<!-- <div class="modal-body"> -->
+					<div class="portlet-body form">
+						<!-- BEGIN FORM	-->					
+						<form id="addRoleForm" action="addRole" method="post" name="addRoleForm" class="form-horizontal form-bordered">
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Role Name<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="roleName" class="form-control"/>										
+									</div>
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Parent Role ID <span class="required">* </span></label>
+									<div class="col-md-9">
+										<input name="pid" class="form-control"/>									
+									</div>
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Status <span class="required">* </span></label>
+									<div class="col-md-9">										
+										<div class="radio-list">
+											<label class="radio-inline">
+											<input type="radio" name="status" value="true" checked/>true </label>
+											<label class="radio-inline">
+											<input type="radio" name="status" value="false"/>false </label>
+										</div>
+									</div>
+								</div>															
+								
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END ADD MODAL FORM-->								<!-- BEGIN Edit MODAL FORM-->				<div class="modal" id="edit_role" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Edit Role</h4>
+					</div>
+					<div id="editFormMsg"></div>
+					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
+						<!-- BEGIN FORM-->						
+						<form id="editRoleForm" action="editRole" method="post" name="editRoleForm" class="form-horizontal form-bordered">
+							<input name="roleId" type="hidden" value=""/>
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Role Name<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="roleName" class="form-control"/>										
+									</div>
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Parent Role ID<span class="required"> * </span></label>
+									<div class="col-md-9">
+										<input name="pid" class="form-control"/>									
+									</div>
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">Status<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<div class="radio-list">
+											<label class="radio-inline">
+											<input type="radio" name="status" value="true" checked/>true </label>
+											<label class="radio-inline">
+											<input type="radio" name="status" value="false"/>false </label>
+										</div>
+									</div>
+								</div>														
+								
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="editFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END EDIT MODAL FORM-->
+				
+				<!-- BEGIN Edit Role Rights MODAL FORM-->				<div class="modal" id="edit_roleRights" tabindex="-1" data-width="760">					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Assign Role Rights</h4>
+					</div>
+					<div id="editFormMsg"></div>
+					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
+						<!-- BEGIN FORM-->						
+						<form id="editRoleRightsForm" action="editRoleRights" method="post" name="editRoleRightsForm" class="form-horizontal form-bordered">
+							<input name="roleId" type="hidden" value=""/>
+							<input name="roleRights" type="hidden" value=""/>
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>
+							<c:forEach var="rightsGroup" items="${rightsList}" varStatus="status">																														
+								<div class="form-group">
+									<label class="control-label col-md-3">${rightsGroup.key} </label>
+									<div class="col-md-9">
+									<c:forEach var="rights" items="${rightsGroup.value}" varStatus="status">
+										<c:if test="${(status.index+1)%3==1}">										
+										<div class="checkbox-list">
+										</c:if>
+											<label class="checkbox-inline">
+											<input type="checkbox" name="rights" value="${rights.bitFlag}"/>${rights.name}</label>											
+										<c:if test="${(status.index+1)%3==0||status.last}">
+										</div>
+										</c:if>
+									</c:forEach>	
+									</div>
+								</div>														
+							</c:forEach>
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="assignFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END EDIT Role Rights MODAL FORM-->
+				
+				<!-- BEGIN DELETE MODAL FORM-->
+				<div class="modal" id="delete_roles" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							 Are you sure to delete these selected rows ?
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>				
+				<!-- END DELETE MODAL FORM-->
+			</div>		
 		</div>
-		<!-- END PAGE -->  
-	</div>
+	</div>	
 	<!-- END CONTAINER -->
-	<!-- BEGIN FOOTER -->    <c:import url="/common/footer"/>
+	<!-- BEGIN FOOTER -->	<c:import url="/common/footer"/>
 	<!-- END FOOTER -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
-	<script src="../media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
-	<script src="../media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-	<script src="../media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
-	<script src="../media/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--[if lt IE 9]>
-	<script src="../media/js/excanvas.min.js"></script>
-	<script src="../media/js/respond.min.js"></script>  
-	<![endif]-->   
-	<script src="../media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="../media/js/jquery.blockui.min.js" type="text/javascript"></script>  
-	<script src="../media/js/jquery.cookie.min.js" type="text/javascript"></script>
-	<script src="../media/js/jquery.uniform.min.js" type="text/javascript" ></script>
-	<!-- END CORE PLUGINS -->
+	<script src="../assets/global/plugins/respond.min.js"></script>
+	<script src="../assets/global/plugins/excanvas.min.js"></script> 
+	<![endif]-->
+	<script src="../assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->	<script src="../assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+	<script src="../assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+	<script src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>	<script src="../assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+	<script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>	<!-- END CORE PLUGINS -->
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
-	<script type="text/javascript" src="../media/js/select2.min.js"></script>
-	<!-- END PAGE LEVEL PLUGINS -->
+	<script src="../assets/global/plugins/select2/select2.min.js" type="text/javascript"></script>
+	<script src="../assets/global/plugins/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>	<script src="../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js" type="text/javascript"></script>	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>    <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script src="../media/js/app.js"></script>
-	<script src="../media/js/form-samples.js"></script>   
-	<!-- END PAGE LEVEL SCRIPTS -->
+	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
+	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>		<script src="../static/js/rolesTableData.js"></script>
 	<script>
-		jQuery(document).ready(function() {    
-		   // initiate layout and plugins
-		   App.init();
-		   FormSamples.init();
-		});
+	jQuery(document).ready(function() {       
+	   Metronic.init(); // init metronic core components	   Layout.init(); // init current layout	
+	   //Demo.init(); // init demo features
+	   RolesTable.init("<c:url value="/"/>");	   	});
 	</script>
-	<!-- END JAVASCRIPTS -->   
-<script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script></body>
+</body>
 <!-- END BODY -->
-</html>
+</html>

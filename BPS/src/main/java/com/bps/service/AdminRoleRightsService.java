@@ -8,6 +8,8 @@ public interface AdminRoleRightsService {
 	
 	void createAdminRoleRights(TadminRoleRights adminRoleRights);
 	
+	void saveAdminRoleRights(TadminRoleRights adminRoleRights);
+	
 	void updateAdminRoleRights(TadminRoleRights adminRoleRights);
 	
 	void deleteAdminRoleRights(TadminRoleRights adminRoleRights);

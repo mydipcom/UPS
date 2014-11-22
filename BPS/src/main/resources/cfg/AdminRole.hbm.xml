@@ -20,5 +20,7 @@
 		<property name="status" type="java.lang.Boolean">
 			<column name="status" not-null="true" default="0"/>
 		</property>
+		
+		<one-to-one name="adminRoleRights" class="com.bps.dto.TadminRoleRights" />
 	</class>
 </hibernate-mapping>

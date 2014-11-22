@@ -70,7 +70,7 @@ public class BaseController {
 			return 0;
 		}
 		else{
-			return (Long)obj;
+			return (long)obj;
 		}
 	}
 	
