@@ -18,16 +18,18 @@ public interface AdminNodesService {
 	
 	public List<TadminNodes> getAdminNodesMenuByPid(Integer pid);
 	
-	public void createAdminNode(TadminNodes adminNodes);
+	public void createAdminNode(TadminNodes adminNode);
 	
-	public void updateAdminNode(TadminNodes adminNodes);
+	public void updateAdminNode(TadminNodes adminNode);
 	
-	public void deleteAdminNode(TadminNodes adminNodes);
+	public void deleteAdminNode(TadminNodes adminNode);
 	
 	public void deleteAdminNodeById(int id);
 	
 	public void deleteAdminNodesByIds(Integer[] ids);
 	
 	public PagingData loadAdminNodesList(DataTableParamter rdtp);
+	
+	void cachedNodesData();
 		
 }

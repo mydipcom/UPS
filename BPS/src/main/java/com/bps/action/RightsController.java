@@ -78,28 +78,15 @@ public class RightsController extends BaseController {
 	 */
 	@RequestMapping(value="/addRights",method=RequestMethod.POST)
 	@ResponseBody
-	public String addRights(HttpServletRequest request,TadminNodes adminNode){
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
-//		TadminNodes adminNode=new TadminNodes();
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-			
+	public String addRights(HttpServletRequest request,TadminNodes adminNode){			
 		JSONObject respJson = new JSONObject();
 		try{
-			adminNodesService.createAdminNode(adminNode);
+			adminNodesService.createAdminNode(adminNode);			
 			respJson.put("status", true);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}		
 		return JSON.toJSONString(respJson);
 	}
@@ -107,18 +94,6 @@ public class RightsController extends BaseController {
 	@RequestMapping(value="/editRights",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateRights(HttpServletRequest request,TadminNodes adminNode){		
-//		TadminNodes adminNode=new TadminNodes();		
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
 
 		JSONObject respJson = new JSONObject();
 		try{
@@ -127,7 +102,7 @@ public class RightsController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);		
 	}
@@ -144,7 +119,7 @@ public class RightsController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}

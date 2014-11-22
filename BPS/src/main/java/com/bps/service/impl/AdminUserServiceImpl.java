@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bps.commons.SecurityTools;
 import com.bps.dao.AdminUserDao;
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
@@ -59,9 +58,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	 * @param adminUser 
 	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
-	public void createAdminUser(TadminUser adminUser) {
-		
-		adminUserDao.create(adminUser);
+	public void createAdminUser(TadminUser adminUser) {		
+		adminUserDao.create(adminUser);		
 	}
 
 	/**

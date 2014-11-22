@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
+import com.bps.commons.SystemConfig;
 import com.bps.dao.AdminNodesDao;
 import com.bps.dto.TadminNodes;
 import com.bps.model.DataTableParamter;
@@ -117,19 +118,18 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#createAdminNode(com.bps.dto.TadminNodes) 
 	 */
-	public void createAdminNode(TadminNodes adminNodes) {
-		try{
-			adminNodesDao.create(adminNodes);
-			double nodeValue=Math.pow(2, adminNodes.getNodeId()-1);
-			adminNodes.setBitFlag((long)nodeValue);
-			adminNodesDao.update(adminNodes);
+	public void createAdminNode(TadminNodes adminNode) {
+		if(adminNodesDao.get(adminNode.getPid())==null){
+			throw new BPSException("error.AdminNodesServiceImpl.createAdminNode.pid");
 		}
-		catch(BPSException be){
-			throw be;
-		}
-		catch(Exception e){
-			throw new BPSException("error.service.adminnodes.create",e);
-		}
+		long bitval=adminNodesDao.getMaxValue("bitFlag");
+		long nodeValue=1;
+		if(bitval>0){
+			nodeValue=bitval*2;
+		}		
+		adminNode.setBitFlag(nodeValue);		
+		adminNodesDao.create(adminNode);	
+		cachedNodesData();
 	}
 
 	/**
@@ -139,8 +139,9 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#updateAdminNode(com.bps.dto.TadminNodes) 
 	 */
-	public void updateAdminNode(TadminNodes adminNodes) {
-		adminNodesDao.update(adminNodes);
+	public void updateAdminNode(TadminNodes adminNode) {
+		adminNodesDao.update(adminNode);
+		cachedNodesData();
 	}
 
 	/**
@@ -150,8 +151,9 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @param adminNodes 
 	 * @see com.bps.service.AdminNodesService#deleteAdminNode(com.bps.dto.TadminNodes) 
 	 */
-	public void deleteAdminNode(TadminNodes adminNodes) {
-		adminNodesDao.delete(adminNodes);		
+	public void deleteAdminNode(TadminNodes adminNode) {
+		adminNodesDao.delete(adminNode);
+		cachedNodesData();
 	}
 	
 	/**
@@ -163,6 +165,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 */
 	public void deleteAdminNodeById(int id){
 		adminNodesDao.delete(id);
+		cachedNodesData();
 	}
 	
 	/**
@@ -174,6 +177,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 */
 	public void deleteAdminNodesByIds(Integer[] ids){		
 		adminNodesDao.deleteAll(ids);
+		cachedNodesData();
 	}
 
 	/**
@@ -212,5 +216,34 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 		return adminNodesDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
+	/**
+	 * <p>Title: Cache all the nodes data</p> 
+	 * <p>Description: </p>  
+	 * @see com.bps.service.AdminNodesService#cachedNodesData()
+	 */
+	public void cachedNodesData(){
+		List<TadminNodes> nodesList=getAllEnabledAdminNodes();
+		SystemConfig.Admin_Nodes_Url_Map.clear();
+		SystemConfig.Admin_Nodes_Menu_Map.clear();
+		SystemConfig.Admin_Nodes_Group_Map.clear();
+		for (TadminNodes adminNodes : nodesList) {    				
+			SystemConfig.Admin_Nodes_Url_Map.put(adminNodes.getMethod()+"@"+adminNodes.getUri(), adminNodes.getBitFlag());
+			    
+			//Build menu mapping
+			if(adminNodes.isIsMenu()&&adminNodes.getPid()==0){
+				List<TadminNodes> menuList=getAdminNodesMenuByPid(adminNodes.getNodeId());
+				SystemConfig.Admin_Nodes_Menu_Map.put(adminNodes, menuList);   	    					
+			}
+			
+			//Build group nodes mapping
+			String groupName=adminNodes.getGroupName();
+			List<TadminNodes> groupList=SystemConfig.Admin_Nodes_Group_Map.get(groupName);
+			if(groupList==null){
+				groupList=new ArrayList<TadminNodes>();
+				SystemConfig.Admin_Nodes_Group_Map.put(groupName, groupList);
+			}    				
+			groupList.add(adminNodes);
+		}
+	}
 	
 }

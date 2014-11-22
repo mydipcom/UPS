@@ -17,17 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
-import com.bps.commons.ConvertTools;
 import com.bps.commons.SecurityTools;
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.AdminNodesService;
+import com.bps.service.AdminRoleService;
 import com.bps.service.AdminUserService;
 
 @Controller
 public class ManagerController extends BaseController {
-private Logger logger = Logger.getLogger(UserController.class);
+private Logger logger = Logger.getLogger(ManagerController.class);
 	
 	
 	@Resource
@@ -36,12 +36,14 @@ private Logger logger = Logger.getLogger(UserController.class);
 	@Resource
 	private AdminNodesService adminNodesService;
 	
+	@Resource
+	private AdminRoleService adminRoleService;
+	
 	
 	@RequestMapping(value="/manager",method=RequestMethod.GET)
 	public ModelAndView adminusers(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		
-//		mav.addObject("user", tUser);
+		ModelAndView mav=new ModelAndView();		
+		mav.addObject("rolesList", adminRoleService.getAllAdminRoles());
 		mav.setViewName("manager/Adminusers");
 		return mav;
 	}
@@ -86,18 +88,6 @@ private Logger logger = Logger.getLogger(UserController.class);
 	@RequestMapping(value="/addUsers",method=RequestMethod.POST)
 	@ResponseBody
 	public String addAdmins(HttpServletRequest request,TadminUser adminuser){
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
-//		TadminNodes adminNode=new TadminNodes();
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
 		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
 		try{
@@ -109,7 +99,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}		
 		return JSON.toJSONString(respJson);
 	}
@@ -117,18 +107,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 	@RequestMapping(value="/editUsers",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateAdmin(HttpServletRequest request,TadminUser adminuser){		
-//		TadminNodes adminNode=new TadminNodes();		
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
+
 		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		TadminUser ad=getSessionUser(request);
 		JSONObject respJson = new JSONObject();
@@ -149,7 +128,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		String str=JSON.toJSONString(respJson);		
 		return str;
@@ -167,7 +146,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}
@@ -183,7 +162,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}
@@ -199,7 +178,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}

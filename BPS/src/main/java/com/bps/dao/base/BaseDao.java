@@ -58,6 +58,11 @@ public class BaseDao<T> extends HibernateDaoSupport
     {
         return this.getHibernateTemplate().save(t);
     }
+    
+    public void saveOrUpdate(T t)
+    {
+        this.getHibernateTemplate().saveOrUpdate(t);
+    }
 
     public T get(Serializable id)
     {
@@ -204,6 +209,25 @@ public class BaseDao<T> extends HibernateDaoSupport
         return criteria;
     } 
     
+    public long getMaxValue(String propertyName){
+    	Criteria criteria =createCriteria();  
+    	Object res=criteria.setProjection(Projections.max(propertyName)).uniqueResult();
+    	if(res==null){
+    		return 0;
+    	}
+    	return (Long)res;
+    	
+    }
+    
+    public long getMinValue(String propertyName){
+    	Criteria criteria =createCriteria();    	
+    	Object res=criteria.setProjection(Projections.min(propertyName)).uniqueResult();
+    	if(res==null){
+    		return 0;
+    	}
+    	return (Long)res;    	
+    }
+    
     @SuppressWarnings("unchecked")
 	public T findUnique(String[] popertyName, Object[] value)
     {
@@ -244,7 +268,7 @@ public class BaseDao<T> extends HibernateDaoSupport
 
         int totalCount = ((Long)criteria.setProjection(
             Projections.rowCount()).uniqueResult()).intValue();
-
+        
         criteria.setProjection(projection);
         if (projection == null)
         {

@@ -172,10 +172,10 @@ var RolesTable = function () {
 						 if(resp.status){
 							 selected=[];
 				        	 oTable.api().draw();
-				        	 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+				        	 handleAlerts("Edited the data successfully.","success","#editRoleRightsFormMsg");
 						 }
 						 else{
-							 handleAlerts("Failed to edit the data.","danger","#editFormMsg");
+							 handleAlerts("Failed to edit the data.","danger","#editRoleRightsFormMsg");
 						 }
 					}             	 
 				 },

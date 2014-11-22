@@ -71,7 +71,7 @@ public class RolesController extends BaseController {
 	}
 	
 	/**
-	 * <p>Description: ´¦ÀíÐÂÔöÊý¾ÝµÄajaxÇëÇó</p>
+	 * <p>Description: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ajaxï¿½ï¿½ï¿½ï¿½</p>
 	 * @Title: addRole 
 	 * @param jsonStr
 	 * @param request
@@ -88,7 +88,7 @@ public class RolesController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}		
 		return JSON.toJSONString(respJson);
 	}
@@ -104,7 +104,7 @@ public class RolesController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);		
 	}
@@ -119,7 +119,7 @@ public class RolesController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);		
 	}
@@ -137,7 +137,7 @@ public class RolesController extends BaseController {
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
+			respJson.put("info", getMessage(request,be.getErrorID(),be.getMessage()));
 		}	
 		return JSON.toJSONString(respJson);	
 	}

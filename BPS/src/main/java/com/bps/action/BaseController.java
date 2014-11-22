@@ -55,6 +55,7 @@ public class BaseController {
 	 */ 
 	protected void setSessionUser(HttpServletRequest request,TadminUser user){
 		request.getSession().setAttribute(SystemConstants.LOGINED, user);		
+		setSessionRights(request,user.getAdminRole().getAdminRoleRights().getRoleRights());
 	}
 	
 	/**
@@ -117,6 +118,19 @@ public class BaseController {
 			return requestContext.getMessage(code);
 		}
 		return requestContext.getMessage(code, args);
+	}
+	
+	/**
+	 * <p>Description:根据资源code获取资源文件中对应的消息</p>
+	 * @Title: getMessage 
+	 * @param request
+	 * @param code
+	 * @param arg
+	 * @return
+	 * @throws
+	 */
+	public String getMessage(HttpServletRequest request,String code,Object arg){				
+		return getMessage(request,code, new Object[]{arg});
 	}
 	
 	/**

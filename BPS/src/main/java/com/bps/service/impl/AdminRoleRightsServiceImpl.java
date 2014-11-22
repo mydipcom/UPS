@@ -42,6 +42,17 @@ public class AdminRoleRightsServiceImpl implements AdminRoleRightsService {
 
 	/**
 	 * (non-Javadoc)
+	 * <p>Title: saveAdminRoleRights</p> 
+	 * <p>Description: </p> 
+	 * @param adminRoleRights 
+	 * @see com.bps.service.AdminRoleRightsService#createAdminRoleRights(com.bps.dto.TadminRoleRights)
+	 */
+	public void saveAdminRoleRights(TadminRoleRights adminRoleRights) {
+		adminRoleRightsDao.saveOrUpdate(adminRoleRights);
+	}
+	
+	/**
+	 * (non-Javadoc)
 	 * <p>Title: createAdminRoleRights</p> 
 	 * <p>Description: </p> 
 	 * @param adminRoleRights 
@@ -72,6 +83,6 @@ public class AdminRoleRightsServiceImpl implements AdminRoleRightsService {
 	 */
 	public void deleteAdminRoleRights(TadminRoleRights adminRoleRights) {
 		adminRoleRightsDao.delete(adminRoleRights);
-	}
+	}	
 
 }

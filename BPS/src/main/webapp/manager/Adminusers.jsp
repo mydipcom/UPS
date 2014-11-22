@@ -105,9 +105,9 @@
 								<div class="col-md-9">
 									<select name="adminRole.roleId" class="form-control">
 										<option value="">ALL</option>
-										<option value="1">admin</option>
-										<option value="2">Bonus Point Manager</option>
-										<option value="3">Bonus Point Operator</option>									
+										<c:forEach var="role" items="${rolesList}">
+										<option value="${role.roleId}">${role.roleName}</option>			
+										</c:forEach>		
 									</select>
 								</div>
 							</div>
@@ -244,12 +244,10 @@
 									<label class="control-label col-md-3">Role_Name<span class="required">* </span></label>
 									<div class="col-md-9">
 										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
+											<c:forEach var="role" items="${rolesList}">
+											<option value="${role.roleId}">${role.roleName}</option>			
+											</c:forEach>
+										</select>										
 									</div>
 								</div>
 								<div class="form-group">
@@ -378,12 +376,10 @@
 									<label class="control-label col-md-3">Role Name</label>
 									<div class="col-md-9">
 										<select name="adminRole.roleId" class="form-control">
-											<option value="1">admin</option>
-											<option value="2">Bonus Point Manager</option>
-											<option value="3">Bonus Point Operator</option>
-										</select>
-										<span class="help-block">
-										Select your gender. </span>
+											<c:forEach var="role" items="${rolesList}">
+											<option value="${role.roleId}">${role.roleName}</option>			
+											</c:forEach>
+										</select>										
 									</div>
 								</div>
 								<div class="form-group">

@@ -123,7 +123,7 @@ public class AdminInfoController extends BaseController {
 	   }
 	
 	@RequestMapping(value="/userprofile/chageAvatar",method=RequestMethod.POST)
-	
+	@ResponseBody
 	public String changeAvatar(HttpServletRequest request,@RequestParam(value = "avatar", required = false) MultipartFile file) throws IOException{
 		JSONObject resp = new JSONObject();
 		InputStream inputStream = file.getInputStream();

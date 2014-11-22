@@ -34,164 +34,112 @@
 				</form>
 				<!-- END RESPONSIVE QUICK SEARCH FORM -->
 			</li>
-			<li class="start active open">
-				<a href="<c:url value="/"/>home">
-				<i class="icon-home"></i> 
-				<span class="title">Dashboard</span>
-				<span class="selected"></span>
-				</a>
-			</li>
+        <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+        <c:set var="cureReqUri" value="${pageContext.request.requestURI}"/>							
+		<c:forEach var="menu" items="${menus}" varStatus="status">
+			<c:forEach var="tempmenu" items="${menu.value}">
+				<c:set var="tempMenuUri" value="${tempmenu.uri}"/>
+				<c:if test="${tempMenuUri.startsWith('/')}">
+					<c:set var="reqUri" value="${contextPath}${tempMenuUri}/"/>
+				</c:if>
+				<c:if test="${!tempMenuUri.startsWith('/')}">
+					<c:set var="reqUri" value="${contextPath}/${tempMenuUri}/"/>
+				</c:if>				
+				<c:if test="${cureReqUri.startsWith(reqUri)}">					
+					<c:set var="selectedNode" value="${tempmenu}"/>			
+				</c:if>
+			</c:forEach>						
+			<c:if test="${status.first}">
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">		
+					<c:set var="classStr" value="start active"/>									
+				</c:if>
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid==menu.key.nodeId}">		
+					<c:set var="classStr" value="start active open"/>			
+				</c:if>
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid!=menu.key.nodeId}">		
+					<c:set var="classStr" value="start"/>			
+				</c:if>
+			</c:if>
+			<c:if test="!${status.first}">		
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">
+					<c:set var="classStr" value="active"/>					
+				</c:if>
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid==menu.key.nodeId}">		
+					<c:set var="classStr" value="active open"/>			
+				</c:if>
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid!=menu.key.nodeId}">		
+					<c:set var="classStr" value=""/>			
+				</c:if>
+			</c:if>	
+			<jsp:useBean id="curBit" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+			<jsp:setProperty name="curBit" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>	
+			<%
+			boolean isAdmin=((com.bps.dto.TadminUser)session.getAttribute("Logined")).getAdminRole().getRoleId()==1;
+			long userRights=0;
+			if(session.getAttribute("rights")!=null){
+				userRights=(long)session.getAttribute("rights");
+			}			
+			if(isAdmin||(userRights&curBit.getBitFlag())>0){
+				
+			%>	
+			<li class="${classStr}">
+				<c:choose>
+					<c:when test="${menu.key.uri eq '/home'}">
+						<c:set var="menuIcon" value="icon-home"/>						
+					</c:when>
+					<c:when test="${menu.key.uri eq '/rights'}">
+						<c:set var="menuIcon" value="icon-wrench"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/setting'}">
+						<c:set var="menuIcon" value="icon-settings"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/logs'}">
+						<c:set var="menuIcon" value="icon-feed"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/points'}">
+						<c:set var="menuIcon" value="icon-note"/>
+					</c:when>
+					<c:otherwise>
+						<c:set var="menuIcon" value="icon-home"/>
+					</c:otherwise>
+				</c:choose>
+				
 			
-			<li>
-				<a href="javascript:;">
-				<i class="icon-user"></i> 
-				<span class="title">User Profile</span>
-				<span class="arrow "></span>
-				</a>                    
-				<ul class="sub-menu">
-				   <li >
-						<a href="<c:url value="/"/>userprofile">
-						Profile</a>
-					</li>
-					<li >
-						<a href="extra_profile.html#tab_1_3">
-						Account</a>
-					</li>
-					<li >
-						<a href="extra_profile.html#tab_2-2">
-						Change Avatar</a>
-					</li>
-					<li >
-						<a href="extra_profile.html#tab_3-3">
-						Change Password</a>
-					</li>
-					
-				</ul>
-			</li>
-            <li class="">
-				<a href="javascript:;">
-				<i class="icon-wrench"></i> 
-				<span class="title">System Management</span>
-				<span class="selected"></span>
-				<span class="arrow"></span>				
+				<c:set var="menuUri" value="${pageContext.request.contextPath}${menu.key.uri}"/>
+				<a href="${menu.value!=null?'javascript;':menu.key.uri}">
+				<i class="<c:out value="${menuIcon}"/>"></i> 
+				<span class="title"><c:out value="${menu.key.name}"/></span>
+				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">				
+					<span class="selected"></span>								
+				</c:if>	
+				<c:if test="${selectedNode!=null&&selectedNode.pid!=0&&selectedNode.pid==menu.key.nodeId}">
+					<span class="arrow open"></span>
+				</c:if>
+				<c:if test="${selectedNode!=null&&selectedNode.pid!=0&&selectedNode.pid!=menu.key.nodeId}">
+					<span class="arrow"></span>
+				</c:if>		
 				</a>
-				<ul class="sub-menu">
-				    <li >
-						<a href="<c:url value="/"/>manager">Manager List</a>
-					</li>
-					<li class="active">
-						<a href="<c:url value="/"/>rights">Rights List</a>
-					</li>
-					<li>
-						<a href="<c:url value="/"/>roles">Roles List</a>
-					</li>						
-				</ul>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
+						<jsp:useBean id="menuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+						<jsp:setProperty name="menuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
+						<%if(isAdmin||(userRights&menuBean.getBitFlag())>0){%>
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>
+						<%} %>
+					</c:forEach>											
+					</ul>
+				</c:if>	
 			</li>
-			<li class="">
-				<a href="<c:url value="/"/>point">
-				<i class="icon-users"></i> 
-				<span class="title">Point Users List</span>					
-				</a>					
-			</li>				
-			<li class="">
-				<a href="<c:url value="/"/>manager">
-				<i class="icon-users"></i> 
-				<span class="title">Admin User</span>					
-				</a>					
-			</li>			
-			<li class="">
-				<a href="javascript:;">
-				<i class="icon-note"></i> 
-				<span class="title">Bonus Rule </span>
-				<span class="arrow "></span>
-				</a>
-				<ul class="sub-menu">
-					<li >
-						<a href="<c:url value="/"/>rulesgroup">
-						Bonus Rule Group</a>
-					</li>
-					<li >
-						<a href="<c:url value="/"/>rules">
-						Bonus Rule Configuration</a>
-					</li>						
-				</ul>
-			</li>			
-			<li>
-				<a href="javascript:;">
-				<i class="icon-notebook"></i> 
-				<span class="title">Job List</span>				
-				</a>				
-			</li>
-			<li class="">
-				<a href="javascript:;">
-				<i class="icon-calendar"></i> 
-				<span class="title">Log List</span>
-				<span class="arrow "></span>
-				</a>
-				<ul class="sub-menu">
-					<li >
-						<a href="login.html">
-						System Log</a>
-					</li>
-					<li >
-						<a href="<c:url value="/"/>ruleslog">
-						Bonus Rule Change Log</a>
-					</li>
-					<li >
-						<a href="<c:url value="/"/>pointlog">
-						Bonus Point Change Log</a>
-					</li>
-					<li >
-						<a href="<c:url value="/"/>mylog">
-						My Log</a>
-					</li>
-					<li >
-						<a href="<c:url value="/"/>managerlog">
-						Admin User Log</a>
-					</li>
-					<li >
-						<a href="login_soft.html">
-						Interface Access Log</a>
-					</li>
-				</ul>
-			</li>
-			<li class="">
-				<a href="javascript:;">
-				<i class="icon-feed"></i> 
-				<span class="title">Interfaces List</span>
-				<span class="arrow "></span>
-				</a>
-				<ul class="sub-menu">
-					<li >
-						<a href="table_basic.html">
-						Basic Tables</a>
-					</li>
-					<li >
-						<a href="table_responsive.html">
-						Responsive Tables</a>
-					</li>					
-				</ul>
-			</li>
-			<li class="">
-				<a href="javascript:;">
-				<i class="icon-settings"></i> 
-				<span class="title">System Setting</span>
-				<span class="arrow "></span>
-				</a>
-				<ul class="sub-menu">
-					<li >
-						<a href="<c:url value="/"/>settings">
-						General Portlets</a>
-					</li>
-					<li >
-						<a href="portlet_draggable.html">
-						Draggable Portlets</a>
-					</li>
-				</ul>
-			</li>
+			<%} %>			    
+		</c:forEach>									
 			
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	   </div>
-    </div>
+    </div>    
    <!-- END SIDEBAR -->

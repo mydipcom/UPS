@@ -22,14 +22,12 @@
 var rootURI="/";
 var ManagersTable = function () {
 	var oTable;
+	var oLogTable;
 	var selected = [];
-	var handleTable = function () {
-		var oLogTable;
-		
-		var viewTable = function(ids){
-			
-			var table=$('#managerlog_table');
-			oLogTable = table.dataTable({
+	var handleTable = function () {				
+		var viewTable = function(ids){			
+			var logTable=$('#managerlog_table');
+			oLogTable = logTable.dataTable({
 				"lengthChange":false,
 		    	"filter":false,
 		    	"sort":false,
@@ -40,70 +38,16 @@ var ManagersTable = function () {
 		        // set the initial value
 		        "displayLength": 3,
 		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//		        "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//		        "oLanguage": {
-//		            "sLengthMenu": "_MENU_ records per page",
-//		            "oPaginate": {
-//		                "sPrevious": "Prev",
-//		                "sNext": "Next",
-//		            	"zeroRecords": "No records to display"
-//		            }
-//		        },
-		        
-		   /*     
-		        "columnDefs": [{                    
-		            'targets': 0,   
-		            'render':function(data,type,row){
-		            	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
-		            },
-		            //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-		        },
-		        {                	
-		        	'targets':-1,
-		        	'data':null,//定义列名
-		        	'render':function(data,type,row){
-		            	return '<div class="actions"><button><a  data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></button></div>';
-		            },
-		            'class':'center'
-		        }
-		    ],
-		    */
-		    "columns": [
-		      //          {"orderable": false },
+		        "columns": [
 		 	           { title: "ID",   data: "id" },
 		 	           { title: "Admin Name",   data: "adminId" },
 		 	           { title: "Content",  data: "content"},
 		 	           { title: "Level", data: "level"},
 		 	           { title: "Create Time", data: "createdTimeStr" },
-		 	    //       { title: "Action" ,"class":"center"}
 		 	        ],
-		     	        "serverSide": true,
-		     	        "serverMethod": "GET",
-		     	        "ajaxSource": rootURI+"managerslogList/"+ids+"?rand="+Math.random(),
-		     	       //"ajaxSource": rootURI+"ruleslogList?rand="+Math.random(),
-//		        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-//		           $.ajax( {
-//		             "dataType": 'json', 
-//		             "type": "POST", 
-//		             "url": sSource, 
-//		             "data": aoData,
-////		             "contentType":"application/json",
-//		             "success": function(resp){ 		            	
-//		            	 fnCallback(resp);
-//		             },
-//		             "error":function(XMLHttpRequest, textStatus, errorThrown){
-//		            	 alert(errorThrown);
-//		             }
-//		           } );
-//		         },
-//		        "fnServerParams": function ( aoData ) {
-//		           aoData.push( { "name": "more_data", "value": "my_value" } );
-//		         },
-//		        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {				
-//		        	$('td:eq(0)', nRow).html( '<input type="checkbox" class="checkboxes" value="1"/>' );
-//					return nRow;
-//				},
-
+     	        "serverSide": true,
+     	        "serverMethod": "GET",
+     	        "ajaxSource": rootURI+"managerslogList/"+ids+"?rand="+Math.random()
 			});	
 		};
 	
@@ -116,18 +60,8 @@ var ManagersTable = function () {
         	"processing":true,
         	"scrollX":"100%",
            	"scrollXInner":"100%",
-            // set the initial value
             "displayLength": 10,
             "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
             "columnDefs": [{                    
                     'targets': 0,   
                     'render':function(data,type,row){
@@ -158,30 +92,7 @@ var ManagersTable = function () {
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"managersList?rand="+Math.random(),
-//	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-//	           $.ajax( {
-//	             "dataType": 'json', 
-//	             "type": "POST", 
-//	             "url": sSource, 
-//	             "data": aoData,
-////	             "contentType":"application/json",
-//	             "success": function(resp){ 		            	
-//	            	 fnCallback(resp);
-//	             },
-//	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-//	            	 alert(errorThrown);
-//	             }
-//	           } );
-//	         },
-//	        "fnServerParams": function ( aoData ) {
-//	           aoData.push( { "name": "more_data", "value": "my_value" } );
-//	         },
-//	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {				
-//	        	$('td:eq(0)', nRow).html( '<input type="checkbox" class="checkboxes" value="1"/>' );
-//				return nRow;
-//			},
-
+	        "ajaxSource": rootURI+"managersList?rand="+Math.random()
 		});		
 
 		//删除操作
@@ -285,41 +196,7 @@ var ManagersTable = function () {
 	            $("#editUsersForm input[name='createdTimeStr']").val(creatime);
 			}
 		});
-		
-		/*
-		//编辑表单提交操作
-		$("#editUsersForm").on("submit", function(event) {
-			  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"editUsers", 
-	             "data" :$(this).serializeJson(),
-//	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 if(status == "success"){  
-	            		 if(resp.status){
-							 selected=[];
-			            	 oTable.api().draw();
-			            	 handleAlerts("Edited the data successfully.","success","");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	 alert(errorThrown);
-	             }
-	           });
-			  $('#edit_users').modal('hide');
-			  return false;
-		});
-				
-          */             
+				           
 		//全选
 		
 		$(".group-checkable").on('change',function () {
@@ -419,7 +296,7 @@ var ManagersTable = function () {
 	            	 handleAlerts("Added the data successfully.","success","");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data.","danger","");						 
+					 handleAlerts("Failed to add the data."+resp.info,"danger","");						 
 				 }
 			}             	 
          },
@@ -427,8 +304,9 @@ var ManagersTable = function () {
         	 alert(errorThrown);
          }
        });
-		$('#add_users').modal('hide');
+		//$('#add_users').modal('hide');
     };
+    
     var AddUsersValidation = function() {
         var form = $('#addUsersForm');
         var errorDiv = $('.alert-danger', form);            
@@ -483,19 +361,15 @@ var ManagersTable = function () {
             	AddUsers();
             }
         });
-};
-//编辑表单提交操作
-var EditUsers= function() {
-	//  event.stopPropagation();
-	  var jsondata=$(this).serializeJson();
+    };
+    
+	//编辑表单提交操作
+	var EditUsers= function() {
 	  $.ajax( {
          "dataType": 'json', 
          "type": "POST", 
          "url": rootURI+"editUsers", 
          "data" :$('#editUsersForm').serializeJson(),
-//         "data": $(this).serialize(),
-//         "processData":false,
-//         "contentType":"application/json",
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){
@@ -512,9 +386,8 @@ var EditUsers= function() {
         	 alert(errorThrown);
          }
        });
-	  $('#edit_users').modal('hide');
-	  return false;
-};
+	 // $('#edit_users').modal('hide');
+	};
 		
             
 	var EditUsersValidation = function() {
@@ -577,8 +450,7 @@ var EditUsers= function() {
         	rootURI=rootPath;
         	handleTable();  
         	AddUsersValidation();
-        	EditUsersValidation();
-        	//addFormValidation();
+        	EditUsersValidation();        	
         }
 
     };

@@ -247,7 +247,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 						<h4 class="modal-title">Assign Role Rights</h4>
 					</div>
-					<div id="editFormMsg"></div>
+					<div id="editRoleRightsFormMsg"></div>
 					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
 						<!-- BEGIN FORM-->						
 						<form id="editRoleRightsForm" action="editRoleRights" method="post" name="editRoleRightsForm" class="form-horizontal form-bordered">

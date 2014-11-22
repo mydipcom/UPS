@@ -9,14 +9,9 @@
  */ 
 package com.bps.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import com.bps.commons.SystemConfig;
-import com.bps.dto.TadminNodes;
 import com.bps.service.AdminNodesService;
 
 /** 
@@ -32,25 +27,7 @@ public class CachedDataProcessor implements ApplicationListener<ContextRefreshed
     	if(event.getApplicationContext().getParent() == null){
     		AdminNodesService adminNodesService=(AdminNodesService) event.getApplicationContext().getBean("adminNodesService");
     		if(adminNodesService!=null){
-    			List<TadminNodes> nodesList=adminNodesService.getAllEnabledAdminNodes();
-    			for (TadminNodes adminNodes : nodesList) {    				
-    				SystemConfig.Admin_Nodes_Url_Map.put(adminNodes.getMethod()+"@"+adminNodes.getUri(), adminNodes.getBitFlag());
-    				    
-    				//Build menu mapping
-    				if(adminNodes.isIsMenu()&&adminNodes.getPid()==0){
-    					List<TadminNodes> menuList=adminNodesService.getAdminNodesMenuByPid(adminNodes.getNodeId());
-    					SystemConfig.Admin_Nodes_Menu_Map.put(adminNodes, menuList);   	    					
-    				}
-    				
-    				//Build group nodes mapping
-    				String groupName=adminNodes.getGroupName();
-    				List<TadminNodes> groupList=SystemConfig.Admin_Nodes_Group_Map.get(groupName);
-    				if(groupList==null){
-    					groupList=new ArrayList<TadminNodes>();
-    					SystemConfig.Admin_Nodes_Group_Map.put(groupName, groupList);
-    				}    				
-    				groupList.add(adminNodes);
-				}
+    			adminNodesService.cachedNodesData();    			
     		}
     	}
     	else{//projectName-servlet  context

@@ -3,11 +3,11 @@
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-              http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-			  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+              http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+			  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd"
     default-lazy-init="false">
  
 <!--======================== property configure本配置文件负责加载变量信息必须在在spring配置文件的最前面加载（第一个加载） ======================== -->
@@ -90,31 +90,17 @@
 	</tx:attributes>
 </tx:advice>
 
-<!-- 根据Bean名称拦截事务的配置
- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-    <property name="sessionFactory" ref="sessionFactory"/>
-  </bean>
-  <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
-    <property name="transactionManager" ref="transactionManager"/>
-    <property name="transactionAttributes">
-      <props>
-        <prop key="*">PROPAGATION_REQUIRED</prop>
-        <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
-      </props>
-    </property>
-  </bean>
-  <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+<!-- 对Service层抛出的异常进行统一处理 -->
+<bean id="exceptionManagerAdvice" class="com.bps.core.ExceptionManagerAdvice"/>
+<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
     <property name="beanNames">
       <value>*Service</value>
     </property>
     <property name="interceptorNames">
       <list>
-        <value>transactionInterceptor</value>
+        <value>exceptionManagerAdvice</value>
       </list>
     </property>
   </bean>
-  <bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
-    <property name="transactionInterceptor" ref="transactionInterceptor"/>
-  </bean>
- -->
+
 </beans>

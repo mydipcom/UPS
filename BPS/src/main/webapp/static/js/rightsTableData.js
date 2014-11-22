@@ -113,11 +113,6 @@ var RightsTable = function () {
            });
         });  
 		
-		//添加操作
-		$('#addRightsForm').on('submit', function (event) {
-			event.preventDefault();			
-			//return false;
-        }); 
 		
 		$("#openEditRightModal").on("click",function(event){
 			if(selected.length!=1){

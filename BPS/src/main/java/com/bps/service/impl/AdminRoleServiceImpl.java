@@ -9,11 +9,22 @@
  */ 
 package com.bps.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bps.dao.AdminRoleDao;
+import com.bps.dto.TadminNodes;
 import com.bps.dto.TadminRole;
+import com.bps.model.DataTableParamter;
+import com.bps.model.PagingData;
 import com.bps.service.AdminRoleService;
 
 /** 
@@ -34,10 +45,21 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * <p>Description: </p> 
 	 * @param userId
 	 * @return TadminRole
-	 * @see com.bps.service.AdminUserService#getAdminUserById(int) 
+	 * @see com.bps.service.AdminRoleService#getAdminUserById(int) 
 	 */
 	public TadminRole getAdminRoleById(int roleId) {
 		return adminRoleDao.get(roleId);
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: getAllAdminRoles</p> 
+	 * <p>Description: </p> 
+	 * @return 
+	 * @see com.bps.service.AdminRoleService#getAllAdminRoles()
+	 */
+	public List<TadminRole> getAllAdminRoles(){
+		return adminRoleDao.LoadAll();
 	}
 
 	/**
@@ -45,7 +67,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * <p>Title: createAdminRole</p> 
 	 * <p>Description: </p> 
 	 * @param adminRole 
-	 * @see com.bps.service.AdminUserService#createAdminUser(com.bps.dto.TadminUser) 
+	 * @see com.bps.service.AdminRoleService#createAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void createAdminRole(TadminRole adminRole) {
 		adminRoleDao.create(adminRole);
@@ -56,22 +78,80 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	 * <p>Title: updateAdminRole</p> 
 	 * <p>Description: </p> 
 	 * @param adminRole 
-	 * @see com.bps.service.AdminUserService#updateAdminUser(com.bps.dto.TadminUser) 
+	 * @see com.bps.service.AdminRoleService#updateAdminUser(com.bps.dto.TadminUser) 
 	 */
 	public void updateAdminRole(TadminRole adminRole) {
 		adminRoleDao.update(adminRole);
 
 	}	
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: deleteAdminRole</p> 
+	 * <p>Description: </p> 
+	 * @param adminNodes 
+	 * @see com.bps.service.AdminRoleService#deleteAdminRole(com.bps.dto.TadminNodes) 
+	 */
+	public void deleteAdminRole(TadminRole adminRole) {
+		adminRoleDao.delete(adminRole);		
+	}
 
 	/**
 	 * (non-Javadoc)
-	 * <p>Title: deleteAdminUser</p> 
+	 * <p>Title: deleteAdminRoleById</p> 
 	 * <p>Description: </p> 
-	 * @param adminUser 
-	 * @see com.bps.service.AdminUserService#deleteAdminUser(com.bps.dto.TadminUser) 
+	 * @param id 
+	 * @see com.bps.service.AdminRoleService#deleteAdminRoleById(int)
 	 */
-	public void deleteAdminRole(TadminRole adminRole) {
-		adminRoleDao.delete(adminRole);
+	public void deleteAdminRoleById(int id){
+		adminRoleDao.delete(id);
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: deleteAdminRolesByIds</p> 
+	 * <p>Description: </p> 
+	 * @param ids 
+	 * @see com.bps.service.AdminRoleService#deleteAdminNodesByIds(int[])
+	 */
+	public void deleteAdminRolesByIds(Integer[] ids){		
+		adminRoleDao.deleteAll(ids);
+	}
+	
+	/**
+	 * (non-Javadoc)
+	 * <p>Title: loadAdminRolesList</p> 
+	 * <p>Description: </p> 
+	 * @param rdtp
+	 * @return 
+	 * @see com.bps.service.AdminRoleService#loadAdminRolesList(com.bps.model.DataTableParamter)
+	 */
+	public PagingData loadAdminRolesList(DataTableParamter rdtp){
+		String searchJsonStr=rdtp.getsSearch();
+		if(searchJsonStr!=null&&!searchJsonStr.isEmpty()){
+			List<Criterion> criterionsList=new ArrayList<Criterion>();
+			JSONObject jsonObj= (JSONObject)JSON.parse(searchJsonStr);
+			Set<String> keys=jsonObj.keySet();						
+			for (String key : keys) {
+				String val=jsonObj.getString(key);
+				if(val!=null&&!val.isEmpty()){
+					if(key=="status"){
+						criterionsList.add(Restrictions.eq(key, jsonObj.getBoolean(key)));
+					}					
+					else{
+						criterionsList.add(Restrictions.eq(key, jsonObj.get(key)));
+					}
+				}
+			}
+			Criterion[] criterions=new Criterion[criterionsList.size()];
+			int i=0;
+			for (Criterion criterion : criterionsList) {
+				criterions[i]=criterion;	
+				i++;
+			}
+			return adminRoleDao.findPage(criterions,rdtp.iDisplayStart, rdtp.iDisplayLength);
+		}
+		return adminRoleDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
 }

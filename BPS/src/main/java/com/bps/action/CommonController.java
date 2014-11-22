@@ -35,8 +35,8 @@ public class CommonController extends BaseController {
 	@RequestMapping(value="header",method=RequestMethod.GET)
 	public ModelAndView header(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-//		TadminUser tUser=new TadminUser();
-//		mav.addObject("user", tUser);
+		TadminUser tUser=getSessionUser(request);
+		mav.addObject("user", tUser);
 		mav.setViewName("common/header");
 		return mav;
 	}
@@ -53,9 +53,14 @@ public class CommonController extends BaseController {
 	@RequestMapping(value="footer",method=RequestMethod.GET)
 	public ModelAndView footer(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-//		TadminUser tUser=new TadminUser();
-//		mav.addObject("user", tUser);
 		mav.setViewName("common/footer");
+		return mav;
+	}
+	
+	@RequestMapping(value="noRights",method=RequestMethod.GET)
+	public ModelAndView noRights(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("error/errPage");
 		return mav;
 	}
 }

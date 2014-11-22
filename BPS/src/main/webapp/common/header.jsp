@@ -35,20 +35,8 @@
 					<ul class="dropdown-menu">
 						<li>
 							<a href="#">
-							<img alt="" src="../assets/global/img/flags/es.png"> Spanish </a>
-						</li>
-						<li>
-							<a href="#">
-							<img alt="" src="../assets/global/img/flags/de.png"> German </a>
-						</li>
-						<li>
-							<a href="#">
-							<img alt="" src="../assets/global/img/flags/ru.png"> Russian </a>
-						</li>
-						<li>
-							<a href="#">
-							<img alt="" src="../assets/global/img/flags/fr.png"> French </a>
-						</li>
+							<img alt="" src="../assets/global/img/flags/cn.png"> Chinese </a>
+						</li>						
 					</ul>
 				</li>
 				<!-- END LANGUAGE BAR -->
@@ -57,7 +45,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" class="img-circle hide1" src="../assets/admin/layout/img/avatar3_small.jpg"/>
 					<span class="username username-hide-on-mobile">
-					Bob </span>
+					${user.adminId} </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
