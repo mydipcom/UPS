@@ -54,8 +54,10 @@ public class BaseController {
 	 * @throws 
 	 */ 
 	protected void setSessionUser(HttpServletRequest request,TadminUser user){
-		request.getSession().setAttribute(SystemConstants.LOGINED, user);		
+		request.getSession().setAttribute(SystemConstants.LOGINED, user);
+		if(user.getAdminRole().getRoleId()!=1){
 		setSessionRights(request,user.getAdminRole().getAdminRoleRights().getRoleRights());
+		}
 	}
 	
 	/**
