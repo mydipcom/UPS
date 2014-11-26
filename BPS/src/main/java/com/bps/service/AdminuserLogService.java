@@ -12,7 +12,7 @@ public interface AdminuserLogService {
 
 	TadminLog getRuleLogById(Integer Id);
 	
-	void createRuleLog(TadminLog adminlog);
+	void createAdminLog(TadminLog adminlog);
 	
 	void deleteRuleLog(TadminLog adminlog);
 	

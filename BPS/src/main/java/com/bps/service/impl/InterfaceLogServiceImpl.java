@@ -27,7 +27,7 @@ public class InterfaceLogServiceImpl implements InterfaceLogService{
 		interfaceLogDao.deleteAll(ids);
 	}
 
-	@Override
+	
 	public PagingData loadInterfaceLogList(DataTableParamter rdtp) {
 		
 		String searchJsonStr=rdtp.getsSearch();

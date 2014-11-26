@@ -24,4 +24,11 @@ public class SystemConstants {
 	public static final String LOGIN_ERROR="Login_Error";
 	
 	public static final String LOGIN_STATUS="Login_Status";
+	
+	public static final String LOG_SUCCESS="success";
+	
+	public static final String LOG_FAILURE="failure";
+	
+	public static final String LOG_SEPARATOR="-";
+	
 }

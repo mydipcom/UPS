@@ -27,14 +27,18 @@
 				<!-- END INBOX DROPDOWN -->
 				<!-- BEGIN LANGUAGE BAR -->
 				<li class="dropdown dropdown-language">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="../assets/global/img/flags/us.png">
-					<span class="langname">US </span>
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<img alt="" src="<s:message code="locale.flag.img"/>">
+					<span class="langname"><s:message code="locale.langname"/></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
+					    <li>
+							<a href="<c:url value="/"/>locale?locale=en_US">
+							<img alt="" src="../assets/global/img/flags/us.png"> US </a>
+						</li>
 						<li>
-							<a href="#">
+							<a href="<c:url value="/"/>locale?locale=zh_CN">
 							<img alt="" src="../assets/global/img/flags/cn.png"> Chinese </a>
 						</li>						
 					</ul>
@@ -43,7 +47,7 @@
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle hide1" src="../assets/admin/layout/img/avatar3_small.jpg"/>
+					<img alt="" class="img-circle hide1" src="<%=request.getContextPath()%>/userprofile/getAvatar"/>
 					<span class="username username-hide-on-mobile">
 					${user.adminId} </span>
 					<i class="fa fa-angle-down"></i>
@@ -52,10 +56,6 @@
 						<li>
 							<a href="<c:url value="/"/>userprofile">
 							<i class="icon-user"></i> My Profile </a>
-						</li>
-						<li>
-							<a href="extra_lock.html">
-							<i class="icon-lock"></i> Lock Screen </a>
 						</li>
 						<li>
 							<a href="<c:url value="/"/>logout">

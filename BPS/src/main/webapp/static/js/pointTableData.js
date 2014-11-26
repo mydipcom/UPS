@@ -23,6 +23,7 @@ var rootURI="/";
 var PointUserTable = function () {
 	var oTable;
 	var selected;
+	var oLogTable;
 	var handleTable = function () {
 		selected = [];
 		var table=$('#point_users_table');
@@ -68,7 +69,7 @@ var PointUserTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<button>View</button>';
+                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#pointchange_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
@@ -306,6 +307,44 @@ var PointUserTable = function () {
 		    var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
 		    oTable.fnSetColumnVis(iCol, (bVis ? false : true));
 		});
+		 
+		 
+		 table.on('click', 'tbody tr a',function(){
+	           var data = oTable.api().row($(this).parents('tr')).data();
+	           var ids=data.userId;
+	           if(oLogTable!=null){
+	        	   oLogTable.fnDestroy();
+	        	   viewLogTable(ids); 
+	           }else{
+	        	   viewLogTable(ids);
+	           }
+	           });
+		 
+		 var viewLogTable = function(ids){			
+				var logTable=$('#pointchangelog');
+				oLogTable = logTable.dataTable({
+					"lengthChange":false,
+			    	"filter":false,
+			    	"sort":false,
+			    	"info":true,
+			    	"bRetrieve": true,
+			    	"processing":true,
+			    	"bDestroy":true,
+			        // set the initial value
+			        "displayLength": 6,
+			        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+			        "columns": [
+			 	           { title: "Point",   data: "points" },
+			 	           { title: "PointBalance",   data: "pointsBalance" },
+			 	           { title: "Content",  data: "content"},
+			 	           { title: "From", data: "from"},
+			 	           { title: "Create Time", data: "createdTimeStr" },
+			 	        ],
+	     	        "serverSide": true,
+	     	        "serverMethod": "GET",
+	     	        "ajaxSource": rootURI+"pointlogListById?id="+ids+"&rand="+Math.random()
+				});	
+			};
  };
 	
     

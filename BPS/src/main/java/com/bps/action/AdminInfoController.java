@@ -123,9 +123,7 @@ public class AdminInfoController extends BaseController {
 	   }
 	
 	@RequestMapping(value="/userprofile/chageAvatar",method=RequestMethod.POST)
-	@ResponseBody
 	public String changeAvatar(HttpServletRequest request,@RequestParam(value = "avatar", required = false) MultipartFile file) throws IOException{
-		JSONObject resp = new JSONObject();
 		InputStream inputStream = file.getInputStream();
 		byte [] avatar=new byte[1048576];
 		inputStream.read(avatar);
@@ -136,14 +134,9 @@ public class AdminInfoController extends BaseController {
 			adminInfo=adminInfoService.getAdminInfoById(adminId);
 			adminInfo.setAvatar(avatar);
 			adminInfoService.updateAdminInfoAvatar(adminInfo);
-			resp.put("status", true);
 		}catch(BPSException be){
-			resp.put("status", false);
-			resp.put("info", be.getMessage());
+			
 		}
-		
-		//return JSON.toJSONString(resp);
-		
 		return "redirect:/userprofile"; 
 	   }
       

@@ -21,4 +21,6 @@ public interface SystemSettingService {
 	
 	public PagingData loadSystemsettingList(DataTableParamter rdtp);
 
+	public void cachedSystemSettingData();
+
 }

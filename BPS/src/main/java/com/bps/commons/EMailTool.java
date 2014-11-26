@@ -1,23 +1,32 @@
 package com.bps.commons;
+import java.util.Properties;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
+
+import com.bps.dto.TemaiMessage;
 public class EMailTool {
-	 public void send(JavaMailSender javaMailSenderImpl){
+	
+	 public static void send(TemaiMessage temaiMessage){
 		try {
+			JavaMailSender javaMailSenderImpl=getJavaMailSenderImpl();
 			MimeMessage message = javaMailSenderImpl.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-			messageHelper.setFrom("宋杰");
-			messageHelper.setTo("campray@sina.com");
-			messageHelper.setSubject("测试邮件");
-			messageHelper.setText("登录成功");
-			
+            messageHelper.setFrom(new InternetAddress(SystemConfig.Admin_Setting_Map.get("username")));
+            if(temaiMessage.getTo() !=null && !temaiMessage.getTo().isEmpty()){
+            	messageHelper.setTo(temaiMessage.getTo());
+            }
+            if(temaiMessage.getSubject() !=null){
+            	messageHelper.setSubject(temaiMessage.getSubject());
+            }
+            if(temaiMessage.getText() !=null){
+            	messageHelper.setText(temaiMessage.getText());
+            }
 			javaMailSenderImpl.send(message);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
@@ -25,6 +34,17 @@ public class EMailTool {
 		}
 		
 	}
-	
+	 
+	public static JavaMailSenderImpl getJavaMailSenderImpl(){
+	    JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+	    javaMailSenderImpl.setHost(SystemConfig.Admin_Setting_Map.get("host"));
+	    javaMailSenderImpl.setUsername(SystemConfig.Admin_Setting_Map.get("username"));
+	    javaMailSenderImpl.setPassword(SystemConfig.Admin_Setting_Map.get("password"));
+	    Properties properties = new Properties();
+	    properties.setProperty("mail.smtp.auth", "true");
+	    properties.setProperty("mail.smtp.timeout", "30000");
+	    javaMailSenderImpl.setJavaMailProperties(properties);
+	    return javaMailSenderImpl;
+     }
 
 }

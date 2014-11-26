@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContextAware;
  */
 public class MyApplicationContextUtil implements ApplicationContextAware {
 
-	private static ApplicationContext context;// 澹版槑涓�涓潤鎬佸彉閲忎繚瀛�
+	private static ApplicationContext context;
 
 	public void setApplicationContext(ApplicationContext contex)
 			throws BeansException {

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.util.JsonPathExpectationsHelper;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +57,10 @@ public class PointController extends BaseController {
      public String pointsList(HttpServletRequest request,DataTableParamter dtp){
     	 PagingData pagingData = pointUserService.loadPoitUsersList(dtp);
     	 pagingData.setSEcho(dtp.getsEcho());
-    	 
+    	 if(pagingData.getAaData()==null){
+ 			Object[] objs=new Object[]{};
+ 			pagingData.setAaData(objs);
+ 		}
     	 return JSON.toJSONString(pagingData);
      }
      

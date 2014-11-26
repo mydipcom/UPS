@@ -1,8 +1,11 @@
 package com.bps.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bps.commons.SystemConfig;
 import com.bps.dao.SettingDao;
 import com.bps.dto.Tsetting;
 import com.bps.model.DataTableParamter;
@@ -56,7 +59,24 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 		// TODO Auto-generated method stub
 		return settingDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
+
+
+	private List<Tsetting> getAllSystemSetting() {
+		// TODO Auto-generated method stub
+		return settingDao.LoadAll();
+	}
 	
+	
+	public void cachedSystemSettingData() {
+		// TODO Auto-generated method stub
+		List <Tsetting> setingList = getAllSystemSetting();
+		SystemConfig.Admin_Setting_Map.clear();
+		SystemConfig.Api_Access_Key = null;
+		for(Tsetting setting:setingList){
+			SystemConfig.Admin_Setting_Map.put(setting.getName(),setting.getValue());
+		}
+		SystemConfig.Api_Access_Key=SystemConfig.Admin_Setting_Map.get("api_access_key");
+	}
 
 	
 

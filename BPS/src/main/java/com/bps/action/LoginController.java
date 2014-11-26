@@ -9,6 +9,9 @@
 */ 
 package com.bps.action;
 
+import java.util.Calendar;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,10 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bps.commons.EMailTool;
+import com.bps.commons.LogManageTools;
 import com.bps.commons.SecurityTools;
 import com.bps.commons.SystemConstants;
+import com.bps.dto.TadminLog;
 import com.bps.dto.TadminUser;
+import com.bps.dto.TemaiMessage;
 import com.bps.service.AdminUserService;
+import com.bps.service.AdminuserLogService;
 
 /** 
  * @ClassName: LoginController 
@@ -38,14 +46,17 @@ public class LoginController extends BaseController {
 	@Autowired
 	private AdminUserService adminUserService;		
 	
-
+    @Autowired
+    private AdminuserLogService adminuserLogService;
 	/** 
 	 * <p>Open the login page</p>
 	 * @Title: login 
 	 * @return String
 	 * @throws 
 	 */ 
-	@RequestMapping(value="/login",method=RequestMethod.GET)
+    private String log_content;
+    
+    @RequestMapping(value="/login",method=RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView mav=new ModelAndView();
 		TadminUser tUser=new TadminUser();		
@@ -65,6 +76,8 @@ public class LoginController extends BaseController {
 	 */ 
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(HttpServletRequest request,TadminUser user){
+		TadminLog adminLog = new TadminLog();
+		adminLog.setAdminId(user.getAdminId());
 		TadminUser tUser=(TadminUser)adminUserService.getAdminUserById(user.getAdminId());
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
@@ -75,16 +88,19 @@ public class LoginController extends BaseController {
 				}else{
 					mav.addObject("user", new TadminUser());
 				}
+				log_content=SystemConstants.LOG_FAILURE+":userid locked.";
 		}
 		else if(tUser==null){
 			mav.addObject(ERROR_MSG_KEY, "用户名不存在");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
+			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
 			mav.addObject(ERROR_MSG_KEY, "登录密码不正确");
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
+			log_content=SystemConstants.LOG_FAILURE+":password error.";
 		}else{
 			setSessionUser(request, tUser);
 			String toUrl=(String)request.getSession().getAttribute(LOGIN_TO_URL);
@@ -95,10 +111,36 @@ public class LoginController extends BaseController {
 				toUrl="/home";
 			}
 			mav.setViewName("redirect:"+toUrl);
+			log_content=SystemConstants.LOG_SUCCESS+":login success.";
+			
 		}
+		LogManageTools.writeLog(log_content,adminLog);
 		return mav;
 	}
 	
+	@RequestMapping(value="/ResetPassword",method=RequestMethod.POST)
+	public ModelAndView resetPassword(HttpServletRequest request ,String email){
+		ModelAndView mav = new ModelAndView();
+		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email);
+		if(adminUser == null){
+			 adminUser = new TadminUser();
+			//邮箱不存在
+		}else{
+			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
+			adminUser.setPassword(SecurityTools.SHA1(random));
+			adminUser.setUpdatedBy(adminUser.getAdminId());
+			adminUser.setUpdatedTime(System.currentTimeMillis());
+			TemaiMessage message = new TemaiMessage();
+			message.setTo(email);
+			message.setText("你的BPS帐号："+adminUser.getAdminId()+"于"+Calendar.getInstance().getTime()+"重置密码，新密码为："+random);
+			message.setSubject("BPS重置密码");
+			EMailTool.send(message);
+			adminUserService.updateAdminUserPassword(adminUser);
+		}
+		mav.addObject("user",adminUser);
+		mav.setViewName("login");
+		return mav;
+	}
 	
 	/** 
 	 * <p>注销登录用户</p>

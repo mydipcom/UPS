@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.dao.PointsLogDao;
+import com.bps.dto.TadminUser;
 import com.bps.dto.TpointsLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -139,6 +140,11 @@ public class PointsLogServiceImpl implements PointsLogService {
 			String hqlName="from TpointsLog where id="+id;
 		return pointsLogDao.findByHqlName(hqlName);
 	}
-	
+
+	public PagingData loadPointLogByUserId(DataTableParamter rdtp, String id) {
+		// TODO Auto-generated method stub
+		Criterion criterion = Restrictions.eq("pointUser.userId", id);
+		return pointsLogDao.findPage(criterion, rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,6 +92,22 @@ public class PointLogController extends BaseController {
 		}	
 		return JSON.toJSONString(respJson);	
 	}
+	
+	@RequestMapping(value="/pointlogListById",method=RequestMethod.GET)
+	@ResponseBody
+	public String pointlogListById(HttpServletRequest request,DataTableParamter dtp,@RequestParam String id){		
+	PagingData pagingData=pointsLogService.loadPointLogByUserId(dtp, id);
+        pagingData.setSEcho(dtp.sEcho);	
+		if(pagingData.getAaData()==null){
+			Object[] objs=new Object[]{};
+			pagingData.setAaData(objs);
+		}
+		String rightsListJson= JSON.toJSONString(pagingData);
+		return rightsListJson;
+			
+		}
+	
+	
 }
 
 

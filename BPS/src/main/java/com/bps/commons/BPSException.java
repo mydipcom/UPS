@@ -16,7 +16,7 @@ public class BPSException extends RuntimeException {
 	public BPSException(Throwable ex) {
 		super(ex);
 		this.msg = ex.getMessage();
-		this.str = "com.uswop.commons.UswopException:"
+		this.str = "com.bps.BPSException:"
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -24,7 +24,7 @@ public class BPSException extends RuntimeException {
 		super(ex);
 		this.errID = ID;
 		this.msg = ex.getMessage();
-		this.str = "com.uswop.commons.UswopException:" + ex.getMessage()
+		this.str = "com.bps.BPSException:" + ex.getMessage()
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -32,7 +32,7 @@ public class BPSException extends RuntimeException {
 		super(ex);
 		this.errID = ID;
 		this.msg = message + " nested exception:" + ex.getMessage();
-		this.str = "com.uswop.commons.UswopException:" + message
+		this.str = "com.bps.BPSException:" + message
 				+ "\n    nested exception:" + ex.toString();
 	}
 
@@ -40,20 +40,20 @@ public class BPSException extends RuntimeException {
 		super(ex);
 		this.errID = String.valueOf(ID);
 		this.msg = message + " nested exception:" + ex.getMessage();
-		this.str = "com.uswop.commons.UswopException:" + message
+		this.str = "com.bps.BPSException:" + message
 				+ "\n    nested exception:" + ex.toString();
 	}
 
 	public BPSException(String ID, String message) {
 		this.errID = ID;
 		this.msg = message;
-		this.str = "com.uswop.commons.UswopException:" + message;
+		this.str = "com.bps.BPSException:" + message;
 	}
 
 	public BPSException(int ID, String message) {
 		this.errID = String.valueOf(ID);
 		this.msg = message;
-		this.str = "com.uswop.commons.UswopException:" + message;
+		this.str = "com.bps.BPSException:" + message;
 	}
 
 	public BPSException(String ID) {

@@ -20,7 +20,7 @@ public class InterfaceParamServiceImpl implements InterfaceParamService{
 	@Autowired
 	private InterfaceParamDao interfaceParamDao;
 	
-	@Override
+	
 	public PagingData loadInterfaceinparam(String id, DataTableParamter rdtp) {
 		List<Criterion> criterionsList=new ArrayList<Criterion>();
 		criterionsList.add(Restrictions.eq("t.name", id));
@@ -34,7 +34,7 @@ public class InterfaceParamServiceImpl implements InterfaceParamService{
 		return interfaceParamDao.findPage(criterions, rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
-	@Override
+	
 	public PagingData loadInterfaceoutparam(String id, DataTableParamter rdtp) {
 		List<Criterion> criterionsList=new ArrayList<Criterion>();
 		criterionsList.add(Restrictions.eq("t.name", id));

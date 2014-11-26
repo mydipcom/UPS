@@ -1,5 +1,7 @@
 package com.bps.service;
 
+import java.util.List;
+
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -26,6 +28,8 @@ public interface AdminUserService {
 	
 	public PagingData loadAdminUserList(DataTableParamter rdtp);
 	
-	int getAdminUserAmount();
+	public int getAdminUserAmount();
+	
+	public TadminUser getTadminUsersByEmail(String email);
 		
 }

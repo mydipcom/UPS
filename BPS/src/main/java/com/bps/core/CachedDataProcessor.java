@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.bps.service.AdminNodesService;
+import com.bps.service.SystemSettingService;
 
 /** 
  * <p>Sping容器初始化完成后的缓存甚而数据的处理方法</p>
@@ -21,13 +22,19 @@ import com.bps.service.AdminNodesService;
  * 
  */
 public class CachedDataProcessor implements ApplicationListener<ContextRefreshedEvent> {
-	@Override
+	
     public void onApplicationEvent(ContextRefreshedEvent event) {
 		//root application context
     	if(event.getApplicationContext().getParent() == null){
     		AdminNodesService adminNodesService=(AdminNodesService) event.getApplicationContext().getBean("adminNodesService");
+    		
+    		SystemSettingService systemSettingService =(SystemSettingService)event.getApplicationContext().getBean("systemSettingService");
+    		
     		if(adminNodesService!=null){
     			adminNodesService.cachedNodesData();    			
+    		}
+    		if(systemSettingService != null){
+    			systemSettingService.cachedSystemSettingData();
     		}
     	}
     	else{//projectName-servlet  context

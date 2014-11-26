@@ -23,4 +23,6 @@ public interface PointsLogService {
 	public PagingData loadPointLogList(DataTableParamter rdtp);
 	
 	public   List<TpointsLog>  getPointsHistoryByRuleId(Integer id);
+	
+	public PagingData loadPointLogByUserId(DataTableParamter rdtp,String id);
 }

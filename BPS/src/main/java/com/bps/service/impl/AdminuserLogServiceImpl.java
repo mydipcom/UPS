@@ -37,7 +37,7 @@ public class AdminuserLogServiceImpl implements AdminuserLogService {
 	}
 
 	
-	public void createRuleLog(TadminLog adminlog) {
+	public void createAdminLog(TadminLog adminlog) {
 		// TODO Auto-generated method stub
 		adminLogDao.create(adminlog);
 	}

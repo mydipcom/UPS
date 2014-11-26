@@ -51,14 +51,6 @@ var RightsTable = function () {
                     	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
                     },
                     //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-                },
-                {                	
-                	'targets':-1,
-                	'data':null,//定义列名
-                	'render':function(data,type,row){
-                    	return '<button>View</button>';
-                    },
-                    'class':'center'
                 }
             ],
             "columns": [
@@ -72,9 +64,8 @@ var RightsTable = function () {
 	           { title: "Is Menu",    data: "isMenu" },
 	           { title: "Group Name",    data: "groupName" },
 	           { title: "Group Sort",    data: "groupSort" },
-	           { title: "Status",    data: "status" },
-	           { title: "Action" ,"class":"center"}
-	        ],
+	           { title: "Status",    data: "status" }
+	          ],
 	        "serverSide": true,
 	        "serverMethod": "GET",
 	        "ajaxSource": rootURI+"rightsList?rand="+Math.random()

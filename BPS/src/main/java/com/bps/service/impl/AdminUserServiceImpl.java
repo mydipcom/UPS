@@ -149,4 +149,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 	
 }
 
+public TadminUser getTadminUsersByEmail(String email) {
+	// TODO Auto-generated method stub
+	return adminUserDao.findUnique("email", email);
+}
+
 }

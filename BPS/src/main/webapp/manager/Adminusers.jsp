@@ -280,7 +280,7 @@
 			<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Rules logs</h4>
+						<h4 class="modal-title">Admin Logs</h4>
 					</div>
 				
 				<div class="row">
@@ -291,7 +291,7 @@
 					<div class="portlet box blue-hoki">
 						<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i> Rulelogs Table
+									<i class="fa fa-edit"></i>Admin Logs Table
 								</div>
 						</div>
 						<div class="portlet box blue-hoki">
@@ -299,12 +299,7 @@
 								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
 									<thead>
 										<tr>
-										<!-- 
-											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#managerlog_table .checkboxes"/>
-											</th>
-										-->
-											<th>ID</th>
+										    <th>ID</th>
 											<th>Admin Name</th>
 											<th>Content</th>
 											<th>Level</th>
