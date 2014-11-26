@@ -27,7 +27,7 @@ import com.bps.service.AdminuserLogService;
 @Controller
 public class ManagerLogController extends BaseController {
 
-	private Logger logger = Logger.getLogger(RightsController.class);
+	//private Logger logger = Logger.getLogger(ManagerLogController.class);
 		
 	@Resource
 	private AdminuserLogService adminuserLogService;

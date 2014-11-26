@@ -92,6 +92,12 @@
 	
 	<bean id="pointsRuleGroupService" class="com.bps.service.impl.PointsRuleGroupServiceImpl" autowire="byName"/>
 	
+	<bean id="interfaceService" class="com.bps.service.impl.InterfaceServiceImpl" autowire="byName"/>
+	
+	<bean id="interfaceLogService" class="com.bps.service.impl.InterfaceLogServiceImpl" autowire="byName"/>
+	
+	<bean id="interfaceParamService" class="com.bps.service.impl.InterfaceParamServiceImpl" autowire="byName"/>
+	
 	<!-- 缓存系统常用数据 -->
 	<bean class="com.bps.core.CachedDataProcessor"/>
 </beans>

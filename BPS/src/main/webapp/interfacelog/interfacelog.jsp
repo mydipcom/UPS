@@ -74,7 +74,7 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>rulelog">Bonus Rule Change Log</a>
+							<a href="<c:url value="/"/>interfacelog">Interface Log List</a>
 						</li>
 					</ul>					
 				</div>
@@ -96,7 +96,7 @@
 						 -->
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Rule ID</label>
+								<label class="col-md-3 control-label">Interface Name</label>
 								<div class="col-md-9">
 									<input name="ruleId" type="text" class="form-control">							
 								</div>
@@ -140,7 +140,7 @@
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
 									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -157,10 +157,10 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Rules Logs Table
+									<i class="fa fa-edit"></i>Interface Logs Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_ruleslog"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_interfacelog"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -168,24 +168,26 @@
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
 											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Rule Id</label>
+											<label><input type="checkbox" checked data-column="2">Interface Name</label>
 											<label><input type="checkbox" checked data-column="3">Content</label>
-											<label><input type="checkbox" checked data-column="4">Create Time</label>
+											<label><input type="checkbox" checked data-column="4">Access Time</label>
+											<label><input type="checkbox" checked data-column="5">Access By</label>
 										</div>
 									</div>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="ruleslog_table">
+								<table class="table table-striped table-hover table-bordered" id="interfacelog_table">
 									<thead>
 										<tr>
 											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#ruleslog_table .checkboxes"/>
+												<input type="checkbox" class="group-checkable" data-set="#interfacelog_table .checkboxes"/>
 											</th>
 											<th>ID</th>
-											<th>Rule Id</th>
+											<th>Interface Name</th>
 											<th>Content</th>
-											<th>Create Time</th>
+											<th>Access Time</th>
+											<th>Access By</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -203,13 +205,13 @@
 				<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">View Bonus Rule Change Log</h4>
+						<h4 class="modal-title">View Interface Access Log</h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
 					<div class="portlet-body form">
 							<!-- BEGIN FORM	-->					
-						<form id="viewRuleslogForm" action=" " method="post" name="viewRuleslogForm" class="form-horizontal form-bordered">
+						<form id="viewInterfacelogForm" action=" " method="post" name="viewInterfacelogForm" class="form-horizontal form-bordered">
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
@@ -222,9 +224,9 @@
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3">Interface Name<span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="ruleId" class="form-control" readonly="true"/>										
+										<input name="name" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">
@@ -234,11 +236,17 @@
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Create Time<span class="required">* </span></label>
+									<label class="control-label col-md-3">Access Time<span class="required">* </span></label>
 									<div class="col-md-9">
-										<input name="createdTime" class="form-control" readonly="true"/>									
+										<input name="accessTime" class="form-control" readonly="true"/>									
 									</div>
-								</div>		
+								</div>	
+								<div class="form-group">
+									<label class="control-label col-md-3">Access By<span class="required">* </span></label>
+									<div class="col-md-9">
+										<input name="accessBy" class="form-control" readonly="true"/>									
+									</div>
+								</div>			
 							</div>
 							
 						</form>
@@ -247,7 +255,7 @@
 				<div class="modal-footer"></div>
 			</div>
 				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_ruleslog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="delete_interfacelog" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to delete these selected rows ?
@@ -298,13 +306,13 @@
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
-	<script src="../static/js/ruleslogTableData.js"></script>
+	<script src="../static/js/InterfaceLogTableData.js"></script>
 	<script>
 	jQuery(document).ready(function() {       
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   RulesLogTable.init("<c:url value="/"/>");	   
+	  InterfaceLogTable.init("<c:url value="/"/>");	   
 	});
 	</script>
 </body>

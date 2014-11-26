@@ -123,6 +123,7 @@ var RightsTable = function () {
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				var nodeId = data.nodeId;
 	            var name = data.name;
+	            var bitFlag=data.bitFlag;
 	            var uri  = data.uri;
 	            var method  = data.method;
 	            var groupName  = data.groupName;
@@ -137,6 +138,7 @@ var RightsTable = function () {
 	            
 	            $("#editRightsForm input[name='nodeId']").val(nodeId);
 	            $("#editRightsForm input[name='name']").val(name);
+	            $("#editRightsForm input[name='bitFlag']").val(bitFlag);
 	            $("#editRightsForm input[name='uri']").val(uri);
 	            
 	            $("#editRightsForm select[name='method']").children("option[value='"+method+"']").attr("selected","true");
@@ -149,7 +151,7 @@ var RightsTable = function () {
 	            $("#editRightsForm :radio[name='isMenu']").filter("[value='"+isMenu+"']").parents('span').addClass("checked");
 	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").attr("checked","true");
 	            $("#editRightsForm :radio[name='status']").filter("[value='"+status+"']").parents('span').addClass("checked");
-	            
+	            selected=[];
 			}
 		});								
 		

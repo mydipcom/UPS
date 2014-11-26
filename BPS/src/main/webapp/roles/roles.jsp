@@ -264,16 +264,16 @@
 									<div class="col-md-9">
 									<c:forEach var="rights" items="${rightsGroup.value}" varStatus="status">
 										<c:if test="${(status.index+1)%3==1}">										
-										<div class="checkbox-list">
-										</c:if>
+										</c:if>										<div class="checkbox-list">
+										
 											<label class="checkbox-inline">
 											<input type="checkbox" name="rights" value="${rights.bitFlag}"/>${rights.name}</label>											
 										<c:if test="${(status.index+1)%3==0||status.last}">
-										</div>
+										
 										</c:if>
-									</c:forEach>	
+									</div>																		</c:forEach>
 									</div>
-								</div>														
+															</div>														
 							</c:forEach>
 							</div>
 							<div class="form-actions" style="border-top:0;">

@@ -34,97 +34,50 @@
 				</form>
 				<!-- END RESPONSIVE QUICK SEARCH FORM -->
 			</li>
-        <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-        <c:set var="cureReqUri" value="${pageContext.request.requestURI}"/>							
-		<c:forEach var="menu" items="${menus}" varStatus="status">
-			<c:forEach var="tempmenu" items="${menu.value}">
-				<c:set var="tempMenuUri" value="${tempmenu.uri}"/>
-				<c:if test="${tempMenuUri.startsWith('/')}">
-					<c:set var="reqUri" value="${contextPath}${tempMenuUri}/"/>
-				</c:if>
-				<c:if test="${!tempMenuUri.startsWith('/')}">
-					<c:set var="reqUri" value="${contextPath}/${tempMenuUri}/"/>
-				</c:if>				
-				<c:if test="${cureReqUri.startsWith(reqUri)}">					
-					<c:set var="selectedNode" value="${tempmenu}"/>			
-				</c:if>
-			</c:forEach>						
-			<c:if test="${status.first}">
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">		
-					<c:set var="classStr" value="start active"/>									
-				</c:if>
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid==menu.key.nodeId}">		
-					<c:set var="classStr" value="start active open"/>			
-				</c:if>
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid!=menu.key.nodeId}">		
-					<c:set var="classStr" value="start"/>			
-				</c:if>
-			</c:if>
-			<c:if test="!${status.first}">		
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">
-					<c:set var="classStr" value="active"/>					
-				</c:if>
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid==menu.key.nodeId}">		
-					<c:set var="classStr" value="active open"/>			
-				</c:if>
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId!=menu.key.nodeId&&selectedNode.pid!=menu.key.nodeId}">		
-					<c:set var="classStr" value=""/>			
-				</c:if>
-			</c:if>	
-			<jsp:useBean id="curBit" class="com.bps.dto.TadminNodes"></jsp:useBean>	
-			<jsp:setProperty name="curBit" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>	
+			<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+       		<c:set var="cureReqUri" value="${pageContext.request.requestURI}"/>	
 			<%
 			boolean isAdmin=((com.bps.dto.TadminUser)session.getAttribute("Logined")).getAdminRole().getRoleId()==1;
-			long userRights=0;
+			Long userRights=null;
 			if(session.getAttribute("rights")!=null){
-				userRights=(long)session.getAttribute("rights");
-			}			
-			if(isAdmin||(userRights&curBit.getBitFlag())>0){
-				
+				userRights=(Long)session.getAttribute("rights");
+			}	
+			if(!isAdmin){
 			%>	
-			<li class="${classStr}">
-				<c:choose>
-					<c:when test="${menu.key.uri eq '/home'}">
-						<c:set var="menuIcon" value="icon-home"/>						
-					</c:when>
-					<c:when test="${menu.key.uri eq '/rights'}">
-						<c:set var="menuIcon" value="icon-wrench"/>
-					</c:when>
-					<c:when test="${menu.key.uri eq '/setting'}">
-						<c:set var="menuIcon" value="icon-settings"/>
-					</c:when>
-					<c:when test="${menu.key.uri eq '/logs'}">
-						<c:set var="menuIcon" value="icon-feed"/>
-					</c:when>
-					<c:when test="${menu.key.uri eq '/points'}">
-						<c:set var="menuIcon" value="icon-note"/>
-					</c:when>
-					<c:otherwise>
-						<c:set var="menuIcon" value="icon-home"/>
-					</c:otherwise>
-				</c:choose>
-				
-			
-				<c:set var="menuUri" value="${pageContext.request.contextPath}${menu.key.uri}"/>
-				<a href="${menu.value!=null?'javascript;':menu.key.uri}">
-				<i class="<c:out value="${menuIcon}"/>"></i> 
-				<span class="title"><c:out value="${menu.key.name}"/></span>
-				<c:if test="${selectedNode!=null&&selectedNode.nodeId==menu.key.nodeId}">				
-					<span class="selected"></span>								
-				</c:if>	
-				<c:if test="${selectedNode!=null&&selectedNode.pid!=0&&selectedNode.pid==menu.key.nodeId}">
-					<span class="arrow open"></span>
-				</c:if>
-				<c:if test="${selectedNode!=null&&selectedNode.pid!=0&&selectedNode.pid!=menu.key.nodeId}">
-					<span class="arrow"></span>
-				</c:if>		
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="menuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="menuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="menuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<%if(menuBean.getName().equals("Dashboard")&&(userRights&menuBean.getBitFlag())>0){ %>
+			<li class="start active open">
+				<a href="<c:url value="/"/>home">
+				<i class="icon-home"></i> 
+				<span class="title">Dashboard</span>
+				<span class="selected"></span>
+				</a>
+			</li>
+			<%} %>
+			</c:forEach>
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="mangmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="mangmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="mangmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(mangmenuBean.getName().equals("System Management")&&(userRights&mangmenuBean.getBitFlag())>0){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-wrench"></i> 
+				<span class="title">System Management</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
 				</a>
 				<c:if test="${menu.value!=null}">
 					<ul class="sub-menu">
 					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
-						<jsp:useBean id="menuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
-						<jsp:setProperty name="menuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
-						<%if(isAdmin||(userRights&menuBean.getBitFlag())>0){%>
+						<jsp:useBean id="smenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+						<jsp:setProperty name="smenuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
+						<%if(isAdmin||(userRights&smenuBean.getBitFlag())>0){%>
 					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
 							<a href="${contextPath}${subMenu.uri}">
 							${subMenu.name}
@@ -135,9 +88,234 @@
 					</ul>
 				</c:if>	
 			</li>
-			<%} %>			    
-		</c:forEach>									
-			
+			<%} %>
+			</c:forEach>
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="pusermenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="pusermenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="pusermenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(pusermenuBean.getName().equals("Point Users List")&&(userRights&pusermenuBean.getBitFlag())>0){
+			%>	
+            	<li class="">
+				<a href="<c:url value="/"/>point">
+				<i class="icon-users"></i> 
+				<span class="title">Point Users List</span>					
+				</a>					
+			</li>
+			<%} %>
+			</c:forEach>
+				<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="PrulemenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="PrulemenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="PrulemenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(PrulemenuBean.getName().equals("Bonus Rule")&&(userRights&PrulemenuBean.getBitFlag())>0){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-wrench"></i> 
+				<span class="title">Bonus Rule</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
+						<jsp:useBean id="rulemenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+						<jsp:setProperty name="rulemenuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
+						<%if(isAdmin||(userRights&rulemenuBean.getBitFlag())>0){%>
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>
+						<%} %>
+					</c:forEach>											
+					</ul>
+				</c:if>	
+			</li>
+			<%} %>
+			</c:forEach>
+				<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="logmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="logmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="logmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(logmenuBean.getName().equals("Log List")&&(userRights&logmenuBean.getBitFlag())>0){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-calendar"></i> 
+				<span class="title">Log List</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
+						<jsp:useBean id="slogmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+						<jsp:setProperty name="slogmenuBean" property="bitFlag" value="${subMenu.bitFlag}"></jsp:setProperty>
+						<%if(isAdmin||(userRights&slogmenuBean.getBitFlag())>0){%>
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>
+						<%} %>
+					</c:forEach>											
+					</ul>
+				</c:if>	
+			</li>
+			<%} %>
+			</c:forEach>
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="intermenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="intermenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="intermenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(intermenuBean.getName().equals("Interfaces List")&&(userRights&intermenuBean.getBitFlag())>0){
+			%>	
+            <li class="">
+				<a href="<c:url value="/"/>home">
+				<i class="icon-calendar"></i> 
+				<span class="title">Interfaces List</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+			</li>
+			<%} %>
+			</c:forEach>
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="settingmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="settingmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+				<jsp:setProperty name="settingmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
+			<% 
+			if(settingmenuBean.getName().equals("System Setting")&&(userRights&settingmenuBean.getBitFlag())>0){
+			%>	
+            <li class="">
+				<a href="<c:url value="/"/>settings">
+				<i class="icon-calendar"></i> 
+				<span class="title">System Setting</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+			</li>
+			<%} %>
+			</c:forEach>
+		<%} else{%>	
+			<li class="start active open">
+				<a href="<c:url value="/"/>home">
+				<i class="icon-home"></i> 
+				<span class="title">Dashboard</span>
+				<span class="selected"></span>
+				</a>
+			</li>
+			<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="mangsmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="mangsmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+			<% 
+			if(mangsmenuBean.getName().equals("System Management")){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-wrench"></i> 
+				<span class="title">System Management</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">							
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>	
+					</c:forEach>											
+					</ul>
+				</c:if>	
+			</li>
+			<%} %>
+			</c:forEach>
+            	<li class="">
+				<a href="<c:url value="/"/>point">
+				<i class="icon-users"></i> 
+				<span class="title">Point Users List</span>					
+				</a>					
+				</li>
+				<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="PrulesmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="PrulesmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>	
+			<% 
+			if(PrulesmenuBean.getName().equals("Bonus Rule")){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-wrench"></i> 
+				<span class="title">Bonus Rule</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">												
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>
+					</c:forEach>											
+					</ul>
+				</c:if>	
+			</li>
+			<%} %>
+			</c:forEach>
+				<c:forEach var="menu" items="${menus}" varStatus="status">
+				<jsp:useBean id="logsmenuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
+				<jsp:setProperty name="logsmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
+			<% 
+			if(logsmenuBean.getName().equals("Log List")){
+			%>	
+            <li class="">
+				<a href="javascript:;">
+				<i class="icon-calendar"></i> 
+				<span class="title">Log List</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+				<c:if test="${menu.value!=null}">
+					<ul class="sub-menu">
+					<c:forEach var="subMenu" items="${menu.value}" varStatus="substatus">						
+					   <li class="${(selectedNode!=null&&subMenu.nodeId==selectedNode.nodeId)?'active':''}">
+							<a href="${contextPath}${subMenu.uri}">
+							${subMenu.name}
+							</a>
+						</li>
+					</c:forEach>											
+					</ul>
+				</c:if>	
+			</li>
+			<%} %>
+			</c:forEach>		
+            <li class="">
+				<a href="<c:url value="/"/>interface">
+				<i class="icon-calendar"></i> 
+				<span class="title">Interfaces List</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+			</li>
+            <li class="">
+				<a href="<c:url value="/"/>settings">
+				<i class="icon-calendar"></i> 
+				<span class="title">System Setting</span>
+				<span class="selected"></span>
+				<span class="arrow"></span>				
+				</a>
+			</li>
+		
+		<%} %>
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	   </div>

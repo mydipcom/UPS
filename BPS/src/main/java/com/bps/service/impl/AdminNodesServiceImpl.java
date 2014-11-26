@@ -140,6 +140,9 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @see com.bps.service.AdminNodesService#updateAdminNode(com.bps.dto.TadminNodes) 
 	 */
 	public void updateAdminNode(TadminNodes adminNode) {
+		if(adminNodesDao.get(adminNode.getPid())==null){
+					throw new BPSException("error.AdminNodesServiceImpl.createAdminNode.pid");
+			}
 		adminNodesDao.update(adminNode);
 		cachedNodesData();
 	}

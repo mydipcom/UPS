@@ -47,6 +47,10 @@
 	      <value>cfg/PointRuleLog.hbm.xml</value>
 	      <value>cfg/PointRuleGroup.hbm.xml</value>
 	      <value>cfg/Setting.hbm.xml</value>
+	      <value>cfg/Interface.hbm.xml</value>
+	      <value>cfg/Param.hbm.xml</value>
+	    	
+	      <value>cfg/InterfaceLog.hbm.xml</value>
 	  </list>
 	</property>
 	 

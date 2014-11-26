@@ -52,23 +52,26 @@ private Logger logger = Logger.getLogger(ManagerController.class);
 	@ResponseBody
 	public String AdminusersList(HttpServletRequest request,DataTableParamter dtp){		
 		PagingData pagingData=adminUserService.loadAdminUserList(dtp);
+		
 		pagingData.setSEcho(dtp.sEcho);
-		Object[] aaData=pagingData.getAaData();
-		for(int i=0;i<aaData.length;i++){
-			TadminUser adminuser=(TadminUser)aaData[i];
-			if(adminuser.getCreatedBy()==null){
-				adminuser.setCreatedBy("");
-				adminuser.setCreatedTimeStr("");
-			}
-			if(adminuser.getUpdatedBy()==null){
-				adminuser.setUpdatedBy("");
-				adminuser.setUpdatedTimeStr("");
-			}
-			aaData[i]=adminuser;
-		}
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
 			pagingData.setAaData(objs);
+		}
+		else{
+			Object[] aaData=pagingData.getAaData();
+			for(int i=0;i<aaData.length;i++){
+				TadminUser adminuser=(TadminUser)aaData[i];
+				if(adminuser.getCreatedBy()==null){
+					adminuser.setCreatedBy("");
+					adminuser.setCreatedTimeStr("");
+				}
+				if(adminuser.getUpdatedBy()==null){
+					adminuser.setUpdatedBy("");
+					adminuser.setUpdatedTimeStr("");
+				}
+				aaData[i]=adminuser;
+			}
 		}
 		String rightsListJson= JSON.toJSONString(pagingData);
 		return rightsListJson;

@@ -9,7 +9,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Rules Log List</title>
+<title>Interface List</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -27,7 +27,6 @@
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="../assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
-
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="../assets/global/css/components.css" rel="stylesheet" type="text/css"/>
@@ -70,19 +69,15 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">Log List</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>rulelog">Bonus Rule Change Log</a>
+							<a href="<c:url value="/"/>interface">Interface</a>
 						</li>
 					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
 				
-				<!-- BEGIN SEARCH FORM -->
+				<!-- BEGIN SEARCH FORM -->		
 				<div class="portlet-body" >
-					<form id="searchForm" name="searchForm" action="rulelist1" class="form-horizontal" method="post">
+					<form id="searchForm" name="searchForm" action="" class="form-horizontal" method="post">
 					<div class="row">
 						<!-- 
 						<div class="col-md-6">					
@@ -96,45 +91,13 @@
 						 -->
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Rule ID</label>
+								<label class="col-md-3 control-label">Interface Name</label>
 								<div class="col-md-9">
-									<input name="ruleId" type="text" class="form-control">							
+									<input name="name" type="text" class="form-control">							
 								</div>
 							</div>
 						</div>
-					</div>
-									<div class="row">	
-										<div class="col-md-6">	
-											<div class="form-group">
-														<label class="col-md-3 control-label">Start time</label>
-														<div class="col-md-5">
-                                                        <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
-												           <input type="text" name="startTime" readonly="true" class="form-control"/>
-												           <span class="input-group-btn">
-												           <button type="button" class="btn default"><i class="fa fa-calendar"></i></button>
-												           </span>
-											            </div>
-											            </div>
-											        </div>
-											     </div>
-											  </div>
-							
-								<div class="row">	
-										<div class="col-md-6">	
-											<div class="form-group">
-														<label class="col-md-3 control-label">End time</label>
-														<div class="col-md-5">
-                                                        <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
-												           <input type="text" name="endTime" readonly="true" class="form-control"/>
-												           <span class="input-group-btn">
-												           <button type="button" class="btn default"><i class="fa fa-calendar"></i></button>
-												           </span>
-											            </div>
-											            </div>
-											        </div>
-											     </div>
-											  </div>
-					
+					</div>				
 					<div class="row">	
 						<div class="col-md-6">	
 							<div class="form-group">								
@@ -150,6 +113,11 @@
 				<!-- END SEARCH FORM -->
 				
 				
+								
+				
+				
+				
+				
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
@@ -157,35 +125,31 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Rules Logs Table
+									<i class="fa fa-edit"></i>Interface List
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_ruleslog"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Rule Id</label>
-											<label><input type="checkbox" checked data-column="3">Content</label>
-											<label><input type="checkbox" checked data-column="4">Create Time</label>
+											<label><input type="checkbox" checked data-column="1">Interface Name</label>
+											<label><input type="checkbox" checked data-column="2">Describe</label>
 										</div>
 									</div>								    																
 								</div>
 							</div>							
 							<div class="portlet-body">																
-								<table class="table table-striped table-hover table-bordered" id="ruleslog_table">
+								<table class="table table-striped table-hover table-bordered" id="interface_table">
 									<thead>
 										<tr>
 											<th class="table-checkbox">
-												<input type="checkbox" class="group-checkable" data-set="#ruleslog_table .checkboxes"/>
+												<input type="checkbox" class="group-checkable" data-set="#interface_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Rule Id</th>
-											<th>Content</th>
-											<th>Create Time</th>
+											<th>Interface Name</th>
+											<th>Describe</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -197,57 +161,13 @@
 					</div>
 				</div>
 				<!-- END PAGE CONTENT -->
-						
-						
-				<!-- BEGIN Edit MODAL FORM-->
-				<div class="modal" id="view_log" tabindex="-1" data-width="760">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">View Bonus Rule Change Log</h4>
-					</div>
-					<div id="editFormMsg"></div>
-					<!-- <div class="modal-body"> -->
-					<div class="portlet-body form">
-							<!-- BEGIN FORM	-->					
-						<form id="viewRuleslogForm" action=" " method="post" name="viewRuleslogForm" class="form-horizontal form-bordered">
-							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Id</label>
-									<div class="col-md-9">										
-										<input name="id" class="form-control" readonly="true"/>										
-									</div>
-								</div>						
-								<div class="form-group">
-									<label class="control-label col-md-3">Rule ID<span class="required"> * </span></label>
-									<div class="col-md-9">										
-										<input name="ruleId" class="form-control" readonly="true"/>										
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Content<span class="required">* </span></label>
-									<div class="col-md-9">																				
-										<textarea name="content" class="form-control"  readonly="true"></textarea>
-									</div>
-								</div>									
-								<div class="form-group">
-									<label class="control-label col-md-3">Create Time<span class="required">* </span></label>
-									<div class="col-md-9">
-										<input name="createdTime" class="form-control" readonly="true"/>									
-									</div>
-								</div>		
-							</div>
-							
-						</form>
-						<!-- END FORM-->
-				</div>
+				</div>	
 				<div class="modal-footer"></div>
-			</div>
+							
+			</div>	
+						
 				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_ruleslog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+				<div class="modal" id="delete_adminslog" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
 							 Are you sure to delete these selected rows ?
@@ -259,9 +179,74 @@
 					</div>					
 				</div>				
 				<!-- END DELETE MODAL FORM-->
+				<div class="modal" id="view_interface" tabindex="-1" data-width="760">
+					<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Interface Info</h4>
+					</div>
+				<div class="row">
+					<div class="col-md-12">
+					<form id="interfaceinfoForm"  method="post" name="interfaceinfoForm" class="form-horizontal form-bordered">
+						<div class="form-body">
+								<div class="form-group">
+									<label class="control-label col-md-2">Describe</label>
+									<div class="col-md-9">										
+										<input name="descr" readonly="true" type="text" class="form-control"/>										
+									</div>
+								</div>
+						</div>
+					</form>
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->
+							<!-- BEGIN EXAMPLE TABLE PORTLET-->
+					<div class="portlet box blue-hoki">
+						<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-edit"></i> inParam
+								</div>
+						</div>
+						<div class="portlet-body">																
+								<table class="table table-striped table-hover table-bordered" id="inparam_table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Param Name</th>
+											<th>Type</th>
+											<th>Describe</th>										
+										</tr>
+									</thead>															
+								</table>
+					</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+					</div> 
+							<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				
+					<div class="portlet box blue-hoki">
+						<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-edit"></i> outParam
+								</div>
+						</div>
+						<div class="portlet-body">																
+								<table class="table table-striped table-hover table-bordered" id="outparam_table">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Param Name</th>
+											<th>Type</th>
+											<th>Describe</th>										
+										</tr>
+									</thead>															
+								</table>
+							</div>
+						<!-- END EXAMPLE TABLE PORTLET-->
+				  </div> 
+				 
+					</div>
+				</div>
+			</div>
 			</div>		
-		</div>
-	</div>	
+		
+	
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
 	<c:import url="/common/footer"/>
@@ -292,19 +277,18 @@
 	<script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
     <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
-
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 	<script src="../assets/global/plugins/json/json2.js" type="text/javascript"></script>
 	<script src="../assets/global/scripts/metronic.js" type="text/javascript"></script>
 	<script src="../assets/admin/layout/scripts/layout.js" type="text/javascript"></script>	
-	<script src="../static/js/ruleslogTableData.js"></script>
+	<script src="../static/js/InterfaceTableData.js"></script>
 	<script>
 	jQuery(document).ready(function() {       
 	   Metronic.init(); // init metronic core components
 	   Layout.init(); // init current layout	
 	   //Demo.init(); // init demo features
-	   RulesLogTable.init("<c:url value="/"/>");	   
+	  InterfaceTable.init("<c:url value="/"/>");	   
 	});
 	</script>
 </body>

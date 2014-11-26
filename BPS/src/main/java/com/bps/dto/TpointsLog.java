@@ -34,6 +34,8 @@ public class TpointsLog implements Serializable {
 	private long createdTime;
 		
 	private String createdTimeStr;	
+	
+	private String pointuserId;
 
 	public TpointsLog() {
 	}
@@ -45,6 +47,16 @@ public class TpointsLog implements Serializable {
 		this.setContent(content);
 		this.createdTime=createdTime;
 		this.status=status;
+	}
+
+	
+	
+	public String getPointuserId() {
+		return pointUser.getUserId();
+	}
+
+	public void setPointuserId(String pointuserId) {
+		this.pointuserId = pointuserId;
 	}
 
 	public int getId() {
