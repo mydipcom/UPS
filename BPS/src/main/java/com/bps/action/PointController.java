@@ -30,7 +30,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ExcelTools;
+import com.bps.commons.LogManageTools;
+import com.bps.dto.TadminLog;
 import com.bps.dto.TpointUser;
+import com.bps.dto.TpointsLog;
 import com.bps.model.ChangePointModel;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -44,6 +47,8 @@ public class PointController extends BaseController {
      
      @Autowired
      private PointUserService pointUserService;
+     
+     private String log_content;
      
      @RequestMapping(value="/point",method = RequestMethod.GET)
      public ModelAndView point(HttpServletRequest request){
@@ -89,11 +94,16 @@ public class PointController extends BaseController {
      public String changerUserPoints(HttpServletRequest request,ChangePointModel cpm,HttpServletResponse response){
     	 JSONObject respJson = new JSONObject();
     	 TpointUser pointUser = new TpointUser();
+    	 TpointsLog pointsLog = new TpointsLog();
+    	 TadminLog  adminLog = new TadminLog();
     	try{
          pointUser  = pointUserService.getUserInfoById(cpm.getUserId());
+         pointsLog.setPointUser(pointUser);
           int curentPoints=pointUser.getPoints();
           if(cpm.getAction() == 1){
            pointUser.setPoints(curentPoints+cpm.getAmount());
+           pointsLog.setPoints(cpm.getAmount());
+           pointsLog.setPointsBalance(pointUser.getPoints());
           }else{
         	  curentPoints=curentPoints-cpm.getAmount();
         	  if(curentPoints<0)
@@ -101,7 +111,10 @@ public class PointController extends BaseController {
         		  curentPoints=0;
         	  }
               pointUser.setPoints(curentPoints);
+              pointsLog.setPoints(-cpm.getAmount());
+              pointsLog.setPointsBalance(pointUser.getPoints());
             }
+             log_content="success:change points.";
              pointUserService.updateUserInfo(pointUser);
           	 respJson.put("status", true);
     	 }catch(BPSException b){
@@ -109,6 +122,10 @@ public class PointController extends BaseController {
     		 respJson.put("info", b.getMessage());
     		
     	 }
+    	 pointsLog.setFrom(0);
+    	 LogManageTools.writePointLog(log_content, pointsLog);
+    	 adminLog.setAdminId(getSessionUser(request).getAdminId());
+    	 LogManageTools.writeAdminLog(log_content, adminLog);
     	 return JSON.toJSONString(respJson);
      }
      
@@ -116,14 +133,19 @@ public class PointController extends BaseController {
      @ResponseBody
      public String changerMoreUserPoints(HttpServletRequest request,ChangePointModel cpm,@PathVariable String ids,HttpServletResponse response){
     	 JSONObject respJson = new JSONObject();
-    	 TpointUser pointUser = new TpointUser();
+    	 TadminLog adminLog = new TadminLog();
+    	 TpointsLog pointsLog;
     	 try{
     	 String []user_ids = ids.split(",");
     	 for(String user_id:user_ids){
-               pointUser  = pointUserService.getUserInfoById(user_id);
+    		 pointsLog = new TpointsLog();
+    		 TpointUser pointUser  = pointUserService.getUserInfoById(user_id);
+    		  pointsLog.setPointUser(pointUser);
                int curentPoints=pointUser.getPoints();
                if(cpm.getAction() == 1){
                     pointUser.setPoints(curentPoints+cpm.getAmount());
+                    pointsLog.setPoints(cpm.getAmount());
+                    pointsLog.setPointsBalance(pointUser.getPoints());
                }else{
         	        curentPoints=curentPoints-cpm.getAmount();
         	        if(curentPoints<0)
@@ -131,9 +153,13 @@ public class PointController extends BaseController {
         		      curentPoints=0;
         	        }
                     pointUser.setPoints(curentPoints);
+                    pointsLog.setPoints(-cpm.getAmount());
+                    pointsLog.setPointsBalance(pointUser.getPoints());
                }
                 pointUserService.updateUserInfo(pointUser);
-             
+                log_content="success:change points.";
+                LogManageTools.writePointLog(log_content, pointsLog);
+                
     	     }
           	 respJson.put("status", true);
     	 }catch(BPSException b){
@@ -141,6 +167,8 @@ public class PointController extends BaseController {
     		 respJson.put("info", b.getMessage());
     		
     	 }
+    	 adminLog.setAdminId(getSessionUser(request).getAdminId());
+    	 LogManageTools.writeAdminLog(log_content, adminLog);
     	 return JSON.toJSONString(respJson);
      }
      

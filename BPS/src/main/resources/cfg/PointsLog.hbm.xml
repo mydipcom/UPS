@@ -8,7 +8,7 @@
 			<column name="id" />
 			<generator class="native"></generator>
 		</id>
-		<many-to-one name="pointUser" column="user_id" class="com.bps.dto.TpointUser" unique="true" not-null="true"/>						
+		<many-to-one name="pointUser" column="user_id" class="com.bps.dto.TpointUser"  not-null="true"/>						
         <property name="points" type="java.lang.Integer">
             <column name="points" length="11" not-null="true"/>
         </property>                
@@ -19,7 +19,7 @@
         	<column name="content" length="1000" not-null="true"/>
         </property>        
         <property name="from" type="java.lang.Integer">
-            <column name="from" length="6">
+            <column name="[from]" length="6">
                 <comment>0 System; 1 Interface; 2 Excel</comment>
             </column>
         </property>                           

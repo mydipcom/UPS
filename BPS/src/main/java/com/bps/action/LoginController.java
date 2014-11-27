@@ -88,18 +88,21 @@ public class LoginController extends BaseController {
 				}else{
 					mav.addObject("user", new TadminUser());
 				}
+				adminLog.setLevel((short)1);
 				log_content=SystemConstants.LOG_FAILURE+":userid locked.";
 		}
 		else if(tUser==null){
 			mav.addObject(ERROR_MSG_KEY, "用户名不存在");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
+			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
 			mav.addObject(ERROR_MSG_KEY, "登录密码不正确");
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
+			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":password error.";
 		}else{
 			setSessionUser(request, tUser);
@@ -115,18 +118,21 @@ public class LoginController extends BaseController {
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
 			
 		}
-		LogManageTools.writeLog(log_content,adminLog);
+		LogManageTools.writeAdminLog(log_content,adminLog);
 		return mav;
 	}
 	
 	@RequestMapping(value="/ResetPassword",method=RequestMethod.POST)
 	public ModelAndView resetPassword(HttpServletRequest request ,String email){
 		ModelAndView mav = new ModelAndView();
+		TadminLog adminLog = new TadminLog();
 		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email);
 		if(adminUser == null){
 			 adminUser = new TadminUser();
 			//邮箱不存在
 		}else{
+			adminLog.setAdminId(adminUser.getAdminId());
+		   
 			String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
 			adminUser.setPassword(SecurityTools.SHA1(random));
 			adminUser.setUpdatedBy(adminUser.getAdminId());
@@ -140,6 +146,8 @@ public class LoginController extends BaseController {
 		}
 		mav.addObject("user",adminUser);
 		mav.setViewName("login");
+		log_content="success:resert password success.";
+		LogManageTools.writeAdminLog(log_content, adminLog);
 		return mav;
 	}
 	
@@ -152,7 +160,11 @@ public class LoginController extends BaseController {
 	 */ 
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session){
+		TadminLog adminLog = new TadminLog();
+		adminLog.setAdminId(((TadminUser)session.getAttribute(SystemConstants.LOGINED)).getAdminId());
 		session.removeAttribute(SystemConstants.LOGINED);
+		log_content="success:login out.";
+		LogManageTools.writeAdminLog(log_content, adminLog);
 		return "forward:login";
 	}
 }

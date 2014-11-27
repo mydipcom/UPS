@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <property name="content" type="string">
-            <column name="content" length="40" not-null="true" />
+            <column name="content" length="100" not-null="true" />
         </property>
         <property name="name" type="string">
             <column name="interface_id" length="20" not-null="true" />

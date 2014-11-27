@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.dao.InterfaceLogDao;
+import com.bps.dto.TInterfaceLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.InterfaceLogService;
@@ -67,6 +68,12 @@ public class InterfaceLogServiceImpl implements InterfaceLogService{
 		}
 		
 		return interfaceLogDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
+
+
+	public void createInterfaceLog(TInterfaceLog interfaceLog) {
+		// TODO Auto-generated method stub
+		interfaceLogDao.create(interfaceLog);
 	}
 
 }

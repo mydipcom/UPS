@@ -15,7 +15,7 @@
             <column name="content" length="1000" not-null="true" />
         </property>
         <property name="from" type="short">
-            <column name="from" not-null="true" />
+            <column name="[from]" not-null="true" />
         </property>
         <property name="createdTime" type="long">
             <column name="created_time" not-null="true" />

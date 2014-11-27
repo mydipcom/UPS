@@ -16,8 +16,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
+import com.bps.commons.LogManageTools;
+import com.bps.commons.SystemConstants;
+import com.bps.dto.TadminLog;
+import com.bps.dto.TadminUser;
 import com.bps.dto.TpointRule;
 import com.bps.dto.TpointRuleGroup;
+import com.bps.dto.TpointRuleLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.BonusRuleService;
@@ -34,6 +39,8 @@ private Logger logger = Logger.getLogger(UserController.class);
 	
 	@Resource
 	private PointsRuleGroupService pointsRuleGroupService;
+	
+	private String log_content;
 	
 	@RequestMapping(value="/rules",method=RequestMethod.GET)
 	public ModelAndView rules(HttpServletRequest request){
@@ -71,20 +78,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 	@RequestMapping(value="/addrules",method=RequestMethod.POST)
 	@ResponseBody
 	public String addRules(HttpServletRequest request,TpointRule pointRule){
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
-//		TadminNodes adminNode=new TadminNodes();
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-			
-		JSONObject respJson = new JSONObject();
+        JSONObject respJson = new JSONObject();
 		try{
 			bonusRuleService.createAdminRole(pointRule);
 			respJson.put("status", true);
@@ -98,23 +92,18 @@ private Logger logger = Logger.getLogger(UserController.class);
 	
 	@RequestMapping(value="/editrules",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateRules(HttpServletRequest request,TpointRule pointRule){		
-//		TadminNodes adminNode=new TadminNodes();		
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-
-		JSONObject respJson = new JSONObject();
+	public String updateRules(HttpServletRequest request,TpointRule pointRule){	
+		TpointRuleLog pointRuleLog = new TpointRuleLog();
+		TadminLog adminLog = new TadminLog();
+		adminLog.setAdminId(((TadminUser)request.getSession().getAttribute(SystemConstants.LOGINED)).getAdminId());
+		pointRuleLog.setRuleId(pointRule.getRuleId());
+		pointRuleLog.setFrom((short)0);
+        JSONObject respJson = new JSONObject();
 		try{
 			bonusRuleService.updateAdminRole(pointRule);
+			log_content="success:edit rules.";
+			LogManageTools.writePointRuleLog(log_content, pointRuleLog);
+			LogManageTools.writeAdminLog(log_content, adminLog);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){
