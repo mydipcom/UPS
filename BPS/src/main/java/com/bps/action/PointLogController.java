@@ -39,7 +39,7 @@ public class PointLogController extends BaseController {
 	public ModelAndView pointlog(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 			
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "Log List");
 		mav.setViewName("pointlog/pointlog");
 		return mav;
 	}	

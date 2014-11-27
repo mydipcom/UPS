@@ -335,7 +335,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3">ID</label>
 									<div class="col-md-9">										
-										<input name="adminId" class="form-control"/>										
+										<input name="adminId" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">

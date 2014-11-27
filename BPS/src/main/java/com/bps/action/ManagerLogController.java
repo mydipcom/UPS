@@ -36,7 +36,7 @@ public class ManagerLogController extends BaseController {
 	public ModelAndView adminuserslog(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 			
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "Log List");
 		mav.setViewName("managerlog/managerslog");
 		return mav;
 	}	

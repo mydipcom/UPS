@@ -30,7 +30,7 @@ public class RulesGroupController extends BaseController{
 	@RequestMapping(value="/rulesgroup",method=RequestMethod.GET)
 	public ModelAndView rules(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		
+		request.getSession().setAttribute(Lift_Flag, "Bonus Rule");
 		mav.setViewName("rulesgroup/rulesgroup");
 		return mav;
 	}
@@ -49,19 +49,6 @@ public class RulesGroupController extends BaseController{
 	@RequestMapping(value="/addrulesgroup",method=RequestMethod.POST)
 	@ResponseBody
 	public String addRulesGroup(HttpServletRequest request,TpointRuleGroup pointRuleGroup){
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);		
-//		TadminNodes adminNode=new TadminNodes();
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
-			
 		JSONObject respJson = new JSONObject();
 		try{
 			pointsRuleGroupService.createPointRuleGroup(pointRuleGroup);
@@ -77,18 +64,6 @@ public class RulesGroupController extends BaseController{
 	@RequestMapping(value="/editrulesgroup",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateRulesGroup(HttpServletRequest request,TpointRuleGroup pointRuleGroup){		
-//		TadminNodes adminNode=new TadminNodes();		
-//		JSONObject jsonObj= (JSONObject)JSON.parse(jsonStr);
-//		ConvertTools.json2Model(jsonObj, adminNode);
-//		adminNode.setName(jsonObj.getString("name"));
-//		adminNode.setUri(jsonObj.getString("uri"));
-//		adminNode.setMethod(jsonObj.getString("method"));
-//		adminNode.setPid(jsonObj.getIntValue("pid"));
-//		adminNode.setIsMenu(jsonObj.getBooleanValue("isMenu"));
-//		adminNode.setGroupName(jsonObj.getString("groupName"));
-//		adminNode.setGroupSort(jsonObj.getShortValue("groupSort"));
-//		adminNode.setDescr(jsonObj.getString("descr"));
-//		adminNode.setStatus(jsonObj.getBooleanValue("status"));
 
 		JSONObject respJson = new JSONObject();
 		try{

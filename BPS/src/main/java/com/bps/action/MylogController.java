@@ -34,7 +34,7 @@ public class MylogController extends BaseController {
 	public ModelAndView mylogs(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 			
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "Log List");
 		mav.setViewName("mylog/mylog");
 		return mav;
 	}	

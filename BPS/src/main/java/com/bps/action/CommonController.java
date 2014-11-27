@@ -44,6 +44,7 @@ public class CommonController extends BaseController {
 	@RequestMapping(value="left",method=RequestMethod.GET)
 	public ModelAndView left(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
+		mav.addObject(Lift_Flag, (String) request.getSession().getAttribute(Lift_Flag));
 		mav.addObject("menus", SystemConfig.Admin_Nodes_Menu_Map);
 		mav.setViewName("common/left");
 		return mav;

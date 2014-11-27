@@ -57,11 +57,10 @@ public class HomeController extends BaseController {
 	private BonusRuleService bonusRuleService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView home(){
+	public ModelAndView home(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-//		TadminUser tUser=new TadminUser();
-//		mav.addObject("user", tUser);
-		mav.setViewName("home/index");
+		request.getSession().setAttribute(Lift_Flag,"Dashboard");
+		mav.setViewName("home/home");
 		return mav;
 	}
 	

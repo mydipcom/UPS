@@ -47,7 +47,7 @@ public class SettingController extends BaseController {
 	public ModelAndView settings(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "System Setting");
 		mav.setViewName("settings/systemsetting");
 		return mav;
 	}

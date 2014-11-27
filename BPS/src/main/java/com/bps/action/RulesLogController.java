@@ -26,34 +26,20 @@ import com.bps.service.RulesLogService;
 @Controller
 public class RulesLogController extends BaseController {
 
-	private Logger logger = Logger.getLogger(RightsController.class);
+	private Logger logger = Logger.getLogger(RulesLogController.class);
 	
 	@Resource
 	private RulesLogService rulesLogService;
 	
-	private Integer Ruleid;
+
 	@RequestMapping(value="/ruleslog",method=RequestMethod.GET)
 	public ModelAndView ruleslogs(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "Log List");
 		mav.setViewName("ruleslog/ruleslog");
 		return mav;
 	}	
-	/*
-	@RequestMapping(value="/ruleidset/{ids}",method=RequestMethod.GET)
-	@ResponseBody
-	public String viewruleslogs(@PathVariable String ids,HttpServletRequest request){
-		JSONObject respJson = new JSONObject();
-		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
-		Ruleid=idArr[0];
-//		mav.addObject("user", tUser);
-		respJson.put("status", true);
-		return JSON.toJSONString(respJson);	
-	
-	}
-	*/	
 	@RequestMapping(value="/ruleslogList",method=RequestMethod.GET)
 	@ResponseBody
 	public String ruleslogList(HttpServletRequest request,DataTableParamter dtp){

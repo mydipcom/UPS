@@ -51,7 +51,8 @@ public class RolesController extends BaseController {
 	@RequestMapping(value="/roles",method=RequestMethod.GET)
 	public ModelAndView roles(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		mav.addObject("rightsList", SystemConfig.Admin_Nodes_Group_Map);		
+		mav.addObject("rightsList", SystemConfig.Admin_Nodes_Group_Map);
+		request.getSession().setAttribute(Lift_Flag, "System Management");
 		mav.setViewName("roles/roles");
 		return mav;
 	}

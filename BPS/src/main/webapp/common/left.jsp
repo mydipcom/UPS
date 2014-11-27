@@ -38,15 +38,22 @@
 			Long userRights=null;
 			if(session.getAttribute("rights")!=null){
 				userRights=(Long)session.getAttribute("rights");
-			}	
+			}
+			String active=(String)session.getAttribute("liftflag");
+			
 			if(!isAdmin){
 			%>	
+			
 			<c:forEach var="menu" items="${menus}" varStatus="status">
 				<jsp:useBean id="menuBean" class="com.bps.dto.TadminNodes"></jsp:useBean>	
 				<jsp:setProperty name="menuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
 				<jsp:setProperty name="menuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<%if(menuBean.getName().equals("Dashboard")&&(userRights&menuBean.getBitFlag())>0){ %>
+			<%if(active.equals("Dashboard")) {%>
 			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>home">
 				<i class="icon-home"></i> 
 				<span class="title">Dashboard</span>
@@ -61,8 +68,11 @@
 				<jsp:setProperty name="mangmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(mangmenuBean.getName().equals("System Management")&&(userRights&mangmenuBean.getBitFlag())>0){
-			%>	
-            <li class="">
+			if(active.equals("System Management")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="javascript:;">
 				<i class="icon-wrench"></i> 
 				<span class="title">System Management</span>
@@ -93,8 +103,11 @@
 				<jsp:setProperty name="pusermenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(pusermenuBean.getName().equals("Point Users List")&&(userRights&pusermenuBean.getBitFlag())>0){
-			%>	
-            	<li class="">
+			 if(active.equals("Point Users List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>point">
 				<i class="icon-users"></i> 
 				<span class="title">Point Users List</span>					
@@ -108,8 +121,11 @@
 				<jsp:setProperty name="PrulemenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(PrulemenuBean.getName().equals("Bonus Rule")&&(userRights&PrulemenuBean.getBitFlag())>0){
-			%>	
-            <li class="">
+			if(active.equals("Bonus Rule")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="javascript:;">
 				<i class="icon-wrench"></i> 
 				<span class="title">Bonus Rule</span>
@@ -140,9 +156,12 @@
 				<jsp:setProperty name="logmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(logmenuBean.getName().equals("Log List")&&(userRights&logmenuBean.getBitFlag())>0){
-			%>	
-            <li class="">
-				<a href="javascript:;">
+			if(active.equals("Log List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
+        		<a href="javascript:;">
 				<i class="icon-calendar"></i> 
 				<span class="title">Log List</span>
 				<span class="selected"></span>
@@ -172,9 +191,12 @@
 				<jsp:setProperty name="intermenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(intermenuBean.getName().equals("Interfaces List")&&(userRights&intermenuBean.getBitFlag())>0){
-			%>	
-            <li class="">
-				<a href="<c:url value="/"/>home">
+			 if(active.equals("Interfaces List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
+				<a href="<c:url value="/"/>interface">
 				<i class="icon-calendar"></i> 
 				<span class="title">Interfaces List</span>
 				<span class="selected"></span>
@@ -189,8 +211,11 @@
 				<jsp:setProperty name="settingmenuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>
 			<% 
 			if(settingmenuBean.getName().equals("System Setting")&&(userRights&settingmenuBean.getBitFlag())>0){
-			%>	
-            <li class="">
+			if(active.equals("System Setting")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>settings">
 				<i class="icon-calendar"></i> 
 				<span class="title">System Setting</span>
@@ -200,12 +225,16 @@
 			</li>
 			<%} %>
 			</c:forEach>
-		<%} else{%>	
+			
+		<%} else{
+			if(active.equals("Dashboard")) {%>
 			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>home">
 				<i class="icon-home"></i> 
-				<span class="title">Dashboard</span>
-				<span class="selected"></span>
+				<span class="title"> Dashboard</span>	
 				</a>
 			</li>
 			<c:forEach var="menu" items="${menus}" varStatus="status">
@@ -213,8 +242,11 @@
 				<jsp:setProperty name="mangsmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
 			<% 
 			if(mangsmenuBean.getName().equals("System Management")){
-			%>	
-            <li class="">
+          	if(active.equals("System Management")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="javascript:;">
 				<i class="icon-wrench"></i> 
 				<span class="title">System Management</span>
@@ -235,7 +267,11 @@
 			</li>
 			<%} %>
 			</c:forEach>
-            	<li class="">
+			<% if(active.equals("Point Users List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>point">
 				<i class="icon-users"></i> 
 				<span class="title">Point Users List</span>					
@@ -246,8 +282,11 @@
 				<jsp:setProperty name="PrulesmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>	
 			<% 
 			if(PrulesmenuBean.getName().equals("Bonus Rule")){
-			%>	
-            <li class="">
+			if(active.equals("Bonus Rule")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="javascript:;">
 				<i class="icon-wrench"></i> 
 				<span class="title">Bonus Rule</span>
@@ -273,8 +312,11 @@
 				<jsp:setProperty name="logsmenuBean" property="name" value="${menu.key.name}"></jsp:setProperty>
 			<% 
 			if(logsmenuBean.getName().equals("Log List")){
-			%>	
-            <li class="">
+			if(active.equals("Log List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="javascript:;">
 				<i class="icon-calendar"></i> 
 				<span class="title">Log List</span>
@@ -295,7 +337,11 @@
 			</li>
 			<%} %>
 			</c:forEach>		
-            <li class="">
+          <%   if(active.equals("Interfaces List")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>interface">
 				<i class="icon-calendar"></i> 
 				<span class="title">Interfaces List</span>
@@ -303,7 +349,11 @@
 				<span class="arrow"></span>				
 				</a>
 			</li>
-            <li class="">
+            <%if(active.equals("System Setting")) {%>
+			<li class="start active open">
+			<%} else{ %>
+			<li class=''> 
+			<%}%>
 				<a href="<c:url value="/"/>settings">
 				<i class="icon-calendar"></i> 
 				<span class="title">System Setting</span>

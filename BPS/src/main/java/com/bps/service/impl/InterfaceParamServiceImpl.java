@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import com.bps.dao.InterfaceParamDao;
+import com.bps.dto.Param;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.InterfaceParamService;
@@ -46,6 +47,18 @@ public class InterfaceParamServiceImpl implements InterfaceParamService{
 			i++;
 		}
 		 return interfaceParamDao.findPage(criterions, rdtp.iDisplayStart, rdtp.iDisplayLength);
+	}
+
+
+	public void createInterfaceParam(Param param) {
+		interfaceParamDao.create(param);
+		
+	}
+
+
+	public void deleteInterfaceParam(String[] ids) {
+		
+		interfaceParamDao.deleteparam(ids);
 	}
 
 }

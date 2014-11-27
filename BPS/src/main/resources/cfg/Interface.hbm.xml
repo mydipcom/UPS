@@ -9,7 +9,7 @@
             <generator class="assigned" />
         </id>
         <property name="descr" type="string">
-            <column name="descr" length="20" not-null="true" />
+            <column name="descr" length="200" not-null="true" />
         </property>
         <set name="param">  
            <key column="interface_id" />  

@@ -34,6 +34,7 @@ public class BaseController {
 	
 	protected final String ERROR_MSG_KEY="errorMsg";
 	protected final String LOGIN_TO_URL="LoginToUrl";
+	protected final String Lift_Flag="liftflag";
 	
 	/** 
 	 * <p>Description:Get the login user from session</p>

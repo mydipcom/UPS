@@ -27,7 +27,7 @@ public class InterfaceLogController extends BaseController{
 	@RequestMapping(value="/interfacelog", method=RequestMethod.GET)
 	public ModelAndView interfaceLog(HttpServletRequest request){
 		ModelAndView mav= new ModelAndView();
-		
+		request.getSession().setAttribute(Lift_Flag, "Log List");
 		mav.setViewName("interfacelog/interfacelog");
 		
 		return mav;	

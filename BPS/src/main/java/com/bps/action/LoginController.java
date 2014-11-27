@@ -110,6 +110,7 @@ public class LoginController extends BaseController {
 			if(StringUtils.isEmpty(toUrl)){
 				toUrl="/home";
 			}
+			request.getSession().setAttribute(Lift_Flag, "Dashboard");
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
 			

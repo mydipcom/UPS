@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
 import com.bps.dto.Param;
+import com.bps.dto.TInterface;
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
 import com.bps.model.InterfaceModel;
@@ -34,7 +35,7 @@ public class InterfaceController extends BaseController{
 	@RequestMapping(value="/interface",method=RequestMethod.GET)
 	public ModelAndView interfaces(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();		
-		
+		request.getSession().setAttribute(Lift_Flag,"Interfaces List");
 		mav.setViewName("interface/interface");
 		return mav;
 	}
@@ -104,11 +105,12 @@ public class InterfaceController extends BaseController{
 		}
 	@RequestMapping(value="/interface/{ids}", method=RequestMethod.DELETE)
 	@ResponseBody
-	public String DeleteInterfaceLog(HttpServletRequest request,@PathVariable String ids){
+	public String DeleteInterface(HttpServletRequest request,@PathVariable String ids){
 		String[] idstrArr=ids.split(",");		
 				
 		JSONObject respJson = new JSONObject();
 		try{
+			interfaceParamService.deleteInterfaceParam(idstrArr);
 			interfaceService.deleteInterface(idstrArr);
 			respJson.put("status", true);
 		}
@@ -118,5 +120,48 @@ public class InterfaceController extends BaseController{
 		}	
 		return JSON.toJSONString(respJson);	
 	}
-
+	@RequestMapping(value="/addinterface", method=RequestMethod.POST)
+	@ResponseBody
+	public String AddInterface(HttpServletRequest request,TInterface interfaces){
+					
+		JSONObject respJson = new JSONObject();
+		try{
+			interfaceService.createInterface(interfaces);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+	@RequestMapping(value="/editinterface", method=RequestMethod.POST)
+	@ResponseBody
+	public String EditInterface(HttpServletRequest request,TInterface interfaces){
+					
+		JSONObject respJson = new JSONObject();
+		try{
+			interfaceService.updateInterface(interfaces);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
+	}
+	@RequestMapping(value="/addinterfaceparam", method=RequestMethod.POST)
+	@ResponseBody
+	public String AddInterfaceParam(HttpServletRequest request,Param param){
+		JSONObject respJson = new JSONObject();
+		try{
+			interfaceParamService.createInterfaceParam(param);
+			respJson.put("status", true);
+		}
+		catch(BPSException be){
+			respJson.put("status", false);
+			respJson.put("info", be.getMessage());
+		}	
+		return JSON.toJSONString(respJson);	
+	}
 }

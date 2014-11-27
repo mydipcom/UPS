@@ -127,8 +127,11 @@
 								<div class="caption">
 									<i class="fa fa-edit"></i>Interface List
 								</div>
-								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog"><i class="fa fa-trash-o"></i> Delete</a>
+								<div class="actions">
+									<a class="btn btn-default btn-sm" data-toggle="modal" href="#add_interface"><i class="fa fa-plus"></i> Add</a>
+									<a class="btn btn-default btn-sm" data-toggle="modal" href="#add_interfaceparam" id="openAddParamModal"><i class="fa fa-plus"></i> AddParam</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_interface" id="openEditinterfaceModal"><i class="fa fa-pencil"></i> Edit</a>									
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_interface"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
@@ -165,6 +168,156 @@
 				<div class="modal-footer"></div>
 							
 			</div>	
+							<!-- BEGIN ADD MODAL FORM-->
+				<div class="modal" id="add_interface" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Add Interface</h4>
+					</div>
+					<div id="addFormMsg"></div>
+					<!-- <div class="modal-body"> -->
+					<div class="portlet-body form">
+						<!-- BEGIN FORM	-->					
+						<form id="addInterfaceForm" action="" method="post" name="addInterfaceForm" class="form-horizontal form-bordered">
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">InterfaceName<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="name" class="form-control"/>										
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Describe<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="descr" class="form-control"/>										
+									</div>
+								</div>									
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END ADD MODAL FORM-->
+				
+				
+							<!-- BEGIN ADD MODAL FORM-->
+				<div class="modal" id="edit_interface" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Edit Interface</h4>
+					</div>
+					<div id="addFormMsg"></div>
+					<!-- <div class="modal-body"> -->
+					<div class="portlet-body form">
+						<!-- BEGIN FORM	-->					
+						<form id="editInterfaceForm" action="" method="post" name="editInterfaceForm" class="form-horizontal form-bordered">
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">InterfaceName<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="name" class="form-control" readonly="true"/>										
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Describe<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="descr" class="form-control"/>										
+									</div>
+								</div>									
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="addFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END ADD MODAL FORM-->
+				<!-- BEGIN Add MODAL FORM-->
+				<div class="modal" id="add_interfaceparam" tabindex="-1" data-width="760">
+					<div class="modal-header">
+						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Add InterfaceParam</h4>
+					</div>
+					<div id="addFormMsg"></div>
+					<!-- <div class="modal-body"> -->
+					<div class="portlet-body form">
+						<!-- BEGIN FORM	-->					
+						<form id="addInterfaceparamForm" action="" method="post" name="addInterfaceparamForm" class="form-horizontal form-bordered">
+							<div class="form-body">
+								<div class="alert alert-danger display-hide">
+									<button class="close" data-close="alert"></button>
+									You have some form errors. Please check below.
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">InterfaceName<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="t.name" class="form-control" readonly="true"/>										
+									</div>
+								</div>								
+								<div class="form-group">
+									<label class="control-label col-md-3">ParamName<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="name" class="form-control"/>										
+									</div>
+								</div>
+								<div class="form-group">
+								<label class="col-md-3 control-label">Flag</label>
+								<div class="col-md-9">
+									<select name="flag" class="form-control">
+										<option value="1">InParam</option>
+										<option value="2">OutParam</option>								
+									</select>
+								</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Type<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="type" class="form-control"/>										
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Describe<span class="required"> * </span></label>
+									<div class="col-md-9">										
+										<input name="description" class="form-control"/>										
+									</div>
+								</div>
+																	
+							</div>
+							<div class="form-actions" style="border-top:0;">
+								<div class="row">
+									<div class="col-md-offset-6 col-md-6">
+										<button type="submit" class="btn green" id="addparamFormSubmit"><i class="fa fa-check"></i> Submit</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- END FORM-->
+					</div>					
+				</div>				
+				<!-- END ADD MODAL FORM-->
 						
 				<!-- BEGIN DELETE MODAL FORM-->
 				<div class="modal" id="delete_adminslog" tabindex="-1" data-backdrop="static" data-keyboard="false">

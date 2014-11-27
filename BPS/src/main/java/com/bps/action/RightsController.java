@@ -48,7 +48,7 @@ public class RightsController extends BaseController {
 	public ModelAndView rights(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		
-//		mav.addObject("user", tUser);
+		request.getSession().setAttribute(Lift_Flag, "System Management");
 		mav.setViewName("rights/rights");
 		return mav;
 	}

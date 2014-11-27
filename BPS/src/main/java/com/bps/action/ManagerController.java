@@ -45,6 +45,7 @@ private Logger logger = Logger.getLogger(ManagerController.class);
 		ModelAndView mav=new ModelAndView();		
 		mav.addObject("rolesList", adminRoleService.getAllAdminRoles());
 		mav.setViewName("manager/Adminusers");
+		request.getSession().setAttribute(Lift_Flag, "System Management");
 		return mav;
 	}
 	

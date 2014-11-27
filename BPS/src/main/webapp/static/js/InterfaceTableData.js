@@ -223,6 +223,41 @@ var InterfaceTable = function () {
                 $(this).removeAttr("checked");
             }
         });
+        
+        $("#openEditinterfaceModal").on("click",function(event){
+			if(selected.length>1){
+				handleAlerts("Only one row can be edited.","warning","");
+				event.stopPropagation();
+			}else if(selected.length==0)
+			{
+				handleAlerts("Please choose one row.","warning","");
+				event.stopPropagation();
+			}
+			else{
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+	            var name = data.name;
+	            var descr =data.descr;
+	            $("#editInterfaceForm input[name='name']").val(name);
+	            $("#editInterfaceForm input[name='descr']").val(descr);
+			}
+		});
+        $("#openAddParamModal").on("click",function(event){
+			if(selected.length>1){
+				handleAlerts("Only one row can be edited.","warning","");
+				event.stopPropagation();
+			}else if(selected.length==0)
+			{
+				handleAlerts("Please choose one row.","warning","");
+				event.stopPropagation();
+			}
+			else{
+				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
+	            var name = data.name;
+	           
+	            $("#addInterfaceparamForm input[name='t.name']").val(name);
+	           
+			}
+		});
       //删除操作
 		$('#deleteBtn').on('click', function (e) {
 			
@@ -266,11 +301,218 @@ var InterfaceTable = function () {
 		oTable.fnFilter(jsonDataStr);
 		return false;
 	});	
-    
+    //添加操作
+	var AddInterface = function(){
+		event.stopPropagation();
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"addinterface", 
+         "data": $('#addInterfaceForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 handleAlerts("Added the data successfully.","success","");		            	 
+				 }
+				 else{
+					 handleAlerts("Failed to add the data."+resp.info,"danger","");						 
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+    };
+    var AddInterfaceParam = function(){
+		event.stopPropagation();
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"addinterfaceparam", 
+         "data": $('#addInterfaceparamForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 handleAlerts("Added the data successfully.","success","");		            	 
+				 }
+				 else{
+					 handleAlerts("Failed to add the data."+resp.info,"danger","");						 
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+    };
+    var EditInterface = function(){
+		event.stopPropagation();
+		$.ajax( {
+         "dataType": 'json', 
+         "type":'POST', 
+         "url": rootURI+"editinterface", 
+         "data": $('#editInterfaceForm').serialize(),
+         "success": function(resp,status){
+        	 if(status == "success"){  
+        		 if(resp.status){						 
+	            	 oTable.api().draw();
+	            	 handleAlerts("Added the data successfully.","success","");		            	 
+				 }
+				 else{
+					 handleAlerts("Failed to add the data."+resp.info,"danger","");						 
+				 }
+			}             	 
+         },
+         "error":function(XMLHttpRequest, textStatus, errorThrown){
+        	 alert(errorThrown);
+         }
+       });
+    };
 	
-  
-	
+    var AddInterfaceValidation = function() {
+        var form = $('#addInterfaceForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+             name: {
+            	required: true,
+            	minlength:4,
+                		},
+            
+        	 descr: {
+        		required: true,
+    				}
 
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	AddInterface();
+            }
+        });
+    };
+    var AddInterfaceparamValidation = function() {
+        var form = $('#addInterfaceparamForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+             name: {
+            	required: true,
+            	minlength:3,
+                		},
+            
+                descr: {
+        		required: true,
+    				},
+    			type: {
+                required: true,
+                 		}
+
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	AddInterfaceParam();
+            }
+        });
+    };
+    var EditInterfaceValidation = function() {
+        var form = $('#editInterfaceForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+             name: {
+            	required: true,
+            	minlength:4,
+                		},
+            
+        	 descr: {
+        		required: true,
+    				}
+
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	EditInterface();
+            }
+        });
+    };
 	
 	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position,closeInSeconds) {         
@@ -297,7 +539,9 @@ var InterfaceTable = function () {
         init: function (rootPath) {
         	rootURI=rootPath;
         	handleTable();  
-       	    
+        	AddInterfaceValidation();
+        	EditInterfaceValidation();
+        	AddInterfaceparamValidation();
         }
 
     };
