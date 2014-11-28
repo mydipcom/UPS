@@ -65,6 +65,9 @@
 	<!-- BEGIN LOGIN FORM -->
 	<form:form action="login" method="post" commandName="user" cssClass="login-form">	
 		<h3 class="form-title"><s:message code="login.form.title"/></h3>
+		<div class="form-group">
+		<span>${errorMsg}</span>
+		</div>
 		<div class="alert alert-danger display-hide">
 			<button class="close" data-close="alert"></button>
 			<span><s:message code="login.form.alert"/></span>
@@ -100,10 +103,7 @@
 			</p>
 		</div>
 		<div class="create-account">
-			<p>
-				 Don't have an account yet ?&nbsp; <a href="javascript:;" id="register-btn">
-				Create an account </a>
-			</p>
+		
 		</div>
 	</form:form>
 	<!-- END LOGIN FORM -->

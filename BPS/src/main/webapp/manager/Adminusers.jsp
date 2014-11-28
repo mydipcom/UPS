@@ -69,7 +69,7 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">Admin Users</a>
+							<a href="<c:url value="/"/>manager"><s:message code="system.management.user.admin"/></a>
 						</li>
 					</ul>					
 				</div>
@@ -83,7 +83,7 @@
 					<div class="row">
 						<div class="col-md-6">					
 							<div class="form-group">
-								<label class="col-md-3 control-label">User ID</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.id"/></label>
 								<div class="col-md-9">
 									<input name="adminId" type="text" class="form-control">							
 								</div>
@@ -91,7 +91,7 @@
 						</div>
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Email</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.email"/></label>
 								<div class="col-md-9">
 									<input name="email" type="text" class="form-control">							
 								</div>
@@ -101,7 +101,7 @@
 					<div class="row">
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Role Name</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.rolename"/></label>
 								<div class="col-md-9">
 									<select name="adminRole.roleId" class="form-control">
 										<option value="">ALL</option>
@@ -114,15 +114,15 @@
 						</div>					
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Status</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.status"/></label>
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
 										<input type="radio" name="status" value="" checked/>All </label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="true"/>Enable </label>
+										<input type="radio" name="status" value="true"/><s:message code="all.status.enable"/></label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="false"/>Disable </label>
+										<input type="radio" name="status" value="false"/><s:message code="all.status.disable" /> </label>
 									</div>									
 								</div>
 							</div>
@@ -133,7 +133,7 @@
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
 									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -151,28 +151,28 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Admin Users Table
+									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users"><i class="fa fa-key"></i> Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users"><i class="fa fa-lock"></i> Deactivate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_users"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_users" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_users" id="openActiveadminsModal"><i class="fa fa-key"></i> <s:message code="all.table.activate" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_users" id="openDeactiveadminsModal"><i class="fa fa-lock"></i> <s:message code="all.table.deactivate" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_users" id="openDeleteadminsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Email</label>
-											<label><input type="checkbox" checked data-column="3">Role_Name</label>
-											<label><input type="checkbox" checked data-column="4">Status</label>
-											<label><input type="checkbox" checked data-column="5">CreatedBy</label>
-											<label><input type="checkbox" checked data-column="6">CreatedTime</label>
-											<label><input type="checkbox" checked data-column="7">UpdatedBy</label>
-											<label><input type="checkbox" checked data-column="8">UpdatedTime</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.user.createdBy"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="system.management.user.createdTime"/></label>
+											<label><input type="checkbox" checked data-column="7"><s:message code="system.management.user.updatedBy"/></label>
+											<label><input type="checkbox" checked data-column="8"><s:message code="system.management.user.updatedTime"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -184,15 +184,15 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#adminusers_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Email</th>
-											<th>Role_Name</th>
-											<th>Status</th>
-											<th>CreatedBy</th>
-											<th>CreatedTime</th>
-											<th>UpdatedBy</th>
-											<th>UpdatedTime</th>
-											<th>Action</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="system.management.user.searchform.email"/></th>
+											<th><s:message code="system.management.user.searchform.rolename"/></th>
+											<th><s:message code="system.management.user.searchform.status"/></th>
+											<th><s:message code="system.management.user.createdBy"/></th>
+											<th><s:message code="system.management.user.createdTime"/></th>
+											<th><s:message code="system.management.user.updatedBy"/></th>
+											<th><s:message code="system.management.user.updatedTime"/></th>
+											<th><s:message code="all.table.title"/></th>
 										</tr>
 									</thead>
 																						
@@ -208,7 +208,7 @@
 				<div class="modal" id="add_users" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add AdminUsers</h4>
+						<h4 class="modal-title"><s:message code="system.management.user.adduser"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -218,30 +218,28 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="adminId" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Password<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="password" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Email<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="email" class="form-control"/>
-										<span class="help-block">
-										Please input the email that access this rights page</span>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Role_Name<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<select name="adminRole.roleId" class="form-control">
 											<c:forEach var="role" items="${rolesList}">
@@ -251,7 +249,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Status <span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status" /><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -280,7 +278,7 @@
 			<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Admin Logs</h4>
+						<h4 class="modal-title"><s:message code="system.management.user.logtitle" /></h4>
 					</div>
 				
 				<div class="row">
@@ -291,7 +289,7 @@
 					<div class="portlet box blue-hoki">
 						<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Admin Logs Table
+									<i class="fa fa-edit"></i><s:message code="system.management.user.logtablename" />
 								</div>
 						</div>
 						<div class="portlet box blue-hoki">
@@ -299,11 +297,11 @@
 								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
 									<thead>
 										<tr>
-										    <th>ID</th>
-											<th>Admin Name</th>
-											<th>Content</th>
-											<th>Level</th>
-											<th>Create Time</th>
+										    <th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="system.management.user.logtable.adminame"/></th>
+											<th><s:message code="system.management.user.logtable.content"/></th>
+											<th><s:message code="system.management.user.logtable.level"/></th>
+											<th><s:message code="system.management.user.createdTime"/></th>
 											
 										</tr>
 									</thead>
@@ -330,45 +328,43 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+								<s:message code="system.management.user.adduser.message" />
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">ID</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
 									<div class="col-md-9">										
 										<input name="adminId" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Password</label>
+									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
 									<div class="col-md-9">																				
 										<input name="password" class="form-control"/>
 										
 									</div>
 								</div>	
 								<div class="form-group">
-									<label class="control-label col-md-3">CreateBy</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdBy"/></label>
 									<div class="col-md-9">																				
 										<input name="createdBy" class="form-control" readonly="true"/>
 										
 									</div>
 								</div>			
 								<div class="form-group">
-									<label class="control-label col-md-3">Create Time</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/></label>
 									<div class="col-md-9">																				
 										<input name="createdTimeStr" class="form-control" readonly="true"/>
 										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Eamil</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.email"/></label>
 									<div class="col-md-9">																				
 										<input name="email" class="form-control"/>
-										<span class="help-block">
-										Please input the uri that access this rights page</span>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Role Name</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.rolename"/></label>
 									<div class="col-md-9">
 										<select name="adminRole.roleId" class="form-control">
 											<c:forEach var="role" items="${rolesList}">
@@ -378,7 +374,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Status</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -406,7 +402,7 @@
 				<div class="modal" id="delete_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							 <s:message code="system.management.user.deletemessage" />
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -420,7 +416,7 @@
 				<div class="modal" id="activate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to activate these selected rows ?
+							 <s:message code="system.management.user.activemessage" />
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -434,7 +430,7 @@
 				<div class="modal" id="deactivate_users" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to deactivate these selected rows ?
+							<s:message code="system.management.user.deactivemessage" />
 						</p>
 					</div>
 					<div class="modal-footer">

@@ -69,10 +69,7 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">Admin Users</a>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>rulesgroup">Bonus Rule Group</a>
+							<a href="<c:url value="/"/>rulesgroup"><s:message code="bonusrule.group.title"/></a>
 						</li>
 					</ul>					
 				</div>
@@ -90,18 +87,18 @@
 									<i class="fa fa-edit"></i>Rules Group Table
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_groups"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_groups" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_groups"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_groups"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_groups" id="openEditRightModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_groups" id="openDeletegroupsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Group Name</label>
-											<label><input type="checkbox" checked data-column="3">Describe</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.rights.groupName"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="bonusrule.group.describe"/></label>
 											
 										</div>
 									</div>								    																
@@ -114,9 +111,9 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#rulesgroup_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Group Name</th>
-											<th>Describe</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="system.management.rights.groupName"/></th>
+											<th><s:message code="bonusrule.group.describe"/></th>
 											
 										</tr>
 									</thead>
@@ -133,7 +130,7 @@
 				<div class="modal" id="add_groups" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add NewruleGroup</h4>
+						<h4 class="modal-title"><s:message code="bonusrule.group.addtitle"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -143,21 +140,18 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Group Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.rights.groupName"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="groupName" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Describe<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.group.describe"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="descr" type="text" class="form-control"/>
-										<span class="help-block">
-										Please input the email that access this rights page</span>
-									</div>
 								</div>									
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -168,7 +162,9 @@
 									</div>
 								</div>
 							</div>
+							</div>
 						</form>
+						
 						<!-- END FORM-->
 					</div>					
 				</div>				
@@ -177,7 +173,7 @@
 			<div class="modal" id="edit_groups" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Rules Group</h4>
+						<h4 class="modal-title"><s:message code="bonusrule.group.edititle"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -187,26 +183,24 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="groupId" class="form-control " readonly="true"/>										
 									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Group Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.rights.groupName"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="groupName" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Describe<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.group.describe"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="descr" class="form-control"/>
-										<span class="help-block">
-										Please input the email that access this rights page</span>
 									</div>
 								</div>
 							<div class="form-actions" style="border-top:0;">
@@ -229,7 +223,7 @@
 				<div class="modal" id="delete_groups" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							<s:message code="system.management.user.deletemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">

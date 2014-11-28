@@ -181,7 +181,26 @@ var RulesTable = function () {
 //			},
 
 		});		
-
+			
+		//打开删除对话框前判断是否已选择要删除的行
+		$("#openDeleteRulesModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to delete.","warning","");				
+					return false;
+				}
+			});
+		$("#openActiveRulesModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts("Please select the rows which you want to Active.","warning","");				
+				return false;
+			}
+		});
+		$("#openDeactiveRulesModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts("Please select the rows which you want to deactive.","warning","");				
+				return false;
+			}
+		});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -194,9 +213,10 @@ var RulesTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("delete the rules successfully.","success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
 					 }
 				}             	 
              },

@@ -140,7 +140,7 @@
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
 									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -161,9 +161,9 @@
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_rules"><i class="fa fa-plus"></i> Add</a>
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules"><i class="fa fa-key"></i> Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules"><i class="fa fa-lock"></i> Deactivate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules" id="openActiveRulesModal"><i class="fa fa-key"></i> Activate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules" id="openDeactiveRulesModal"><i class="fa fa-lock"></i> Deactivate</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules" id="openDeleteRulesModal"><i class="fa fa-trash-o"></i> Delete</a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>

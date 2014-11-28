@@ -110,8 +110,10 @@ public class LoginController extends BaseController {
 			request.getSession().removeAttribute(LOGIN_TO_URL);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 			request.getSession().removeAttribute(SystemConstants.LOGIN_STATUS);
-			if(StringUtils.isEmpty(toUrl)){
+			if(StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()==1){
 				toUrl="/home";
+			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
+				toUrl="/point";	
 			}
 			request.getSession().setAttribute(Lift_Flag, "Dashboard");
 			mav.setViewName("redirect:"+toUrl);

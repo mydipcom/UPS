@@ -70,11 +70,11 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">Log List</a>
+							<a href="<c:url value="/"/>manager"><s:message code="loglist"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>interfacelog">Interface Log List</a>
+							<a href="<c:url value="/"/>interfacelog"><s:message code="loglist.interfaceloglist"/></a>
 						</li>
 					</ul>					
 				</div>
@@ -96,7 +96,7 @@
 						 -->
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Interface Name</label>
+								<label class="col-md-3 control-label"><s:message code="interfacename"/></label>
 								<div class="col-md-9">
 									<input name="ruleId" type="text" class="form-control">							
 								</div>
@@ -106,7 +106,7 @@
 									<div class="row">	
 										<div class="col-md-6">	
 											<div class="form-group">
-														<label class="col-md-3 control-label">Start time</label>
+														<label class="col-md-3 control-label"><s:message code="log.startime"/></label>
 														<div class="col-md-5">
                                                         <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
 												           <input type="text" name="startTime" readonly="true" class="form-control"/>
@@ -122,7 +122,7 @@
 								<div class="row">	
 										<div class="col-md-6">	
 											<div class="form-group">
-														<label class="col-md-3 control-label">End time</label>
+														<label class="col-md-3 control-label"><s:message code="log.endtime"/></label>
 														<div class="col-md-5">
                                                         <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
 												           <input type="text" name="endTime" readonly="true" class="form-control"/>
@@ -157,21 +157,21 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Interface Logs Table
+									<i class="fa fa-edit"></i><s:message code="loglist.interfacelogtable"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_interfacelog"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_interfacelog" id="openDeleteinterfacesLogModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Interface Name</label>
-											<label><input type="checkbox" checked data-column="3">Content</label>
-											<label><input type="checkbox" checked data-column="4">Access Time</label>
-											<label><input type="checkbox" checked data-column="5">Access By</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="interfacename"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.logtable.content"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="interface.accesstime"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="interface.accessby"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -183,12 +183,12 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#interfacelog_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Interface Name</th>
-											<th>Content</th>
-											<th>Access Time</th>
-											<th>Access By</th>
-											<th>Action</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="interfacename"/></th>
+											<th><s:message code="system.management.user.logtable.content"/></th>
+											<th><s:message code="interface.accesstime"/></th>
+											<th><s:message code="interface.accessby"/></th>
+											<th><s:message code="all.table.title"/></th>
 										</tr>
 									</thead>
 																						
@@ -205,7 +205,7 @@
 				<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">View Interface Access Log</h4>
+						<h4 class="modal-title"><s:message code="loglist.interfacelogtable"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -213,36 +213,32 @@
 							<!-- BEGIN FORM	-->					
 						<form id="viewInterfacelogForm" action=" " method="post" name="viewInterfacelogForm" class="form-horizontal form-bordered">
 							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
-								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Id</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
 									<div class="col-md-9">										
 										<input name="id" class="form-control" readonly="true"/>										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Interface Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="interfacename"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="name" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Content<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.logtable.content"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<textarea name="content" class="form-control"  readonly="true"></textarea>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Access Time<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="interface.accesstime"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="accessTime" class="form-control" readonly="true"/>									
 									</div>
 								</div>	
 								<div class="form-group">
-									<label class="control-label col-md-3">Access By<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="interface.accessby"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="accessBy" class="form-control" readonly="true"/>									
 									</div>
@@ -258,7 +254,7 @@
 				<div class="modal" id="delete_interfacelog" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							<s:message code="system.management.user.deletemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">

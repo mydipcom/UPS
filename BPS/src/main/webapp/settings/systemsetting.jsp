@@ -68,11 +68,8 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>setting">System Setting</a>
+							<a href="<c:url value="/"/>setting"><s:message code="setting"/></a>
 							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>setting">General Portlets</a>
 						</li>
 					</ul>					
 				</div>
@@ -85,23 +82,23 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>System Setting Table
+									<i class="fa fa-edit"></i><s:message code="settingtable"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_settings"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_settings" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_settings"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_settings"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_settings" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit" /></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_settings" id="openDeleteSettingsModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">Id</label>
-											<label><input type="checkbox" checked data-column="2">Name</label>
-											<label><input type="checkbox" checked data-column="3">Value</label>
-											<label><input type="checkbox" checked data-column="4">descr</label>
-											<label><input type="checkbox" checked data-column="5">sort</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="settingname"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="settingvalue"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="settingdescr"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="settingsort"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -113,11 +110,11 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#setting_table .checkboxes"/>
 											</th>
-											<th>Id</th>
-											<th>Name</th>
-											<th>Value</th>
-											<th>descr</th>
-											<th>sort</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="settingname"/></th>
+											<th><s:message code="settingvalue"/></th>
+											<th><s:message code="settingdescr"/></th>
+											<th><s:message code="settingsort"/></th>
 										</tr>
 									</thead>
 																						
@@ -133,7 +130,7 @@
 				<div class="modal" id="add_settings" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add Settings</h4>
+						<h4 class="modal-title"><s:message code="setting.addtitle"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -143,29 +140,29 @@
 						<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>				
 								<div class="form-group">
-									<label class="control-label col-md-3">Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="settingname"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="name" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Value<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="settingvalue"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="value" class="form-control"/>		
 								</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Sort<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="settingsort"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="sort" class="form-control"/>									
 									</div>
 								</div>
 								
 								<div class="form-group">
-									<label class="control-label col-md-3">Description</label>
+									<label class="control-label col-md-3"><s:message code="settingdescr"/></label>
 									<div class="col-md-9">										
 										<input name="descr" class="form-control"/>
 									</div>
@@ -191,7 +188,7 @@
 				<div class="modal" id="edit_settings" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Settings</h4>
+						<h4 class="modal-title"><s:message code="setting.edittitle"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -201,35 +198,35 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Id</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
 									<div class="col-md-9">										
 										<input name="id" class="form-control" readonly="true"/>										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="settingname"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="name" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Value<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="settingvalue"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="value" class="form-control"/>
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Sort<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="settingsort"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="sort" class="form-control"/>									
 									</div>
 								</div>
 								
 								<div class="form-group">
-									<label class="control-label col-md-3">Description</label>
+									<label class="control-label col-md-3"><s:message code="settingdescr"/></label>
 									<div class="col-md-9">										
 										<input name="descr" class="form-control"/>
 									</div>
@@ -255,7 +252,7 @@
 				<div class="modal" id="delete_settings" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							<s:message code="system.management.user.deletemessage" />
 						</p>
 					</div>
 					<div class="modal-footer">
