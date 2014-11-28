@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -88,21 +89,21 @@
 			<!-- END STYLE CUSTOMIZER -->
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-			Dashboard <small>dashboard & statistics</small>
+		<s:message code="home.Dashboard"/> <small>dashboard & statistics</small>
 			</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-home"></i>
-						<a href="index.html">Home</a>
+						<a href="home.jsp">Home</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="#">Dashboard</a>
+						<a href="#"><s:message code="home.Dashboard"/></a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="#">Dashboard</a>
+						<a href="#"><s:message code="home.Dashboard"/></a>
 					</li>
 				</ul>
 				
@@ -121,11 +122,11 @@
 								 
 							</div>
 							<div class="desc">
-								 System User Amount
+								<s:message code="home.systemuseramount" />
 							</div>
 						</div>
 						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
+						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
 				</div>
@@ -139,11 +140,11 @@
 								 
 							</div>
 							<div class="desc">
-								Point User Amount
+							<s:message code="home.pointuseramount"/>
 							</div>
 						</div>
 						<a class="more" href="<c:url value="/"/>point">
-						View more <i class="m-icon-swapright m-icon-white"></i>
+						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
 				</div>
@@ -157,11 +158,11 @@
 								 
 							</div>
 							<div class="desc">
-								 Point Rule Amount
+							<s:message code="home.pointruleamount"/>
 							</div>
 						</div>
 						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
+						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
 				</div>
@@ -175,7 +176,7 @@
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>System CPU State
+								<i class="fa fa-gift"></i><s:message code="home.systemcpustate"/>
 							</div>
 							
 						</div>
@@ -195,7 +196,7 @@
 					<div class="portlet box green">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>System Memory State
+								<i class="fa fa-gift"></i><s:message code="home.systemmemorystate" />
 							</div>
 							
 						</div>
@@ -216,7 +217,7 @@
 					<div class="portlet box yellow">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>Interface Visit Statistics
+								<i class="fa fa-gift"></i><s:message code="home.interfacevisitstatistics"/>
 							</div>
 							
 						</div>
@@ -233,7 +234,7 @@
 					<div class="portlet box red">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>System State Statistics
+								<i class="fa fa-gift"></i><s:message code="home.systemstatestatistics" />
 							</div>
 							
 						</div>

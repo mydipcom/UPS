@@ -73,13 +73,10 @@
 	<mvc:interceptors>
 		<!-- 拦截指定请求 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/home"/>
+			<mvc:mapping path="/*/*"/>
 			
 			<mvc:exclude-mapping path="/login"/> 
 			<mvc:exclude-mapping path="/logout"/>
-			<mvc:exclude-mapping path="/home/*"/>
-			<mvc:exclude-mapping path="/common/*"/>
-			<mvc:exclude-mapping path="/userprofile"/>
 			<mvc:exclude-mapping path="/userprofile/getAvatar"/>	
 			<bean class="com.bps.core.PermissionInteceptor"></bean>			
 		</mvc:interceptor>	    

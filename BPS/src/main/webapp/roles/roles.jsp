@@ -42,10 +42,10 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager">System Management</a>
+							<a href="<c:url value="/"/>manager"><s:message code="system.management" /></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
-						<li>							<a href="<c:url value="/"/>rights">Roles List</a>
+						<li>							<a href="<c:url value="/"/>roles"><s:message code="system.management.roles.title" /></a>
 						</li>					</ul>					
 				</div>
 				<!-- END PAGE TITLE & BREADCRUMB-->
@@ -56,7 +56,7 @@
 					<div class="row">
 						<div class="col-md-6">					
 							<div class="form-group">
-								<label class="col-md-3 control-label">Roles Name</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.roles.search.rolename" /></label>
 								<div class="col-md-9">
 									<input name="roleName" type="text" class="form-control">							
 								</div>
@@ -64,15 +64,15 @@
 						</div>
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Status</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.status" /></label>
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
 										<input type="radio" name="status" value="" checked/>All </label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="true"/>Enable </label>
+										<input type="radio" name="status" value="true"/><s:message code="all.status.enable" /> </label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="false"/>Disable </label>
+										<input type="radio" name="status" value="false"/><s:message code="all.status.disable" /></label>
 									</div>									
 								</div>
 							</div>
@@ -96,20 +96,20 @@
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Managed Rights Table
+									<i class="fa fa-edit"></i><s:message code="system.management.roles.tablename" />
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i> Add</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i> Edit</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> Delete</a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> Assign Rights</a>								    <div class="btn-group">
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_role"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_role" id="openEditRoleModal"><i class="fa fa-pencil"></i><s:message code="all.table.edit" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_roles" id="openDeleteRoleModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete" /></a>								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_roleRights" id="openRoleRigthsModal"><i class="fa fa-cogs"></i> <s:message code="system.management.roles.assign"/></a>								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Role Name</label>											
-											<label><input type="checkbox" checked data-column="3">Parent ID</label>
-											<label><input type="checkbox" checked data-column="4">Status</label>
-											<label><input type="checkbox" checked data-column="4">Role Rights</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.roles.search.rolename" /></label>											
+											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.roles.parentid" /></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.roles.roleright" /></label>
 										</div>
 									</div>								    																
 								</div>
@@ -121,11 +121,11 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#roles_table .checkboxes"/>
 											</th>
-											<th>ID</th>											
-											<th>Role Name</th>											
-											<th>Parent ID</th>											
-											<th>Status</th>	
-											<th>Role Rights</th>										
+											<th><s:message code="system.management.user.searchform.id"/></th>											
+											<th><s:message code="system.management.roles.search.rolename" /></th>											
+											<th><s:message code="system.management.roles.parentid" /></th>											
+											<th><s:message code="system.management.user.searchform.status"/></th>	
+											<th><s:message code="system.management.roles.roleright" /></th>										
 										</tr>
 									</thead>
 																						
@@ -140,7 +140,7 @@
 				<div class="modal" id="add_role" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add Role</h4>
+						<h4 class="modal-title"><s:message code="system.management.addrole.title" /></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -150,22 +150,22 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Role Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.roles.search.rolename" /><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="roleName" class="form-control"/>										
 									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Parent Role ID <span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.roles.parentid" /><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="pid" class="form-control"/>									
 									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Status <span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/><span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
@@ -192,7 +192,7 @@
 				<!-- END ADD MODAL FORM-->								<!-- BEGIN Edit MODAL FORM-->				<div class="modal" id="edit_role" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Role</h4>
+						<h4 class="modal-title"><s:message code="system.management.editrole.title"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
@@ -202,22 +202,22 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Role Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.roles.search.rolename" /><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="roleName" class="form-control"/>										
 									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Parent Role ID<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.roles.parentid" /><span class="required"> * </span></label>
 									<div class="col-md-9">
 										<input name="pid" class="form-control"/>									
 									</div>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Status<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label class="radio-inline">
@@ -245,7 +245,7 @@
 				
 				<!-- BEGIN Edit Role Rights MODAL FORM-->				<div class="modal" id="edit_roleRights" tabindex="-1" data-width="760">					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Assign Role Rights</h4>
+						<h4 class="modal-title"><s:message code="system.management.assign.title"/></h4>
 					</div>
 					<div id="editRoleRightsFormMsg"></div>
 					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
@@ -256,7 +256,7 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>
 							<c:forEach var="rightsGroup" items="${rightsList}" varStatus="status">																														
 								<div class="form-group">
@@ -294,7 +294,7 @@
 				<div class="modal" id="delete_roles" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							<s:message code="system.management.user.deletemessage" />
 						</p>
 					</div>
 					<div class="modal-footer">

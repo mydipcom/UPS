@@ -97,6 +97,15 @@ var InterfaceLogTable = function () {
 //			},
 
 		});		
+		
+		//打开删除对话框前判断是否已选择要删除的行
+		$("#openDeleteinterfacesLogModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to delete.","warning","");				
+					return false;
+				}
+			});
+		
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			
@@ -110,9 +119,10 @@ var InterfaceLogTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("delete the interfaceslog successfully.","success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
 					 }
 				}             	 
              },
@@ -200,6 +210,22 @@ var InterfaceLogTable = function () {
         
         
 	}; 
+	//提示信息处理方法（是在页面中指定位置显示提示信息的方式）
+	var handleAlerts = function(msg,msgType,position) {         
+        Metronic.alert({
+            container: position, // alerts parent container(by default placed after the page breadcrumbs)
+            place: "prepent", // append or prepent in container 
+            type: msgType,  // alert's type (success, danger, warning, info)
+            message: msg,  // alert's message
+            close: true, // make alert closable
+            reset: true, // close all previouse alerts first
+            focus: false, // auto scroll to the alert after shown
+            closeInSeconds: 10, // auto close after defined seconds, 0 never close
+            icon: "warning" // put icon before the message, use the font Awesone icon (fa-[*])
+        });        
+
+    };
+	
 	 //initialize datepicker
     var datePicker = function(){
     	$('.date-picker').datepicker({

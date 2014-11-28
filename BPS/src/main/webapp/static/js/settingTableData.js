@@ -89,7 +89,13 @@ var SettingTable = function () {
 //			},
 
 		});		
-
+		//打开删除对话框前判断是否已选择要删除的行
+		$("#openDeleteSettingsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to delete.","warning","");				
+					return false;
+				}
+			});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -102,9 +108,10 @@ var SettingTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("delete the setting successfully.","success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts("Failed to delete the data. " +data.info,"danger","");
 					 }
 				}             	 
              },
@@ -115,7 +122,7 @@ var SettingTable = function () {
         }); 
 	
 		$("#openEditRightModal").on("click",function(event){
-			if(selected.length>1){
+			if(selected.length!=1){
 				handleAlerts("Only one row can be edited.","warning","");
 				event.stopPropagation();
 			}

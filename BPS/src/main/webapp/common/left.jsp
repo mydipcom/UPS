@@ -336,7 +336,8 @@
 				</c:if>	
 			</li>
 			<%} %>
-			</c:forEach>		
+			</c:forEach>
+			<!--  	
           <%   if(active.equals("Interfaces List")) {%>
 			<li class="start active open">
 			<%} else{ %>
@@ -349,6 +350,7 @@
 				<span class="arrow"></span>				
 				</a>
 			</li>
+			-->	
             <%if(active.equals("System Setting")) {%>
 			<li class="start active open">
 			<%} else{ %>

@@ -69,11 +69,11 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>pointlog">Log List</a>
+							<a href="<c:url value="/"/>pointlog"><s:message code="loglist"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>managerlog">Admin User Log</a>
+							<a href="<c:url value="/"/>managerlog"><s:message code="loglist.adminuserlog"/></a>
 						</li>
 					</ul>					
 				</div>
@@ -95,7 +95,7 @@
 						 -->
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Admin Name</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.logtable.adminame"/></label>
 								<div class="col-md-9">
 									<input name="adminId" type="text" class="form-control">							
 								</div>
@@ -105,7 +105,7 @@
 									<div class="row">	
 										<div class="col-md-6">	
 											<div class="form-group">
-														<label class="col-md-3 control-label">Start time</label>
+														<label class="col-md-3 control-label"><s:message code="log.startime"/></label>
 														<div class="col-md-5">
                                                         <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
 												           <input type="text" name="startTime" readonly="true" class="form-control"/>
@@ -121,7 +121,7 @@
 								<div class="row">	
 										<div class="col-md-6">	
 											<div class="form-group">
-														<label class="col-md-3 control-label">End time</label>
+														<label class="col-md-3 control-label"><s:message code="log.endtime"/></label>
 														<div class="col-md-5">
                                                         <div data-date-format="dd-mm-yyyy" class="input-group date date-picker">
 												           <input type="text" name="endTime" readonly="true" class="form-control"/>
@@ -139,7 +139,7 @@
 							<div class="form-group">								
 								<div class="col-md-offset-3 col-md-9">
 									<button type="submit" class="btn blue">Search <i class="fa fa-search"></i></button>
-									<button type="button" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
+									<button type="reset" class="btn grey-cascade">Reset <i class="fa fa-reply"></i></button>
 								</div>
 							</div>					
 						</div>
@@ -161,21 +161,21 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Admin Logs Table
+									<i class="fa fa-edit"></i><s:message code="loglist.adminuserlog.tablename"/>
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog" id="openDeleteAdminLogModal" ><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">ID</label>
-											<label><input type="checkbox" checked data-column="2">Admin Name</label>
-											<label><input type="checkbox" checked data-column="3">Content</label>
-											<label><input type="checkbox" checked data-column="4">Level</label>
-											<label><input type="checkbox" checked data-column="5">Create Time</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.logtable.adminame"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.logtable.content"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.logtable.level"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.user.createdTime"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -187,12 +187,12 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#managerlog_table .checkboxes"/>
 											</th>
-											<th>ID</th>
-											<th>Admin Name</th>
-											<th>Content</th>
-											<th>Level</th>
-											<th>Create Time</th>
-											<th>Action</th>
+											<th><s:message code="system.management.user.searchform.id"/></th>
+											<th><s:message code="system.management.user.logtable.adminame"/></th>
+											<th><s:message code="system.management.user.logtable.content"/></th>
+											<th><s:message code="system.management.user.logtable.level"/></th>
+											<th><s:message code="system.management.user.createdTime"/></th>
+											<th><s:message code="all.table.title"/></th>
 										</tr>
 									</thead>
 																						
@@ -208,7 +208,7 @@
 				<div class="modal" id="view_log" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">View Admin User Log</h4>
+						<h4 class="modal-title"><s:message code="loglist.adminuserlog.tablename"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -216,36 +216,32 @@
 							<!-- BEGIN FORM	-->					
 						<form id="viewAdminlogForm" action="" method="post" name="viewAdminlogForm" class="form-horizontal form-bordered">
 							<div class="form-body">
-								<div class="alert alert-danger display-hide">
-									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
-								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Id</label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.id"/></label>
 									<div class="col-md-9">										
 										<input name="id" class="form-control" readonly="true"/>										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Admin Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.logtable.adminame"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="adminId" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Content<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.logtable.content"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<textarea name="content" class="form-control"  readonly="true"></textarea>
 									</div>		
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Level<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.logtable.level"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="level" class="form-control" readonly="true"/>
 									</div>		
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Create Time<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.createdTime"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="createdTime" class="form-control" readonly="true"/>									
 									</div>
@@ -263,7 +259,7 @@
 				<div class="modal" id="delete_adminslog" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							<s:message code="system.management.user.deletemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">

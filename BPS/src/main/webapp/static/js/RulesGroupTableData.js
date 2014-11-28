@@ -88,6 +88,14 @@ var GroupsTable = function () {
 //			},
 
 		});	
+			
+		//打开删除对话框前判断是否已选择要删除的行
+		$("#openDeletegroupsModal").on("click",function(event){
+			if(selected.length==0){
+				handleAlerts("Please select the rows which you want to delete.","warning","");				
+				return false;
+			}
+		});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {

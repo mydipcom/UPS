@@ -94,7 +94,26 @@ var ManagersTable = function () {
 	        "serverMethod": "GET",
 	        "ajaxSource": rootURI+"managersList?rand="+Math.random()
 		});		
-
+		 
+		//打开删除对话框前判断是否已选择要删除的行
+			$("#openDeleteadminsModal").on("click",function(event){
+					if(selected.length==0){
+						handleAlerts("Please select the rows which you want to delete.","warning","");				
+						return false;
+					}
+				});
+			$("#openActiveadminsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to Active.","warning","");				
+					return false;
+				}
+			});
+			$("#openDeactiveadminsModal").on("click",function(event){
+				if(selected.length==0){
+					handleAlerts("Please select the rows which you want to deactive.","warning","");				
+					return false;
+				}
+			});
 		//删除操作
 		$('#deleteBtn').on('click', function (e) {
 			$.ajax( {
@@ -107,9 +126,10 @@ var ManagersTable = function () {
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();
+		            	 handleAlerts("delete the adminusers successfully.","success","");
 					 }
 					 else{
-						 alert(data.info);
+						 handleAlerts("Failed to delete the adminusers. " +data.info,"danger","");
 					 }
 				}             	 
              },

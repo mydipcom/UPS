@@ -28,6 +28,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object arg2) throws Exception {
 		String reqMethod=request.getMethod().toUpperCase();
 		String uri=request.getRequestURI();
+		uri=uri.split("/")[2];
 //		String contextPath=request.getContextPath();
 //		if((contextPath+"/login").equalsIgnoreCase(uri)){
 //			return true;
@@ -44,7 +45,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 				return true;
 			}
 			else{
-				String reqPath=reqMethod+"@"+uri;
+				String reqPath=reqMethod+"@"+"/"+uri;
 				Long rightsBit=SystemConfig.Admin_Nodes_Url_Map.get(reqPath);
 				if(rightsBit==null){
 					Set<String> keys=SystemConfig.Admin_Nodes_Url_Map.keySet();
@@ -69,7 +70,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 						return true;
 					}
 					else{
-						response.sendRedirect(request.getContextPath()+"/error/errpage.jsp");
+						response.sendRedirect(request.getContextPath()+"/point");
 						return false;
 					}
 				}
