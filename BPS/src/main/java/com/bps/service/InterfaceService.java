@@ -10,4 +10,6 @@ public interface InterfaceService {
 	void createInterface(TInterface interfaces);
 	void updateInterface(TInterface interfaces);
 	public PagingData loadInterfaceList(DataTableParamter rdtp);
+	
+	public String [] getInterfaceNameList();
 }

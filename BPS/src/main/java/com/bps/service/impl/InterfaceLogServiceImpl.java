@@ -76,4 +76,10 @@ public class InterfaceLogServiceImpl implements InterfaceLogService{
 		interfaceLogDao.create(interfaceLog);
 	}
 
+
+	public List<TInterfaceLog> findByInterfaceName(String name) {
+		// TODO Auto-generated method stub
+		return interfaceLogDao.findBy("name", name);
+	}
+
 }

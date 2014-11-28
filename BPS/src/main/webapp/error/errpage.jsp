@@ -54,25 +54,6 @@
 		<!-- BEGIN CONTENT -->
 		<div class="page-content-wrapper">	
 			<div class="page-content">								
-				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-				<div class="page-bar">
-					<ul class="page-breadcrumb">
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>manager">System Management</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>rights">Rights List</a>
-						</li>
-					</ul>					
-				</div>
-				<!-- END PAGE TITLE & BREADCRUMB-->
-												
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">

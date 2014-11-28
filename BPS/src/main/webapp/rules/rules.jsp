@@ -85,7 +85,7 @@
 					<div class="row">
 				 		<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Rule ID</label>
+								<label class="col-md-3 control-label"><s:message code="bonusrule.configuration.RuleID"/></label>
 								<div class="col-md-9">
 									<input name="ruleId" type="text" class="form-control">							
 								</div>
@@ -95,7 +95,7 @@
 			
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Bonus Rule Group</label>
+								<label class="col-md-3 control-label"><s:message code="bonusrule.configuration.BonusRuleGroup"/></label>
 								<div class="col-md-9">
 									<select name="pointRuleGroup.groupId" class="form-control">
 										<option value="">ALL</option>	
@@ -113,7 +113,7 @@
 					<div class="row">
 						<div class="col-md-6">					
 							<div class="form-group">
-								<label class="col-md-3 control-label">Rule Name</label>
+								<label class="col-md-3 control-label"><s:message code="bonusrule.configuration.RuleName"/></label>
 								<div class="col-md-9">
 									<input name="ruleName" type="text" class="form-control">							
 								</div>
@@ -121,15 +121,15 @@
 						</div>	
 						<div class="col-md-6">	
 							<div class="form-group">
-								<label class="col-md-3 control-label">Status</label>
+								<label class="col-md-3 control-label"><s:message code="system.management.user.searchform.status"/></label>
 								<div class="col-md-9">
 									<div class="radio-list">
 										<label class="radio-inline">
 										<input type="radio" name="status" value="" checked/>All </label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="true"/>Enable </label>
+										<input type="radio" name="status" value="true"/><s:message code="all.status.enable"/> </label>
 										<label class="radio-inline">
-										<input type="radio" name="status" value="false"/>Disable </label>
+										<input type="radio" name="status" value="false"/><s:message code="all.status.disable"/> </label>
 									</div>									
 								</div>
 							</div>
@@ -156,27 +156,27 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Managed Rules Table
+									<i class="fa fa-edit"></i><s:message code="bonusrule.configuration.ManagedRulesTable" />
 								</div>
 								<div class="actions">									
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_rules"><i class="fa fa-plus"></i> Add</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRightModal"><i class="fa fa-pencil"></i> Edit</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules" id="openActiveRulesModal"><i class="fa fa-key"></i> Activate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules" id="openDeactiveRulesModal"><i class="fa fa-lock"></i> Deactivate</a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules" id="openDeleteRulesModal"><i class="fa fa-trash-o"></i> Delete</a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_rules"><i class="fa fa-plus"></i><s:message code="all.table.add"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules"><i class="fa fa-key"></i> <s:message code="all.table.activate"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules"><i class="fa fa-lock"></i><s:message code="all.table.deactivate"/> </a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1">Rule Id</label>
-											<label><input type="checkbox" checked data-column="2">Rule Name</label>
-											<label><input type="checkbox" checked data-column="3">Rule Group</label>
-											<label><input type="checkbox" checked data-column="4">Rule Input</label>
-											<label><input type="checkbox" checked data-column="5">Rule Output</label>
-											<label><input type="checkbox" checked data-column="6">descr</label>
-											<label><input type="checkbox" checked data-column="7">status</label>
+											<label><input type="checkbox" checked data-column="1"><s:message code="bonusrule.configuration.RuleID"/></label>
+											<label><input type="checkbox" checked data-column="2"><s:message code="bonusrule.configuration.RuleName"/></label>
+											<label><input type="checkbox" checked data-column="3"><s:message code="bonusrule.configuration.RuleGroup"/></label>
+											<label><input type="checkbox" checked data-column="4"><s:message code="bonusrule.configuration.RuleInput"/></label>
+											<label><input type="checkbox" checked data-column="5"><s:message code="bonusrule.configuration.RuleOutput"/></label>
+											<label><input type="checkbox" checked data-column="6"><s:message code="bonusrule.configuration.descr"/></label>
+											<label><input type="checkbox" checked data-column="7"><s:message code="system.management.user.searchform.status"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -188,14 +188,14 @@
 											<th class="table-checkbox">
 												<input type="checkbox" class="group-checkable" data-set="#rules_table .checkboxes"/>
 											</th>
-											<th>Rule Id</th>
-											<th>Rule Name</th>
-											<th>Rule Group</th>
-											<th>Rule Input</th>
-											<th>Rule Output</th>
-											<th>descr</th>
-											<th>status</th>
-											<th>Action</th>
+											<th><s:message code="bonusrule.configuration.RuleID"/></th>
+											<th><s:message code="bonusrule.configuration.RuleName"/></th>
+											<th><s:message code="bonusrule.configuration.RuleGroup"/></th>
+											<th><s:message code="bonusrule.configuration.RuleInput"/></th>
+											<th><s:message code="bonusrule.configuration.RuleOutput"/></th>
+											<th><s:message code="bonusrule.configuration.descr"/></th>
+											<th><s:message code="system.management.user.searchform.status"/></th>
+											<th><s:message code="all.table.title"/></th>
 										</tr>
 									</thead>
 																						
@@ -211,7 +211,7 @@
 				<div class="modal" id="add_rules" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button id="closeAddModal" type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Add Rules</h4>
+						<h4 class="modal-title"><s:message code="bonsurule.configuration.AddRules"/></h4>
 					</div>
 					<div id="addFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -221,17 +221,17 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>								
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleName"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="ruleName" class="form-control"/>										
 									</div>
 								</div>
 							
 							<div class="form-group">
-							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+							<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleGroup"/><span class="required">* </span></label>	
 								<div class="col-md-9">
 									<select name="pointRuleGroup.groupId" class="form-control">	
 										<c:if test="${not empty group}">
@@ -244,7 +244,7 @@
 								</div>
 							</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleInput"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="ruleInput" class="form-control"/>
 										<span class="help-block">
@@ -252,13 +252,13 @@
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Output<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleOutput"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="ruleOutput" class="form-control"/>									
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Status <span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/> <span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -269,7 +269,7 @@
 									</div>
 								</div>	
 								<div class="form-group">
-									<label class="control-label col-md-3">Description</label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.Description"/></label>
 									<div class="col-md-9">										
 										<input name="descr" class="form-control"/>
 									</div>
@@ -294,7 +294,7 @@
 				<div class="modal" id="edit_rules" tabindex="-1" data-width="760">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Edit Rules</h4>
+						<h4 class="modal-title"><s:message code="bonsurule.configuration.EditRules"/></h4>
 					</div>
 					<div id="editFormMsg"></div>
 					<!-- <div class="modal-body"> -->
@@ -304,22 +304,22 @@
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
-									You have some form errors. Please check below.
+									<s:message code="system.management.user.adduser.message"/>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Id</label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleID"/></label>
 									<div class="col-md-9">										
 										<input name="ruleId" class="form-control" readonly="true"/>										
 									</div>
 								</div>						
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Name<span class="required"> * </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleName"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
 										<input name="ruleName" class="form-control"/>										
 									</div>
 								</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">Bonus Rule Group<span class="required">* </span></label>	
+							<label class="control-label col-md-3"><s:message code="bonusrule.configuration.BonusRuleGroup"/><span class="required">* </span></label>	
 								<div class="col-md-9">
 									<select name="pointRuleGroup.groupId" class="form-control">	
 										<c:if test="${not empty group}">
@@ -332,7 +332,7 @@
 								</div>
 							</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Input<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleInput"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="ruleInput" class="form-control"/>
 										<span class="help-block">
@@ -340,13 +340,13 @@
 									</div>
 								</div>									
 								<div class="form-group">
-									<label class="control-label col-md-3">Rule Output<span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleOutput"/><span class="required">* </span></label>
 									<div class="col-md-9">
 										<input name="ruleOutput" class="form-control"/>									
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Status <span class="required">* </span></label>
+									<label class="control-label col-md-3"><s:message code="system.management.user.searchform.status"/> <span class="required">* </span></label>
 									<div class="col-md-9">										
 										<div class="radio-list">
 											<label>
@@ -357,7 +357,7 @@
 									</div>
 								</div>	
 								<div class="form-group">
-									<label class="control-label col-md-3">Description</label>
+									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.Description"/></label>
 									<div class="col-md-9">										
 										<input name="descr" class="form-control"/>
 									</div>
@@ -382,7 +382,7 @@
 				<div class="modal" id="delete_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to delete these selected rows ?
+							 <s:message code="system.management.user.deletemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -396,7 +396,7 @@
 				<div class="modal" id="activate_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to activate these selected rows ?
+							 <s:message code="system.management.user.activemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -411,7 +411,7 @@
 				<div class="modal" id="view_log" tabindex="-1"  data-width="760">
 					<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-						<h4 class="modal-title">Rules logs</h4>
+						<h4 class="modal-title"><s:message code="bonusrule.configuration.Ruleslogs"/></h4>
 					</div>
 				
 				<div class="row">
@@ -421,7 +421,7 @@
 						<div class="portlet box blue-hoki">
 						<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i> Rulelogs Table
+									<i class="fa fa-edit"></i> <s:message code="bonusrule.configuration.RulelogsTable"/>
 								</div>
 						</div>
 						<div class="portlet box blue-hoki">						
@@ -430,10 +430,10 @@
 									<thead>
 										<tr>
 										
-											<th>ID</th>
-											<th>Rule Id</th>
-											<th>Content</th>
-											<th>Create Time</th>
+											<th><s:message code="bonusrule.configuration.ID"/></th>
+											<th><s:message code="bonusrule.configuration.RuleId"/></th>
+											<th><s:message code="bonusrule.configuration.Content"/></th>
+											<th><s:message code="bonusrule.configuration.CreateTime"/></th>
 											
 										</tr>
 									</thead>
@@ -453,7 +453,7 @@
 				<div class="modal" id="deactivate_rules" tabindex="-1" data-backdrop="static" data-keyboard="false">
 					<div class="modal-body">
 						<p>
-							 Are you sure to deactivate these selected rows ?
+							<s:message code="system.management.user.activemessage"/>
 						</p>
 					</div>
 					<div class="modal-footer">

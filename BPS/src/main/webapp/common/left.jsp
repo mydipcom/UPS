@@ -200,7 +200,7 @@
 				<i class="icon-calendar"></i> 
 				<span class="title">Interfaces List</span>
 				<span class="selected"></span>
-				<span class="arrow"></span>				
+							
 				</a>
 			</li>
 			<%} %>
@@ -220,7 +220,7 @@
 				<i class="icon-calendar"></i> 
 				<span class="title">System Setting</span>
 				<span class="selected"></span>
-				<span class="arrow"></span>				
+							
 				</a>
 			</li>
 			<%} %>
@@ -347,7 +347,7 @@
 				<i class="icon-calendar"></i> 
 				<span class="title">Interfaces List</span>
 				<span class="selected"></span>
-				<span class="arrow"></span>				
+							
 				</a>
 			</li>
 			-->	
@@ -360,7 +360,7 @@
 				<i class="icon-calendar"></i> 
 				<span class="title">System Setting</span>
 				<span class="selected"></span>
-				<span class="arrow"></span>				
+						
 				</a>
 			</li>
 		

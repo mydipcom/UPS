@@ -222,13 +222,15 @@
 							
 						</div>
 						<div class="portlet-body">
-							<div id="" class="chart">
+							<div id="interface_chart" class="chart">
+							
 							</div>
 						</div>
 					</div>
 					<!-- END PORTLET-->
 				</div>
 				
+<!--
 				<div class="col-md-6 col-sm-6">
 					
 					<div class="portlet box red">
@@ -245,6 +247,7 @@
 					</div>
 					
 				</div>
+-->
 			</div>
 			
 		    
@@ -320,7 +323,7 @@
 	<script src="../static/js/dashbord.js" type="text/javascript"></script>
 	<script src="../assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
 	<script src="../assets/admin/pages/scripts/highstock.js" type="text/javascript"></script> 
-   
+    <script src="../assets/admin/pages/scripts/highcharts.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL SCRIPTS --> 
 	<script>
 		jQuery(document).ready(function() {    

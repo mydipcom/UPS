@@ -65,4 +65,16 @@ public class InterfaceServiceImpl implements InterfaceService{
 		
 	}
 
+
+	public String[] getInterfaceNameList() {
+		// TODO Auto-generated method stub
+		List<TInterface>interfaceList=interfaceDao.LoadAll();
+		String interfaceName[]=new String[interfaceList.size()];
+		int i=0;
+		for(TInterface interfaces:interfaceList){
+			interfaceName[i++]=interfaces.getName();
+		}
+		return interfaceName;
+	}
+
 }

@@ -60,7 +60,7 @@ public class PointAPI {
 	public String changeBonusApi(HttpServletRequest request,@RequestHeader("Authorization")String apiKey,@RequestBody String jsonStr){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
-		interfaceLog.setName("query");
+		interfaceLog.setName("changebonus");
 		interfaceLog.setAccessBy(IpUtils.getIpAddr(request));
 		log_content="error:interface error.";
 		TpointUser pointUser = new TpointUser();

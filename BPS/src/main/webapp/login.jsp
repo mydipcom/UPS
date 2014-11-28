@@ -65,13 +65,12 @@
 	<!-- BEGIN LOGIN FORM -->
 	<form:form action="login" method="post" commandName="user" cssClass="login-form">	
 		<h3 class="form-title"><s:message code="login.form.title"/></h3>
-		<div class="form-group">
-		<span>${errorMsg}</span>
-		</div>
-		<div class="alert alert-danger display-hide">
+		<c:if test="${not empty errorMsg}">
+		<div class="alert alert-danger">
 			<button class="close" data-close="alert"></button>
-			<span><s:message code="login.form.alert"/></span>
+			<span>${errorMsg}</span>
 		</div>
+		</c:if>
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 			<label class="control-label visible-ie8 visible-ie9"><s:message code="login.form.username"/></label>

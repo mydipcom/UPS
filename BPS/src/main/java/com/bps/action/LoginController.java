@@ -82,7 +82,7 @@ public class LoginController extends BaseController {
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
 		if(time != null && System.currentTimeMillis()-time<600000){
-			    mav.addObject(ERROR_MSG_KEY, "账号被锁定10分钟");
+			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for 10 minutes");
 				if(tUser != null){
 				  mav.addObject("user", tUser);
 				}else{
@@ -92,14 +92,14 @@ public class LoginController extends BaseController {
 				log_content=SystemConstants.LOG_FAILURE+":userid locked.";
 		}
 		else if(tUser==null){
-			mav.addObject(ERROR_MSG_KEY, "用户名不存在");
+			mav.addObject(ERROR_MSG_KEY, "userid not exist.");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
-			mav.addObject(ERROR_MSG_KEY, "登录密码不正确");
+			mav.addObject(ERROR_MSG_KEY, "password is error");
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
@@ -132,6 +132,7 @@ public class LoginController extends BaseController {
 		if(adminUser == null){
 			 adminUser = new TadminUser();
 			//邮箱不存在
+			 mav.addObject(ERROR_MSG_KEY,"email not exist.");
 		}else{
 			adminLog.setAdminId(adminUser.getAdminId());
 		   
@@ -145,11 +146,13 @@ public class LoginController extends BaseController {
 			message.setSubject("BPS重置密码");
 			EMailTool.send(message);
 			adminUserService.updateAdminUserPassword(adminUser);
+			mav.addObject(ERROR_MSG_KEY,"password reset success.");
+			LogManageTools.writeAdminLog(log_content, adminLog);
 		}
 		mav.addObject("user",adminUser);
 		mav.setViewName("login");
 		log_content="success:resert password success.";
-		LogManageTools.writeAdminLog(log_content, adminLog);
+		
 		return mav;
 	}
 	
@@ -163,7 +166,9 @@ public class LoginController extends BaseController {
 	@RequestMapping(value="/logout")
 	public String logout(HttpSession session){
 		TadminLog adminLog = new TadminLog();
+		if((TadminUser)session.getAttribute(SystemConstants.LOGINED)!=null){
 		adminLog.setAdminId(((TadminUser)session.getAttribute(SystemConstants.LOGINED)).getAdminId());
+		}
 		session.removeAttribute(SystemConstants.LOGINED);
 		log_content="success:login out.";
 		LogManageTools.writeAdminLog(log_content, adminLog);

@@ -11,6 +11,8 @@ package com.bps.action;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,8 +32,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
+import com.bps.dto.TInterfaceLog;
 import com.bps.service.AdminUserService;
 import com.bps.service.BonusRuleService;
+import com.bps.service.InterfaceLogService;
+import com.bps.service.InterfaceService;
 import com.bps.service.PointUserService;
 
 /**
@@ -55,6 +60,12 @@ public class HomeController extends BaseController {
 	
 	@Autowired
 	private BonusRuleService bonusRuleService;
+	
+	@Autowired
+	private InterfaceService interfaceService;
+	
+	@Autowired
+	private InterfaceLogService interfaceLogService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request){
@@ -131,6 +142,27 @@ public class HomeController extends BaseController {
 		}
 		
 		return JSON.toJSONString(respJson);
+	}
+	
+	@RequestMapping(value="/getInterfaceStatus",method=RequestMethod.GET)
+	@ResponseBody
+	public String getInterfaceStatus(HttpServletRequest request){
+		int i=0;
+		List<TInterfaceLog> interfaceLogList = new ArrayList<TInterfaceLog>();
+		JSONObject resp = new JSONObject();
+		JSONObject jsonObject=null;
+		String categories[]=interfaceService.getInterfaceNameList();
+		JSONObject[] json = new JSONObject[categories.length];
+		for(String categorie:categories){
+			interfaceLogList=interfaceLogService.findByInterfaceName(categorie);
+			jsonObject=new JSONObject();
+			jsonObject.put("y", interfaceLogList.size());
+			jsonObject.put("color", "#87CEEB");
+			json[i++]=jsonObject;
+		}
+		resp.put("data", json);
+		resp.put("categories", categories);
+		return JSON.toJSONString(resp);
 	}
     public static void loadLibiray(HttpServletRequest request){
     	String path=request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"lib"+File.separator;
