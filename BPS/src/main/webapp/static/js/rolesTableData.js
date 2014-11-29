@@ -159,9 +159,11 @@ var RolesTable = function () {
 		$("#editRoleRightsForm").on("submit", function(event) {
 			event.preventDefault();
 			var rightsVal=$(this).find("input[name='roleRights']");
+			var bitVal=0;
 			$(this).find(":checkbox:checked").each(function(){
-				rightsVal.val(rightsVal.val()|$(this).val());
-			});			
+				bitVal=bitVal|$(this).val();				
+			});	
+			rightsVal.val(bitVal);
 			$.ajax( {
 				 "dataType": 'json', 
 				 "type": "POST", 
