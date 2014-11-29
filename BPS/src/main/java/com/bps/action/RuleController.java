@@ -46,8 +46,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 	public ModelAndView rules(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
 		List<TpointRuleGroup> list=pointsRuleGroupService.getAllGroups();
-		mav.addObject("group", list);
-		request.getSession().setAttribute(Lift_Flag, "Bonus Rule");
+		mav.addObject("group", list);		
 		mav.setViewName("rules/rules");
 		return mav;
 	}	

@@ -1,33 +1,23 @@
 package com.bps.action;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
-import com.bps.commons.MyApplicationContextUtil;
 import com.bps.dto.Tsetting;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -45,9 +35,7 @@ public class SettingController extends BaseController {
 
 	@RequestMapping(value="/settings",method=RequestMethod.GET)
 	public ModelAndView settings(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		
-		request.getSession().setAttribute(Lift_Flag, "System Setting");
+		ModelAndView mav=new ModelAndView();		
 		mav.setViewName("settings/systemsetting");
 		return mav;
 	}

@@ -69,8 +69,7 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		request.getSession().setAttribute(Lift_Flag,"Dashboard");
+		ModelAndView mav=new ModelAndView();		
 		mav.setViewName("home/home");
 		return mav;
 	}

@@ -46,9 +46,7 @@ public class RightsController extends BaseController {
 
 	@RequestMapping(value="/rights",method=RequestMethod.GET)
 	public ModelAndView rights(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		
-		request.getSession().setAttribute(Lift_Flag, "System Management");
+		ModelAndView mav=new ModelAndView();				
 		mav.setViewName("rights/rights");
 		return mav;
 	}

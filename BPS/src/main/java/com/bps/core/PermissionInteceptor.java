@@ -70,7 +70,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 						return true;
 					}
 					else{
-						response.sendRedirect(request.getContextPath()+"/point");
+						response.sendRedirect(request.getContextPath()+"/common/noRights");
 						return false;
 					}
 				}

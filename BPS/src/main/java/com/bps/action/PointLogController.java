@@ -1,8 +1,5 @@
 package com.bps.action;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,11 +16,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
-import com.bps.dto.TadminLog;
 import com.bps.dto.TpointsLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
-import com.bps.service.AdminuserLogService;
 import com.bps.service.PointsLogService;
 
 
@@ -37,9 +32,7 @@ public class PointLogController extends BaseController {
 		
 	@RequestMapping(value="/pointlog",method=RequestMethod.GET)
 	public ModelAndView pointlog(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-			
-		request.getSession().setAttribute(Lift_Flag, "Log List");
+		ModelAndView mav=new ModelAndView();					
 		mav.setViewName("pointlog/pointlog");
 		return mav;
 	}	

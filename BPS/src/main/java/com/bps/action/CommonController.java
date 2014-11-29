@@ -43,8 +43,7 @@ public class CommonController extends BaseController {
 	
 	@RequestMapping(value="left",method=RequestMethod.GET)
 	public ModelAndView left(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		mav.addObject(Lift_Flag, (String) request.getSession().getAttribute(Lift_Flag));
+		ModelAndView mav=new ModelAndView();		
 		mav.addObject("menus", SystemConfig.Admin_Nodes_Menu_Map);
 		mav.setViewName("common/left");
 		return mav;
@@ -61,7 +60,7 @@ public class CommonController extends BaseController {
 	@RequestMapping(value="noRights",method=RequestMethod.GET)
 	public ModelAndView noRights(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("error/errPage");
+		mav.setViewName("error/errpage");
 		return mav;
 	}
 }

@@ -1,11 +1,8 @@
 package com.bps.action;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +15,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
 import com.bps.dto.TadminLog;
-import com.bps.dto.TpointRuleLog;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
 import com.bps.service.AdminuserLogService;
@@ -34,9 +30,7 @@ public class ManagerLogController extends BaseController {
 		
 	@RequestMapping(value="/managerlog",method=RequestMethod.GET)
 	public ModelAndView adminuserslog(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-			
-		request.getSession().setAttribute(Lift_Flag, "Log List");
+		ModelAndView mav=new ModelAndView();					
 		mav.setViewName("managerlog/managerslog");
 		return mav;
 	}	

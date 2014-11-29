@@ -1,13 +1,10 @@
 package com.bps.action;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,9 +31,7 @@ public class RulesLogController extends BaseController {
 
 	@RequestMapping(value="/ruleslog",method=RequestMethod.GET)
 	public ModelAndView ruleslogs(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		
-		request.getSession().setAttribute(Lift_Flag, "Log List");
+		ModelAndView mav=new ModelAndView();				
 		mav.setViewName("ruleslog/ruleslog");
 		return mav;
 	}	

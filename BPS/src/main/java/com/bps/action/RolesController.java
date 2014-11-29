@@ -51,8 +51,7 @@ public class RolesController extends BaseController {
 	@RequestMapping(value="/roles",method=RequestMethod.GET)
 	public ModelAndView roles(HttpServletRequest request){
 		ModelAndView mav=new ModelAndView();
-		mav.addObject("rightsList", SystemConfig.Admin_Nodes_Group_Map);
-		request.getSession().setAttribute(Lift_Flag, "System Management");
+		mav.addObject("rightsList", SystemConfig.Admin_Nodes_Group_Map);		
 		mav.setViewName("roles/roles");
 		return mav;
 	}
@@ -116,6 +115,7 @@ public class RolesController extends BaseController {
 		JSONObject respJson = new JSONObject();
 		try{
 			adminRoleRightsService.saveAdminRoleRights(adminRoleRights);
+			setSessionRights(request,adminRoleRights.getRoleRights());
 			respJson.put("status", true);
 		}
 		catch(BPSException be){

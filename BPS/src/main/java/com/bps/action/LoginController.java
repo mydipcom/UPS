@@ -114,8 +114,7 @@ public class LoginController extends BaseController {
 				toUrl="/home";
 			}else if (StringUtils.isEmpty(toUrl)&&tUser.getAdminRole().getRoleId()!=1) {
 				toUrl="/point";	
-			}
-			request.getSession().setAttribute(Lift_Flag, "Dashboard");
+			}			
 			mav.setViewName("redirect:"+toUrl);
 			log_content=SystemConstants.LOG_SUCCESS+":login success.";
 			

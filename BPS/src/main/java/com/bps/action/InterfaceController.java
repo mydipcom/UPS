@@ -34,8 +34,7 @@ public class InterfaceController extends BaseController{
 	
 	@RequestMapping(value="/interface",method=RequestMethod.GET)
 	public ModelAndView interfaces(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();		
-		request.getSession().setAttribute(Lift_Flag,"Interfaces List");
+		ModelAndView mav=new ModelAndView();				
 		mav.setViewName("interface/interface");
 		return mav;
 	}

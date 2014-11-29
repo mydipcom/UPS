@@ -1,7 +1,5 @@
 package com.bps.action;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
-import com.bps.dto.TpointRule;
 import com.bps.dto.TpointRuleGroup;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -29,8 +26,7 @@ public class RulesGroupController extends BaseController{
 	
 	@RequestMapping(value="/rulesgroup",method=RequestMethod.GET)
 	public ModelAndView rules(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();
-		request.getSession().setAttribute(Lift_Flag, "Bonus Rule");
+		ModelAndView mav=new ModelAndView();		
 		mav.setViewName("rulesgroup/rulesgroup");
 		return mav;
 	}

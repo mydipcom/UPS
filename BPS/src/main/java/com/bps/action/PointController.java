@@ -52,8 +52,7 @@ public class PointController extends BaseController {
      
      @RequestMapping(value="/point",method = RequestMethod.GET)
      public ModelAndView point(HttpServletRequest request){
-    	 ModelAndView mav = new ModelAndView();
-    	 request.getSession().setAttribute(Lift_Flag,"Point Users List");
+    	 ModelAndView mav = new ModelAndView();    	 
     	 mav.setViewName("/point/pointManagement");
     	 return mav;
      }
