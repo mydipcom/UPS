@@ -74,8 +74,12 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @return List<TadminNodes>
 	 * @see com.bps.service.AdminNodesService#getAllAdminNodes()
 	 */
+	@SuppressWarnings("unchecked")
 	public List<TadminNodes> getAllEnabledAdminNodes(){
-		return adminNodesDao.findBy("status", true);		
+		Criteria criteria=adminNodesDao.createCriteria();
+		return criteria.add(Restrictions.eq("status", true))
+				.addOrder(Order.asc("groupSort"))
+				.list();			
 	}
 	
 	/**
@@ -119,7 +123,7 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @see com.bps.service.AdminNodesService#createAdminNode(com.bps.dto.TadminNodes) 
 	 */
 	public void createAdminNode(TadminNodes adminNode) {
-		if(adminNodesDao.get(adminNode.getPid())==null){
+		if(adminNode.getPid()!=0&&adminNodesDao.get(adminNode.getPid())==null){
 			throw new BPSException("error.AdminNodesServiceImpl.createAdminNode.pid");
 		}
 		long bitval=adminNodesDao.getMaxValue("bitFlag");
@@ -140,9 +144,9 @@ public class AdminNodesServiceImpl implements AdminNodesService {
 	 * @see com.bps.service.AdminNodesService#updateAdminNode(com.bps.dto.TadminNodes) 
 	 */
 	public void updateAdminNode(TadminNodes adminNode) {
-		if(adminNodesDao.get(adminNode.getPid())==null){
-					throw new BPSException("error.AdminNodesServiceImpl.createAdminNode.pid");
-			}
+		if(adminNode.getPid()!=0&&adminNodesDao.get(adminNode.getPid())==null){
+			throw new BPSException("error.AdminNodesServiceImpl.createAdminNode.pid");
+		}
 		adminNodesDao.update(adminNode);
 		cachedNodesData();
 	}
