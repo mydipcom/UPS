@@ -51,7 +51,7 @@ public class PermissionInteceptor implements HandlerInterceptor {
 					Set<String> keys=SystemConfig.Admin_Nodes_Url_Map.keySet();
 					for (String key : keys) {
 						if(key.endsWith("*")){
-							if(reqPath.startsWith(key.substring(0, key.length()-1))){
+							if(reqPath.startsWith(key.substring(0, key.length()-2))){
 								rightsBit=SystemConfig.Admin_Nodes_Url_Map.get(key);
 							}
 						}

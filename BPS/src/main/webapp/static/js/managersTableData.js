@@ -318,7 +318,7 @@ var ManagersTable = function () {
 	            	 handleAlerts("Added the data successfully.","success","");		            	 
 				 }
 				 else{
-					 handleAlerts("Failed to add the data."+resp.info,"danger","");						 
+					 handleAlerts("Failed to add the data."+resp.info+"the name or email exist","danger","");						 
 				 }
 			}             	 
          },
@@ -400,7 +400,7 @@ var ManagersTable = function () {
 	            	 handleAlerts("Edited the data successfully.","success","");
 				 }
 				 else{
-					 alert(resp.info);
+					 handleAlerts("Failed to add the data."+resp.info+"the email is exist","danger","");
 				 }
 			}             	 
          },
