@@ -66,15 +66,11 @@
 					<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">Home</a>
+							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>manager"><s:message code="loglist"/></a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>rulelog"><s:message code="loglist.ruleslog"/></a>
+							<a href="<c:url value="/"/>ruleslog"><s:message code="loglist.ruleslog"/></a>
 						</li>
 					</ul>					
 				</div>

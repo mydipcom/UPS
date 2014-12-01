@@ -65,15 +65,15 @@
 					<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">Home</a>
+							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>rules">Bonus Rule</a>
+							<a href="<c:url value="/"/>rules"><s:message code="bonusrule"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="<c:url value="/"/>rules">Bonus Rule Configuration</a>
+							<a href="<c:url value="/"/>rules"><s:message code="bonusrule.configuration"/></a>
 						</li>
 					</ul>					
 				</div>

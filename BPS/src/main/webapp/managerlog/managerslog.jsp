@@ -65,11 +65,7 @@
 					<ul class="page-breadcrumb">
 						<li>
 							<i class="fa fa-home"></i>
-							<a href="<c:url value="/"/>home">Home</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="<c:url value="/"/>pointlog"><s:message code="loglist"/></a>
+							<a href="<c:url value="/"/>home"><s:message code="home"/></a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
