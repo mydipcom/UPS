@@ -125,7 +125,11 @@ private Logger logger = Logger.getLogger(ManagerController.class);
 			adminuser.setCreatedTime(sdate.getTime());
 			adminuser.setUpdatedBy(ad.getAdminId());
 			adminuser.setUpdatedTime(System.currentTimeMillis());
+			if(adminuser.getPassword()!=null){
 			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
+			}else {
+			adminuser.setPassword(adminUserService.getAdminUserById(adminuser.getAdminId()).getPassword());
+			}
 			adminUserService.updateAdminUser(adminuser);
 			respJson.put("status", true);
 		}

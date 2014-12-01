@@ -335,8 +335,7 @@
 									<label class="control-label col-md-3"><s:message code="bonusrule.configuration.RuleInput"/><span class="required">* </span></label>
 									<div class="col-md-9">																				
 										<input name="ruleInput" class="form-control"/>
-										<span class="help-block">
-										Please input the input that access this rights page</span>
+										
 									</div>
 								</div>									
 								<div class="form-group">

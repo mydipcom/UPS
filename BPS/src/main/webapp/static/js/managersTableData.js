@@ -35,6 +35,8 @@ var ManagersTable = function () {
 		    	"bRetrieve": true,
 		    	"processing":true,
 		    	"bDestroy":true,
+		    	"scrollX":"100%",
+	           	"scrollXInner":"100%",
 		        // set the initial value
 		        "displayLength": 3,
 		        "dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -424,8 +426,6 @@ var ManagersTable = function () {
 					minlength:4,
             			},
             	password: {
-    		
-            		required: true,
             		minlength:6,
             		maxlength:12,
 					},

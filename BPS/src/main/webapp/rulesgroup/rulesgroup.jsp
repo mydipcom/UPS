@@ -84,7 +84,7 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i>Rules Group Table
+									<i class="fa fa-edit"></i><s:message code="bonusrule.group.tablename"/>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_groups"><i class="fa fa-plus"></i><s:message code="all.table.add" /></a>

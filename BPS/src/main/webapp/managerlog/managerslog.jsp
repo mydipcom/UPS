@@ -157,7 +157,7 @@
 						<div class="portlet box blue-hoki">
 							<div class="portlet-title">
 								<div class="caption">
-									<i class="fa fa-edit"></i><s:message code="loglist.adminuserlog.tablename"/>
+									<i class="fa fa-edit"></i><s:message code="loglist.adminuserlog"/>
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_adminslog" id="openDeleteAdminLogModal" ><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>

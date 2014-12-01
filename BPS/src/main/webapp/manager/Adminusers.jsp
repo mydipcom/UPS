@@ -340,7 +340,7 @@
 									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
 									<div class="col-md-9">																				
 										<input name="password" class="form-control"/>
-										
+										<span class="help-block"> input a new password or not input password</span>
 									</div>
 								</div>	
 								<div class="form-group">
