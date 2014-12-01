@@ -357,7 +357,7 @@ var Dashbord = function () {
 		var getInterfaceData=function(){
 			$.ajax({
 		    	type:"GET",
-		    	url:"/bps/home/getInterfaceStatus?rand="+Math.random(),
+		    	url:rootURI+"/home/getInterfaceStatus?rand="+Math.random(),
 		    	dataType:"json",
 		    	success:function(data){
 		    		categories=data.categories;
