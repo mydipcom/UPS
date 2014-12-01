@@ -228,8 +228,8 @@ var ManagersTable = function () {
 	            jQuery(set).each(function () {            	
 	            	var data = api.row($(this).parents('tr')).data();
 	            	var ids=data.adminId;
-	                var index = $.inArray(id, selected);
-	                selected.push( id );
+	                var index = $.inArray(ids, selected);
+	                selected.push( ids );
                     $(this).attr("checked", true);
                     $(this).parents('tr').addClass("active");
                     $(this).parents('span').addClass("checked");
