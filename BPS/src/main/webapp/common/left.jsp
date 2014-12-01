@@ -74,9 +74,9 @@
 			<jsp:setProperty name="menuBean" property="bitFlag" value="${menu.key.bitFlag}"></jsp:setProperty>	
 			<%
 			boolean isAdmin=((com.bps.dto.TadminUser)session.getAttribute("Logined")).getAdminRole().getRoleId()==1;
-			long userRights=0;
+			Long userRights=null;
 			if(session.getAttribute("rights")!=null){
-				userRights=(long)session.getAttribute("rights");
+				userRights=(Long)session.getAttribute("rights");
 			}			
 			if(isAdmin||(userRights&menuBean.getBitFlag())>0){				
 			%>	

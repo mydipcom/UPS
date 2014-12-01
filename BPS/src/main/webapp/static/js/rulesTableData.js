@@ -285,9 +285,13 @@ var RulesTable = function () {
 		
 
 		
-		$("#openEditRightModal").on("click",function(event){
+		$("#openEditRulesModal").on("click",function(event){
 			if(selected.length>1){
 				handleAlerts("Only one row can be edited.","warning","");
+				event.stopPropagation();
+			}else if(selected.length==0)
+			{
+				handleAlerts("Please choose one row.","warning","");
 				event.stopPropagation();
 			}
 			else{

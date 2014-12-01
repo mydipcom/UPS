@@ -160,10 +160,10 @@
 								</div>
 								<div class="actions">									
 								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#add_rules"><i class="fa fa-plus"></i><s:message code="all.table.add"/></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRightModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit"/></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules"><i class="fa fa-key"></i> <s:message code="all.table.activate"/></a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules"><i class="fa fa-lock"></i><s:message code="all.table.deactivate"/> </a>
-								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_rules" id="openEditRulesModal"><i class="fa fa-pencil"></i> <s:message code="all.table.edit"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#activate_rules" id="openActiveRulesModal"><i class="fa fa-key"></i> <s:message code="all.table.activate"/></a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#deactivate_rules"id="openDeactiveRulesModal"><i class="fa fa-lock"></i><s:message code="all.table.deactivate"/> </a>
+								    <a class="btn btn-default btn-sm" data-toggle="modal" href="#delete_rules" id="openDeleteRulesModal"><i class="fa fa-trash-o"></i> <s:message code="all.table.delete"/></a>
 								    <div class="btn-group">
 										<a class="btn default" href="#" data-toggle="dropdown">
 										Columns <i class="fa fa-angle-down"></i>
