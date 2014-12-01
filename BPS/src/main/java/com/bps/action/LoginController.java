@@ -82,7 +82,7 @@ public class LoginController extends BaseController {
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
 		if(time != null && System.currentTimeMillis()-time<600000){
-			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for 10 minutes");
+			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for 10 minutes.");
 				if(tUser != null){
 				  mav.addObject("user", tUser);
 				}else{
@@ -92,14 +92,14 @@ public class LoginController extends BaseController {
 				log_content=SystemConstants.LOG_FAILURE+":userid locked.";
 		}
 		else if(tUser==null){
-			mav.addObject(ERROR_MSG_KEY, "userid not exist.");
+			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused) .");
 			mav.addObject("user", new TadminUser());
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);
 			log_content=SystemConstants.LOG_FAILURE+":userid error";
 		}
 		else if(!SecurityTools.SHA1(user.getPassword()).equalsIgnoreCase(tUser.getPassword())){
-			mav.addObject(ERROR_MSG_KEY, "password is error");
+			mav.addObject(ERROR_MSG_KEY, " Login failed (Username/Password refused). ");
 			mav.addObject("user", tUser);
 			saveLoginErrorTims(request);
 			adminLog.setLevel((short)1);

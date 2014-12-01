@@ -125,7 +125,7 @@
 								<s:message code="home.systemuseramount" />
 							</div>
 						</div>
-						<a class="more" href="#">
+						<a class="more" href="<c:url value="/"/>manager">
 						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
@@ -161,7 +161,7 @@
 							<s:message code="home.pointruleamount"/>
 							</div>
 						</div>
-						<a class="more" href="#">
+						<a class="more" href="<c:url value="/"/>rules">
 						<s:message code="home.View"/> <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>

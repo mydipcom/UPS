@@ -165,6 +165,12 @@ public class HomeController extends BaseController {
 	}
     public static void loadLibiray(HttpServletRequest request){
     	String path=request.getSession().getServletContext().getRealPath("/")+File.separator+"static"+File.separator+"lib"+File.separator;
-	    System.load(path+"sigar-amd64-winnt.dll");
+    	if(System.getProperty("os.name").startsWith("Windows")){
+    		if(System.getProperty("os.arch").endsWith("64")){
+    			System.load(path+"sigar-amd64-winnt.dll");
+    		}else{
+    			System.load(path+"sigar-x86-winnt.dll");
+    		}
+        }
     }	
 }
