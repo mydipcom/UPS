@@ -96,6 +96,9 @@
 					</c:when>
 					<c:when test="${menu.key.uri eq '/point'}">
 						<c:set var="menuIcon" value="icon-note"/>
+					</c:when>
+					<c:when test="${menu.key.uri eq '/interface'}">
+						<c:set var="menuIcon" value="icon-calendar"/>
 					</c:when>					
 					<c:otherwise>
 						<c:set var="menuIcon" value="icon-home"/>
