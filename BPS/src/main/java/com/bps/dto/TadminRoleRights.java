@@ -13,6 +13,7 @@ public class TadminRoleRights implements java.io.Serializable {
 	private static final long serialVersionUID = 979892202536550526L;
 	private int roleId;
 	private long roleRights;
+	private long[] rights;
 
 	public TadminRoleRights() {
 	}
@@ -36,6 +37,14 @@ public class TadminRoleRights implements java.io.Serializable {
 
 	public void setRoleRights(long roleRights) {
 		this.roleRights = roleRights;
+	}
+
+	public long[] getRights() {
+		return rights;
+	}
+
+	public void setRights(long[] rights) {
+		this.rights = rights;
 	}
 
 }

@@ -114,6 +114,12 @@ public class RolesController extends BaseController {
 	public String updateRoleRights(HttpServletRequest request,TadminRoleRights adminRoleRights){
 		JSONObject respJson = new JSONObject();
 		try{
+			long bitVal=0;
+			long[] rights=adminRoleRights.getRights();
+			for (int i = 0; i < rights.length; i++) {
+				bitVal=bitVal|rights[i];
+			}
+			adminRoleRights.setRoleRights(bitVal);
 			adminRoleRightsService.saveAdminRoleRights(adminRoleRights);
 			setSessionRights(request,adminRoleRights.getRoleRights());
 			respJson.put("status", true);
