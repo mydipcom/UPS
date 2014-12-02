@@ -135,19 +135,20 @@ var RolesTable = function () {
 			else{
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				var roleId = data.roleId;
-				var roleRights=0;
+				var roleRights="0";
 				if(data.adminRoleRights){
-					roleRights= data.adminRoleRights.roleRights;
+					roleRights= (data.adminRoleRights.roleRights*1).toString(2);
 				}
 				$("#editRoleRightsForm input[name='roleId']").val(roleId); 
-				$("#editRoleRightsForm input[name='roleRights']").val(roleRights); 
+				//$("#editRoleRightsForm input[name='roleRights']").val(roleRights); 
 				
 				var allRightsBox=$("#editRoleRightsForm :checkbox");
 				allRightsBox.removeAttr("checked");
 				allRightsBox.parents('span').removeClass("checked");
 				jQuery(allRightsBox).each(function () {
-					var rightsVal=$(this).val();
-					if((rightsVal&roleRights)>0){
+					var rightsVal=($(this).val()*1).toString(2);
+					var ind=rightsVal.length;					
+					if(roleRights.substr(-ind,1)=="1"){					
 						$(this).attr("checked","true");
 						$(this).parents('span').addClass("checked");
 					}
@@ -157,13 +158,7 @@ var RolesTable = function () {
 		
 		//分配角色权限表单提交操作
 		$("#editRoleRightsForm").on("submit", function(event) {
-			event.preventDefault();
-			var rightsVal=$(this).find("input[name='roleRights']");
-			var bitVal=0;
-			$(this).find(":checkbox:checked").each(function(){
-				bitVal=bitVal|$(this).val();				
-			});	
-			rightsVal.val(bitVal);
+			event.preventDefault();			
 			$.ajax( {
 				 "dataType": 'json', 
 				 "type": "POST", 

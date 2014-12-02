@@ -251,29 +251,24 @@
 					<!-- <div class="modal-body"> -->					<div class="portlet-body form">
 						<!-- BEGIN FORM-->						
 						<form id="editRoleRightsForm" action="editRoleRights" method="post" name="editRoleRightsForm" class="form-horizontal form-bordered">
-							<input name="roleId" type="hidden" value=""/>
-							<input name="roleRights" type="hidden" value=""/>
+							<input name="roleId" type="hidden" value=""/>							
 							<div class="form-body">
 								<div class="alert alert-danger display-hide">
 									<button class="close" data-close="alert"></button>
 									<s:message code="system.management.user.adduser.message"/>
 								</div>
-							<c:forEach var="rightsGroup" items="${rightsList}" varStatus="status">																														
-								<div class="form-group">
-									<label class="control-label col-md-3">${rightsGroup.key} </label>
-									<div class="col-md-9">
-									<c:forEach var="rights" items="${rightsGroup.value}" varStatus="status">
-										<c:if test="${(status.index+1)%3==1}">										
-										</c:if>										<div class="checkbox-list">
-										
-											<label class="checkbox-inline">
-											<input type="checkbox" name="rights" value="${rights.bitFlag}"/>${rights.name}</label>											
-										<c:if test="${(status.index+1)%3==0||status.last}">
-										
-										</c:if>
-									</div>																		</c:forEach>
-									</div>
-															</div>														
+							<c:forEach var="rightsGroup" items="${rightsList}" varStatus="status">
+								<div class="form-group">
+									<label class="control-label col-md-3">${rightsGroup.key} </label>
+									<div class="col-md-9">
+									<c:forEach var="rights" items="${rightsGroup.value}" varStatus="status">
+										<c:if test="${(status.index+1)%3==1}">																				<div class="checkbox-list">
+										</c:if>																			
+											<label class="checkbox-inline">
+											<input type="checkbox" name="rights" value="${rights.bitFlag}"/>${rights.name}</label>
+										<c:if test="${(status.index+1)%3==0||status.last}">										</div>										
+										</c:if>																											    </c:forEach>
+									</div>								</div>
 							</c:forEach>
 							</div>
 							<div class="form-actions" style="border-top:0;">
@@ -289,22 +284,22 @@
 					</div>					
 				</div>				
 				<!-- END EDIT Role Rights MODAL FORM-->
-				
-				<!-- BEGIN DELETE MODAL FORM-->
-				<div class="modal" id="delete_roles" tabindex="-1" data-backdrop="static" data-keyboard="false">
-					<div class="modal-body">
-						<p>
-							<s:message code="system.management.user.deletemessage" />
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
-					</div>					
-				</div>				
+				
+				<!-- BEGIN DELETE MODAL FORM-->
+				<div class="modal" id="delete_roles" tabindex="-1" data-backdrop="static" data-keyboard="false">
+					<div class="modal-body">
+						<p>
+							<s:message code="system.management.user.deletemessage" />
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+						<button id="deleteBtn" type="button" data-dismiss="modal" class="btn blue">Confirm</button>
+					</div>					
+				</div>				
 				<!-- END DELETE MODAL FORM-->
-			</div>		
-		</div>
+			</div>		
+		</div>
 	</div>	
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->	<c:import url="/common/footer"/>
