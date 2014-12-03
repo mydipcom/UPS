@@ -227,13 +227,23 @@ var RulesTable = function () {
         }); 
 		
 		//搜索表单提交操作
-		$("#searchForm").on("submit", function(event) {
+		/*$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
 			var jsonData=$(this).serializeJson();
 			var jsonDataStr=JSON.stringify(jsonData);			
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});
+		*/
+		//搜索积分规则
+		 var search = function(){
+		    	event.preventDefault();
+				var jsonData=$("#searchForm").serializeJson();
+				var jsonDataStr=JSON.stringify(jsonData);			
+				oTable.fnFilter(jsonDataStr);
+				return false;
+		    };
+		
 		//激活规则
 		$('#activateBtn').on('click', function (e) {
 			$.ajax( {
@@ -626,7 +636,47 @@ var RulesTable = function () {
                     EditRules();
                 }
             });
-    };
+    };    
+    //searchValidate
+    var searchValidation = function() {
+        var form = $('#searchForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+            	ruleId: {
+            		digits:true,
+                    min:0
+                }
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	search();
+            }
+        });
+};
     return {
         //main function to initiate the module
         init: function (rootPath) {
@@ -634,6 +684,7 @@ var RulesTable = function () {
         	handleTable();  
         	addFormValidation();
         	editFormValidation();
+        	searchValidation();
         }
 
     };

@@ -229,7 +229,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="login.form.password"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="password" class="form-control"/>										
+										<input name="password" type="password" class="form-control"/>										
 									</div>
 								</div>
 								<div class="form-group">
@@ -339,7 +339,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="login.form.password"/></label>
 									<div class="col-md-9">																				
-										<input name="password" class="form-control"/>
+										<input name="password" type="password"  class="form-control"/>
 										<span class="help-block"> input a new password or not input password</span>
 									</div>
 								</div>	

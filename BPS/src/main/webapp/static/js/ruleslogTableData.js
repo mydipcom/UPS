@@ -57,7 +57,7 @@ var RulesLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><button><a  data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></button></div>';
+                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
@@ -129,7 +129,7 @@ var RulesLogTable = function () {
              }
            });
         });   
-		
+		/*
 		//搜索表单提交操作
 		$("#searchForm").on("submit", function(event) {
 			event.preventDefault();
@@ -138,7 +138,15 @@ var RulesLogTable = function () {
 			oTable.fnFilter(jsonDataStr);
 			return false;
 		});
-		
+		*/
+		//搜索积分规则
+		 var search = function(){
+		    	event.preventDefault();
+				var jsonData=$("#searchForm").serializeJson();
+				var jsonDataStr=JSON.stringify(jsonData);			
+				oTable.fnFilter(jsonDataStr);
+				return false;
+		    };
 		//全选
 		
 		$(".group-checkable").on('change',function () {
@@ -229,6 +237,46 @@ var RulesLogTable = function () {
         });        
 
     };
+    //searchValidate
+    var searchValidation = function() {
+        var form = $('#searchForm');
+        var errorDiv = $('.alert-danger', form);            
+        form.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+            	ruleId: {
+            		digits:true,
+                    min:0
+                }
+            },
+           invalidHandler: function (event, validator) { //display error alert on form submit              
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) { 
+            	errorDiv.hide();
+            	search();
+            }
+        });
+};
 	 //initialize datepicker
     var datePicker = function(){
     	$('.date-picker').datepicker({
@@ -243,6 +291,7 @@ var RulesLogTable = function () {
         	rootURI=rootPath;
         	handleTable();  
         	datePicker();
+        	searchValidation();
         }
 
     };

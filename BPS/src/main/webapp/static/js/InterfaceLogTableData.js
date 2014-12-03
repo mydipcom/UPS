@@ -56,7 +56,7 @@ var InterfaceLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><button><a  data-toggle="modal"  href="#view_log" >view</a></button></div>';
+                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" >view</a></div>';
                     },
                     'class':'center'
                 }
