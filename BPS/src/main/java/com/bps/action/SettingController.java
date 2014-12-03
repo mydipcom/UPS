@@ -74,7 +74,8 @@ public class SettingController extends BaseController {
 		catch(BPSException be){
 			respJson.put("status", false);
 			respJson.put("info", be.getMessage());
-		}		
+		}
+		systemSettingService.cachedSystemSettingData();
 		return JSON.toJSONString(respJson);
 	}
 	
@@ -91,7 +92,8 @@ public class SettingController extends BaseController {
 		catch(BPSException be){
 			respJson.put("status", false);
 			respJson.put("info", be.getMessage());
-		}	
+		}
+		systemSettingService.cachedSystemSettingData();
 		return JSON.toJSONString(respJson);		
 	}
 
@@ -108,7 +110,8 @@ public class SettingController extends BaseController {
 		catch(BPSException be){
 			respJson.put("status", false);
 			respJson.put("info", be.getMessage());
-		}	
+		}
+		systemSettingService.cachedSystemSettingData();
 		return JSON.toJSONString(respJson);	
 	}
 	

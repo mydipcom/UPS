@@ -18,6 +18,7 @@ import org.hyperic.sigar.cmd.Time;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.bps.commons.SystemConfig;
 import com.bps.commons.SystemConstants;
 import com.bps.dto.TadminUser;
 import com.bps.model.LoginFailureModel;
@@ -215,12 +216,12 @@ public class BaseController {
 				request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
 			}else{
 				int error_count=lfm.getCount();
-				if(error_count == 2){
+				if(error_count == (Integer.parseInt(SystemConfig.Admin_Setting_Map.get("max_login_error_times"))-1)){
 					request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 					request.getSession().setAttribute(SystemConstants.LOGIN_STATUS, System.currentTimeMillis());
 				}else{
 					lfm.setTime(System.currentTimeMillis());
-					lfm.setCount(2);
+					lfm.setCount(error_count+1);
 					request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
 				}
 			}

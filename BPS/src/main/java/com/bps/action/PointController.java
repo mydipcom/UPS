@@ -231,4 +231,30 @@ public class PointController extends BaseController {
 		return JSON.toJSONString(resp);
     	 
      }
+     
+     @RequestMapping(value="/addPointUser",method=RequestMethod.POST)
+     @ResponseBody
+     public String addPointUser(HttpServletRequest request,String userId,int points,Boolean statics){
+    	 TpointUser pointUser = pointUserService.getUserInfoById(userId);
+    	 JSONObject resp = new JSONObject();
+    	 try{
+    		
+        	 if(pointUser == null){
+             pointUser=new TpointUser();
+        	 pointUser.setUserId(userId);
+        	 pointUser.setPoints(points);
+        	 pointUser.setStatus(statics);
+        	 pointUserService.createUserInfo(pointUser);
+    		 resp.put("status", true);
+        	 }else{
+        		 resp.put("status", false);
+        		 resp.put("info", "User Id is exist.");
+        	 }
+    		
+    	 }catch(BPSException b){
+    		 resp.put("status", false);
+    	 }
+    	 
+    	 return JSON.toJSONString(resp);
+     }
 }

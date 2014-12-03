@@ -562,6 +562,73 @@ var PointUserTable = function () {
             });
     };
     
+    //addValidate
+    var addValidation = function() {
+            var form = $('#addPointUserForm');
+            var errorDiv = $('.alert-danger', form);            
+            form.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "",  // validate all fields including form hidden input                
+                rules: {
+                	userId: {
+                		 required: true
+                    },
+                    points:{
+                    	digits:true,
+                        min:0
+                    }
+                },
+               invalidHandler: function (event, validator) { //display error alert on form submit              
+                    errorDiv.show();                    
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+
+                submitHandler: function (form) { 
+                	errorDiv.hide();
+                	addPointUser();
+                }
+            });
+    };
+    
+    var addPointUser = function(){
+    	$.ajax({
+    		"type":"POST",
+    		"dataType":"json",
+    		"url":rootURI+"addPointUser?rand="+Math.random(),
+    		"data":$("#addPointUserForm").serialize(),
+    		"success":function(data){
+    			if(data.status){
+    				selected=[];
+	            	oTable.api().draw();
+    				handleAlerts("Add point user successfully.","success","","10");
+    			}else{
+    				handleAlerts(data.info,"danger","","10");
+    			}
+    		},
+    		"error":function(XMLHttpRequest, textStatus, errorThrown){
+           	 alert(errorThrown);
+            }
+    		
+    	});
+    	$("#add_pointuser").modal("hide");
+    	return false;
+    };
     
     return {
         //main function to initiate the module
@@ -571,6 +638,7 @@ var PointUserTable = function () {
        	    changeBalanceValidation();
        	    changeMoreBalanceValidation();
          	searchValidation();
+         	addValidation();
         }
 
     };

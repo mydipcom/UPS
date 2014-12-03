@@ -30,90 +30,24 @@ var InterfaceTable = function () {
 		
 		var table=$('#interface_table');
 		oTable = table.dataTable({
-			"lengthChange":false,
-        	"filter":true,
-        	"sort":false,
-        	"info":true,
-        	"processing":true,                
-            // set the initial value
-            "displayLength": 10,
-            "dom": "Tt<'row'<'col-md-6'i><'col-md-6'p>>",
-//            "sPaginationType": "bootstrap_full_number",   //bootstrap_extended
-//            "oLanguage": {
-//                "sLengthMenu": "_MENU_ records per page",
-//                "oPaginate": {
-//                    "sPrevious": "Prev",
-//                    "sNext": "Next",
-//                	"zeroRecords": "No records to display"
-//                }
-//            },
-            "tableTools":{
-	        	"sSwfPath":"../assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
-	        	"aButtons":[{
-	                    "sExtends": "text",
-	                    "sButtonText": "Import From Excel",
-	                     "fnClick":function(nButton, oConfig, oFlash){
-	                    	 $("#Import_Pointuser_Excel").modal("show");
-	                     }
-	                }, {
-	                    "sExtends": "xls",
-	                    "sButtonText": "Export To Excel"
-	                }]
-	        },
-            "columnDefs": [{                    
-                    'targets': 0,   
-                    'render':function(data,type,row){
-                    	return '<div class="checker"><span><input type="checkbox" class="checkboxes"/></span></div>';
-                    },
-                    //'defaultContent':'<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"/></span></div>'                    
-                },
-                {                	
-                	'targets':-1,
-                	'data':null,//定义列名
-                	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_interface" >view</a></div>';
-                    },
-                    'class':'center'
-                }
-            ],
-            "columns": [
-               {"orderable": false },
-	           { title: "Interface Name",   data: "name" },
-	           { title: "Describe",   data: "descr" },
-	           { title: "Action" ,"class":"center"}
-	        ],
-	        "serverSide": true,
-	        "serverMethod": "GET",
-	        "ajaxSource": rootURI+"interfaceList?rand="+Math.random(),
-            "sScrollX":"100%",        	
-	        "sScrollXInner":"100%",
-	        
-//	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-//	           $.ajax( {
-//	             "dataType": 'json', 
-//	             "type": "POST", 
-//	             "url": sSource, 
-//	             "data": aoData,
-////	             "contentType":"application/json",
-//	             "success": function(resp){ 		            	
-//	            	 fnCallback(resp);
-//	             },
-//	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-//	            	 alert(errorThrown);
-//	             }
-//	           } );
-//	         },
-//	        "fnServerParams": function ( aoData ) {
-//	           aoData.push( { "name": "more_data", "value": "my_value" } );
-//	         },
-//	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {				
-//	        	$('td:eq(0)', nRow).html( '<input type="checkbox" class="checkboxes" value="1"/>' );
-//				return nRow;
-//			},
-	       
-
-		});
-		var inparamTable = function(ids){		
+			    "lengthChange":false,
+				"filter":false,
+				"sort":false,
+				"info":true,
+				"bRetrieve": true,
+				"processing":true,
+				"bDestroy":true,
+                "displayLength": 3,
+				"dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
+				//"columns": [
+	 	        //   { title: "Interface Name",   data: "name" },
+	 	        //   { title: "Describe", data: "descr"}
+	 	        //   ],
+	 	          // "serverSide": true,
+	 	          // "serverMethod": "GET",
+	 	         //  "ajaxSource": rootURI+"interfaceList?rand="+Math.random()
+	 	        });
+		 var inparamTable = function(ids){		
 			var logTable=$('#inparam_table');
 				oInparamTable = logTable.dataTable({
 					"lengthChange":false,

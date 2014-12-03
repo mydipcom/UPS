@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bps.commons.EMailTool;
 import com.bps.commons.LogManageTools;
 import com.bps.commons.SecurityTools;
+import com.bps.commons.SystemConfig;
 import com.bps.commons.SystemConstants;
 import com.bps.dto.TadminLog;
 import com.bps.dto.TadminUser;
@@ -81,8 +82,8 @@ public class LoginController extends BaseController {
 		TadminUser tUser=(TadminUser)adminUserService.getAdminUserById(user.getAdminId());
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
-		if(time != null && System.currentTimeMillis()-time<600000){
-			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for 10 minutes.");
+		if(time != null && System.currentTimeMillis()-time<60000*Integer.parseInt(SystemConfig.Admin_Setting_Map.get("login_error_locked"))){
+			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for "+Integer.parseInt(SystemConfig.Admin_Setting_Map.get("login_error_locked"))+" minutes.");
 				if(tUser != null){
 				  mav.addObject("user", tUser);
 				}else{

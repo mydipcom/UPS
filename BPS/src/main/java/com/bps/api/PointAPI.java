@@ -17,6 +17,7 @@ import com.bps.commons.LogManageTools;
 import com.bps.commons.SystemConfig;
 import com.bps.dto.TInterfaceLog;
 import com.bps.dto.TpointUser;
+import com.bps.model.InterfaceInfoAnnotation;
 import com.bps.service.PointUserService;
 
 @RestController
@@ -29,6 +30,7 @@ public class PointAPI {
 	private String log_content;
 	
 	@RequestMapping(value="/query")
+	@InterfaceInfoAnnotation(name="query",description="query")
 	public String getPointUserApi(HttpServletRequest request ,@RequestHeader("Authorization") String apiKey,@RequestParam String user_id){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
@@ -57,6 +59,7 @@ public class PointAPI {
 	}
 	
 	@RequestMapping(value="/changebonus",method=RequestMethod.POST)
+	@InterfaceInfoAnnotation(name="changebonus",description="changebonus")
 	public String changeBonusApi(HttpServletRequest request,@RequestHeader("Authorization")String apiKey,@RequestBody String jsonStr){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
