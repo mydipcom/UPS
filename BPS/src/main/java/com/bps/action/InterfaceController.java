@@ -1,5 +1,9 @@
 package com.bps.action;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.bps.commons.ClassTools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
@@ -18,6 +22,7 @@ import com.bps.dto.Param;
 import com.bps.dto.TInterface;
 import com.bps.dto.TadminUser;
 import com.bps.model.DataTableParamter;
+import com.bps.model.InterfaceInfoAnnotation;
 import com.bps.model.InterfaceModel;
 import com.bps.model.PagingData;
 import com.bps.service.InterfaceParamService;
@@ -34,8 +39,71 @@ public class InterfaceController extends BaseController{
 	
 	@RequestMapping(value="/interface",method=RequestMethod.GET)
 	public ModelAndView interfaces(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView();				
+		ModelAndView mav=new ModelAndView();
+		try {
+			List<List<String>>  interfaceInfos = new ArrayList<List<String>>();
+			List<String> interfaceInfo = null;
+			List<Class> clazzs = ClassTools.getClassByPackage("com.bps.api");
+			if(clazzs != null){
+				for(Class clazz:clazzs){
+					    Method []methods = clazz.getDeclaredMethods();
+						InterfaceInfoAnnotation annotation;
+						for(Method method : methods){
+							annotation=method.getAnnotation(InterfaceInfoAnnotation.class);
+							interfaceInfo = new ArrayList<String>();
+							interfaceInfo.add(annotation.name());
+							interfaceInfo.add(annotation.description());
+							interfaceInfos.add(interfaceInfo);
+							}
+				}
+				mav.addObject("interfaces", interfaceInfos);
+			}
+			
+		  
+			
+		}catch(BPSException b){
+			
+		}catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		mav.setViewName("interface/interface");
+		return mav;
+	}
+	
+	@RequestMapping(value="/interfaceInfo",method=RequestMethod.GET)
+	public ModelAndView interfaceInfo(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();
+		try {
+			List<List<String>>  interfaceInfos = new ArrayList<List<String>>();
+			List<String> interfaceInfo = null;
+			
+			
+			Method []methods = Class.forName("com.bps.api.PointAPI").getDeclaredMethods();
+			InterfaceInfoAnnotation annotation;
+			for(Method method : methods){
+				annotation=method.getAnnotation(InterfaceInfoAnnotation.class);
+				interfaceInfo = new ArrayList<String>();
+				interfaceInfo.add(annotation.name());
+				interfaceInfo.add(annotation.description());
+				interfaceInfos.add(interfaceInfo);
+				
+			}
+			mav.addObject("interfaces", interfaceInfos);
+		}catch(BPSException b){
+			
+		}catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mav.setViewName("interfaceInfo/interfaceInfo");
 		return mav;
 	}
 	

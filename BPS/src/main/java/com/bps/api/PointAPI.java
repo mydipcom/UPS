@@ -30,7 +30,7 @@ public class PointAPI {
 	private String log_content;
 	
 	@RequestMapping(value="/query")
-	@InterfaceInfoAnnotation(name="query",description="query")
+	@InterfaceInfoAnnotation(name="query",description="Query Describe")
 	public String getPointUserApi(HttpServletRequest request ,@RequestHeader("Authorization") String apiKey,@RequestParam String user_id){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
@@ -59,7 +59,7 @@ public class PointAPI {
 	}
 	
 	@RequestMapping(value="/changebonus",method=RequestMethod.POST)
-	@InterfaceInfoAnnotation(name="changebonus",description="changebonus")
+	@InterfaceInfoAnnotation(name="changebonus",description="Changebonus Describe")
 	public String changeBonusApi(HttpServletRequest request,@RequestHeader("Authorization")String apiKey,@RequestBody String jsonStr){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();

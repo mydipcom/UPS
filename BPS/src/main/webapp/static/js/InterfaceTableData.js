@@ -37,7 +37,7 @@ var InterfaceTable = function () {
 				"bRetrieve": true,
 				"processing":true,
 				"bDestroy":true,
-                "displayLength": 3,
+                "displayLength": 10,
 				"dom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
 				//"columns": [
 	 	        //   { title: "Interface Name",   data: "name" },

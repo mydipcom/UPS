@@ -128,7 +128,7 @@ public class LoginController extends BaseController {
 	public ModelAndView resetPassword(HttpServletRequest request ,String email){
 		ModelAndView mav = new ModelAndView();
 		TadminLog adminLog = new TadminLog();
-		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email);
+		TadminUser adminUser = adminUserService.getTadminUsersByEmail(email.toLowerCase());
 		if(adminUser == null){
 			 adminUser = new TadminUser();
 			//邮箱不存在

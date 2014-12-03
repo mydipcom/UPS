@@ -180,7 +180,7 @@ public class PointController extends BaseController {
         	fileName = fileName.toLowerCase();
         	if(!(fileName.endsWith(".xls")||fileName.endsWith(".xlsx"))){
         		resp.put("status", false);
-        		resp.put("info", "You have some form errors. Please import a excel file.");
+        		resp.put("info", "You have some errors. Please import a excel file.");
         		return JSON.toJSONString(resp);
         	}
     		List<String[]> datas = ExcelTools.readExcelPOI(file, 0);
@@ -188,7 +188,9 @@ public class PointController extends BaseController {
     			TpointUser pointUser = new TpointUser();
     			String data [] = datas.get(i);
     			if(data.length != 2){
-    				continue;
+    				resp.put("status", false);
+            		resp.put("info", "You have form errors. Please import a excel file.");
+            		return JSON.toJSONString(resp);
     			}
     			if(data[0] != null){
     				pointUser = pointUserService.getUserInfoById(data[0]);
@@ -203,27 +205,29 @@ public class PointController extends BaseController {
     					 pointUserService.createUserInfo(pointUser);
     				}
     			}else{
-    				continue;
+    				resp.put("status", false);
+            		resp.put("info", "You have some errors. Please import a excel file.");
+            		return JSON.toJSONString(resp);
     			}
     			}
     		 resp.put("status", true);
 		}catch(BPSException b){
 			resp.put("status", false);
-			resp.put("info", "You have some form errors. Please check below.");
+			resp.put("info", "You have some errors. Please check below.");
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			resp.put("status", false);
-			resp.put("info", "You have some form errors. Please check below.");
+			resp.put("info", "You have some  errors. Please check below.");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			resp.put("status", false);
-			resp.put("info", "You have some form errors. Please check below.");
+			resp.put("info", "You have some  errors. Please check below.");
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			resp.put("status", false);
-			resp.put("info", "You have some form errors. Please check below.");
+			resp.put("info", "You have some  errors. Please check below.");
 			e.printStackTrace();
 		} 
         

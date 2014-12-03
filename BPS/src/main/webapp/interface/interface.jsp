@@ -99,28 +99,18 @@
 							</tr>
 							</thead>
 							<tbody>
-						        <tr class="odd gradeX">
-								
+							 <c:forEach var="item" items="${interfaces}">
+						       <tr>
 								<td>
-									<a href="test">Test
+									<a href="<c:url value="/"/>interfaceInfo?id=${item[0]}">${item[0]}
 									 </a>
 								</td>
 								<td>
-									<span class="label label-sm label-success">
-									 Test</span>
+									<span>${item[1]}
+									 </span>
 								</td>
-							</tr>
-							<tr class="odd gradeX">
-								
-								<td>
-									<a href="test">Test
-									 </a>
-								</td>
-								<td>
-									<span class="label label-sm label-success">
-									Test </span>
-								</td>
-							</tr>
+							   </tr>
+							</c:forEach>
 						
 				            </tbody>
 							</table>

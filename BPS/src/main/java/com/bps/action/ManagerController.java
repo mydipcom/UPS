@@ -97,6 +97,8 @@ private Logger logger = Logger.getLogger(ManagerController.class);
 			adminuser.setCreatedBy(ad.getAdminId());
 			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
 			adminuser.setCreatedTime(System.currentTimeMillis());
+			String email = adminuser.getEmail();
+			adminuser.setEmail(email.toLowerCase());
 			adminUserService.createAdminUser(adminuser);
 			respJson.put("status", true);
 		}
@@ -125,6 +127,8 @@ private Logger logger = Logger.getLogger(ManagerController.class);
 			adminuser.setCreatedTime(sdate.getTime());
 			adminuser.setUpdatedBy(ad.getAdminId());
 			adminuser.setUpdatedTime(System.currentTimeMillis());
+			String email = adminuser.getEmail();
+			adminuser.setEmail(email.toLowerCase());
 			if(adminuser.getPassword()!=null){
 			adminuser.setPassword(SecurityTools.SHA1(adminuser.getPassword()));
 			}else {
