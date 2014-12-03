@@ -53,7 +53,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 	@RequestMapping(value="/rulesList",method=RequestMethod.GET)
 	@ResponseBody
 	public String rulesList(HttpServletRequest request,DataTableParamter dtp){		
-		PagingData pagingData=bonusRuleService.loadAdminUserList(dtp);
+		PagingData pagingData=bonusRuleService.loadRulesList(dtp);
 		pagingData.setSEcho(dtp.sEcho);
 		if(pagingData.getAaData()==null){
 			Object[] objs=new Object[]{};
@@ -79,7 +79,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 	public String addRules(HttpServletRequest request,TpointRule pointRule){
         JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.createAdminRole(pointRule);
+			bonusRuleService.createRules(pointRule);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){
@@ -99,7 +99,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		pointRuleLog.setFrom((short)0);
         JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.updateAdminRole(pointRule);
+			bonusRuleService.updateRules(pointRule);
 			log_content="success:edit rules.";
 			LogManageTools.writePointRuleLog(log_content, pointRuleLog);
 			LogManageTools.writeAdminLog(log_content, adminLog);
@@ -119,7 +119,7 @@ private Logger logger = Logger.getLogger(UserController.class);
 		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
 		JSONObject respJson = new JSONObject();
 		try{
-			bonusRuleService.deleteAdminNodesByIds(idArr);
+			bonusRuleService.deleteRulesByIds(idArr);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){

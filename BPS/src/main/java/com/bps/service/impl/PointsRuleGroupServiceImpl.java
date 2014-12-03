@@ -54,4 +54,9 @@ public class PointsRuleGroupServiceImpl implements PointsRuleGroupService {
 		return pointRuleGroupDao.findPage(rdtp.iDisplayStart, rdtp.iDisplayLength);
 	}
 
+	public void deletePointRuleGroupById(Integer ids) {
+		pointRuleGroupDao.delete(ids);
+		
+	}
+
 }

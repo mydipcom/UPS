@@ -17,7 +17,7 @@ public class EMailTool {
 			JavaMailSender javaMailSenderImpl=getJavaMailSenderImpl();
 			MimeMessage message = javaMailSenderImpl.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "utf-8");
-            messageHelper.setFrom(new InternetAddress(SystemConfig.Admin_Setting_Map.get("username")));
+            messageHelper.setFrom(new InternetAddress(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_NAME)));
             if(temaiMessage.getTo() !=null && !temaiMessage.getTo().isEmpty()){
             	messageHelper.setTo(temaiMessage.getTo());
             }
@@ -37,9 +37,9 @@ public class EMailTool {
 	 
 	public static JavaMailSenderImpl getJavaMailSenderImpl(){
 	    JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
-	    javaMailSenderImpl.setHost(SystemConfig.Admin_Setting_Map.get("host"));
-	    javaMailSenderImpl.setUsername(SystemConfig.Admin_Setting_Map.get("username"));
-	    javaMailSenderImpl.setPassword(SystemConfig.Admin_Setting_Map.get("password"));
+	    javaMailSenderImpl.setHost(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_HOST));
+	    javaMailSenderImpl.setUsername(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIL_NAME));
+	    javaMailSenderImpl.setPassword(SystemConfig.Admin_Setting_Map.get(SystemConstants.EMAIl_PASSWORD));
 	    Properties properties = new Properties();
 	    properties.setProperty("mail.smtp.auth", "true");
 	    properties.setProperty("mail.smtp.timeout", "30000");

@@ -208,15 +208,19 @@ public class BaseController {
 			lfm.setTime(System.currentTimeMillis());
 			lfm.setCount(count);
 			request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
+			if(Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.MAX_LOGIN_ERROR_TIMES))==1){
+				request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
+				request.getSession().setAttribute(SystemConstants.LOGIN_STATUS, System.currentTimeMillis());
+			}
 		}else{
 			Long time_interval = System.currentTimeMillis()-lfm.getTime();
-			if(time_interval>600000){
+			if(time_interval>(6000*Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK)))){
 				lfm.setTime(System.currentTimeMillis());
 				lfm.setCount(count);
 				request.getSession().setAttribute(SystemConstants.LOGIN_ERROR, lfm);
 			}else{
 				int error_count=lfm.getCount();
-				if(error_count == (Integer.parseInt(SystemConfig.Admin_Setting_Map.get("max_login_error_times"))-1)){
+				if(error_count == (Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.MAX_LOGIN_ERROR_TIMES))-1)){
 					request.getSession().removeAttribute(SystemConstants.LOGIN_ERROR);
 					request.getSession().setAttribute(SystemConstants.LOGIN_STATUS, System.currentTimeMillis());
 				}else{

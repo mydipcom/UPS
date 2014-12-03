@@ -30,8 +30,8 @@ var RolesTable = function () {
         	"filter":true,
         	"sort":false,
         	"info":true,
-//        	"scrollX":"100%",
-//        	"scrollXInner":"100%",
+        	"scrollX":"100%",
+        	"scrollXInner":"100%",
         	"processing":true,                
             // set the initial value
             "displayLength": 10,
@@ -136,9 +136,11 @@ var RolesTable = function () {
 				var data = oTable.api().row($("tr input:checked").parents('tr')).data();
 				var roleId = data.roleId;
 				var roleRights="0";
+				
 				if(data.adminRoleRights){
 					roleRights= (data.adminRoleRights.roleRights*1).toString(2);
 				}
+				var allrightslength=roleRights.length;
 				$("#editRoleRightsForm input[name='roleId']").val(roleId); 
 				//$("#editRoleRightsForm input[name='roleRights']").val(roleRights); 
 				
@@ -146,11 +148,14 @@ var RolesTable = function () {
 				allRightsBox.removeAttr("checked");
 				allRightsBox.parents('span').removeClass("checked");
 				jQuery(allRightsBox).each(function () {
+					
 					var rightsVal=($(this).val()*1).toString(2);
-					var ind=rightsVal.length;					
+					var ind=rightsVal.length;
+					if(allrightslength>=ind){
 					if(roleRights.substr(-ind,1)=="1"){					
 						$(this).attr("checked","true");
 						$(this).parents('span').addClass("checked");
+					}
 					}
 				});	           	            
 			}						

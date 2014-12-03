@@ -19,6 +19,8 @@ public interface PointsRuleGroupService {
 	
 	void deletePointRuleGroupByIds(Integer[] ids);
 	
+	void deletePointRuleGroupById(Integer ids);
+	
 	public PagingData loadGroupList(DataTableParamter rdtp);
 
 }

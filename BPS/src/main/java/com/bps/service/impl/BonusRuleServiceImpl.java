@@ -37,21 +37,21 @@ public class BonusRuleServiceImpl implements BonusRuleService{
 	}
 
 	
-	public void createAdminRole(TpointRule pointRule) {
+	public void createRules(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.create(pointRule);
 		
 	}
 
 	
-	public void updateAdminRole(TpointRule pointRule) {
+	public void updateRules(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.update(pointRule);
 		
 	}
 
 	
-	public void deleteAdminRole(TpointRule pointRule) {
+	public void deleteRules(TpointRule pointRule) {
 		// TODO Auto-generated method stub
 		pointRuleDao.delete(pointRule);
 	}
@@ -63,11 +63,11 @@ public class BonusRuleServiceImpl implements BonusRuleService{
 		
 		pointRuleDao.deactivaterules(ids);
 	}
-	public void deleteAdminNodesByIds(Integer[] ids){		
+	public void deleteRulesByIds(Integer[] ids){		
 		pointRuleDao.deleteAll(ids);
 	}
 
-	public PagingData loadAdminUserList(DataTableParamter rdtp) {
+	public PagingData loadRulesList(DataTableParamter rdtp) {
 		
 		
 		String searchJsonStr=rdtp.getsSearch();

@@ -6,19 +6,19 @@ public interface BonusRuleService {
 	
 	TpointRule getBonusRuleById(String ruleId);
 	
-	void createAdminRole(TpointRule pointRule);
+	void createRules(TpointRule pointRule);
 	
-	void updateAdminRole(TpointRule pointRule);
+	void updateRules(TpointRule pointRule);
 	
-	void deleteAdminRole(TpointRule pointRule);
+	void deleteRules(TpointRule pointRule);
 	
-	void deleteAdminNodesByIds(Integer[] ids);
+	void deleteRulesByIds(Integer[] ids);
 	
 	void activateRulesByIds(Integer[] ids);
 	
 	void deactivateRulesByIds(Integer[] ids);
 	
-	public PagingData loadAdminUserList(DataTableParamter rdtp);
+	public PagingData loadRulesList(DataTableParamter rdtp);
 	
 	int getBonusRuleAmount();	
 }

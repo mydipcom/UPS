@@ -209,7 +209,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-3"><s:message code="settingname"/><span class="required"> * </span></label>
 									<div class="col-md-9">										
-										<input name="name" class="form-control"/>										
+										<input name="name" class="form-control" readonly="true"/>										
 									</div>
 								</div>
 								<div class="form-group">

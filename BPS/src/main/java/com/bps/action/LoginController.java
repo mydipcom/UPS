@@ -82,8 +82,8 @@ public class LoginController extends BaseController {
 		TadminUser tUser=(TadminUser)adminUserService.getAdminUserById(user.getAdminId());
 		ModelAndView mav=new ModelAndView();
 		Long time = (Long) request.getSession().getAttribute(SystemConstants.LOGIN_STATUS);
-		if(time != null && System.currentTimeMillis()-time<60000*Integer.parseInt(SystemConfig.Admin_Setting_Map.get("login_error_locked"))){
-			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for "+Integer.parseInt(SystemConfig.Admin_Setting_Map.get("login_error_locked"))+" minutes.");
+		if(time != null && System.currentTimeMillis()-time<60000*Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK))){
+			    mav.addObject(ERROR_MSG_KEY, "The password is wrong too many times account is locked for "+Integer.parseInt(SystemConfig.Admin_Setting_Map.get(SystemConstants.LOGIN_ERROR_LOCK))+" minutes.");
 				if(tUser != null){
 				  mav.addObject("user", tUser);
 				}else{

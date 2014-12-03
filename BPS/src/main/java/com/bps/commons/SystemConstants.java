@@ -31,4 +31,15 @@ public class SystemConstants {
 	
 	public static final String LOG_SEPARATOR="-";
 	
+	public static final String EMAIL_HOST="email_host";
+	
+	public static final String EMAIL_NAME="email_username";
+	
+	public static final String EMAIl_PASSWORD="email_password";
+	
+	public static final String MAX_LOGIN_ERROR_TIMES="max_login_error_times";
+	
+	public static final String LOGIN_ERROR_LOCK="login_error_locked";	
+	
+	
 }

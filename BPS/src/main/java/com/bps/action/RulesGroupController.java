@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
 import com.bps.commons.ConvertTools;
+import com.bps.dao.PointRuleDao;
 import com.bps.dto.TpointRuleGroup;
 import com.bps.model.DataTableParamter;
 import com.bps.model.PagingData;
@@ -23,6 +24,9 @@ import com.bps.service.PointsRuleGroupService;
 public class RulesGroupController extends BaseController{
 	@Autowired
 	private PointsRuleGroupService pointsRuleGroupService;
+	
+	@Autowired
+	private PointRuleDao pointRuleDao;
 	
 	@RequestMapping(value="/rulesgroup",method=RequestMethod.GET)
 	public ModelAndView rules(HttpServletRequest request){
@@ -77,10 +81,18 @@ public class RulesGroupController extends BaseController{
 	@ResponseBody
 	public String deleteRulesGroup(@PathVariable String ids,HttpServletRequest request){
 		String[] idstrArr=ids.split(",");		
-		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);		
+		Integer[] idArr=ConvertTools.stringArr2IntArr(idstrArr);
+		
 		JSONObject respJson = new JSONObject();
 		try{
-			pointsRuleGroupService.deletePointRuleGroupByIds(idArr);
+			for (int i = 0; i < idArr.length; i++) {
+				TpointRuleGroup pointRuleGroup=pointsRuleGroupService.getpointRuleGroupById(idArr[i]);
+				if (!pointRuleGroup.getGroupName().equals("Base Group")) {
+					pointRuleDao.changegroup(pointRuleGroup);
+					pointsRuleGroupService.deletePointRuleGroupById(idArr[i]);		
+				}
+			}
+		//	pointsRuleGroupService.deletePointRuleGroupByIds(idArr);
 			respJson.put("status", true);
 		}
 		catch(BPSException be){

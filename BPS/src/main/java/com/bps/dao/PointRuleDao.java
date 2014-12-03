@@ -1,11 +1,16 @@
 package com.bps.dao;
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.bps.dao.base.BaseDao;
 import com.bps.dto.TpointRule;
+import com.bps.dto.TpointRuleGroup;
 
 /**
  * Home object for domain model class TpointRule.
@@ -33,5 +38,19 @@ public class PointRuleDao extends BaseDao<TpointRule> {
 			query.executeUpdate();
 			//currentSession().flush();   
 		}
+	}
+	 public void  changegroup(TpointRuleGroup pointRuleGroup) {
+		
+		
+		 Query queryBaseGroup=currentSession().createQuery("from TpointRuleGroup where groupName=?");
+		 queryBaseGroup.setParameter(0, "Base Group");
+		 List<TpointRuleGroup> list=queryBaseGroup.list();
+		 TpointRuleGroup  baseGroup=list.get(0);
+		 Session session=this.currentSession();
+		 Query query = session.createQuery("Update TpointRule set pointRuleGroup.groupId ="+baseGroup.getGroupId()+"where group_id="+pointRuleGroup.getGroupId() );
+		 query.executeUpdate();
+		 
+
+		
 	}
 }
