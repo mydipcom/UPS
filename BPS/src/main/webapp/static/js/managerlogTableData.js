@@ -57,14 +57,14 @@ var ManagerLogTable = function () {
                 	'targets':-1,
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
-                    	return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
+                    	return '<div class="actions"><a class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "id" },
+	           { title: "ID",   data: "id" ,"bVisible":false},
 	           { title: "Admin Name",   data: "adminId" },
 	           { title: "Content",  data: "content"},
 	           { title: "Level", data: "level"},

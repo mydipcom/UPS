@@ -56,11 +56,11 @@ var SettingTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "Id",   data: "id" },
+	           { title: "Id",   data: "id" ,"bVisible":false},
 	           { title: "Name",   data: "name" },
 	           { title: "Value",  data: "value"},
 	           { title: "descr", data: "descr" },
-	           { title: "sort",    data: "sort" },
+	           { title: "sort",    data: "sort" ,"bVisible":false},
 	        ],
 	        "serverSide": true,
 	        "serverMethod": "GET",

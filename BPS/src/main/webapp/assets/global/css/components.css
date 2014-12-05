@@ -4959,8 +4959,8 @@ Blue Madison
 ***/
 /* Button */
 .blue-madison.btn {
-  color: white;
-  background-color: #578ebe;
+  color: #000000;
+  background-color: #bebebe;
   border-color: "";
 }
 .blue-madison.btn:hover, .blue-madison.btn:focus, .blue-madison.btn:active, .blue-madison.btn.active {

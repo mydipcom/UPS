@@ -79,7 +79,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet box blue-hoki">
+						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="settingtable"/>
@@ -94,11 +94,11 @@
 										</a>
 										<div id="column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 											<label><input type="checkbox" checked data-column="0">Checkbox</label>
-											<label><input type="checkbox" checked data-column="1"><s:message code="system.management.user.searchform.id"/></label>
+											<label><input type="checkbox" 		  data-column="1"><s:message code="system.management.user.searchform.id"/></label>
 											<label><input type="checkbox" checked data-column="2"><s:message code="settingname"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="settingvalue"/></label>
 											<label><input type="checkbox" checked data-column="4"><s:message code="settingdescr"/></label>
-											<label><input type="checkbox" checked data-column="5"><s:message code="settingsort"/></label>
+											<label><input type="checkbox" 		  data-column="5"><s:message code="settingsort"/></label>
 										</div>
 									</div>								    																
 								</div>

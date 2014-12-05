@@ -76,21 +76,21 @@ var ManagersTable = function () {
                 	'data':null,//定义列名
                 	'render':function(data,type,row){
                     	//return '<div class="actions"><a class="btn btn-default btn-sm" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
-                		return '<div class="actions"><a  data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
+                		return '<div class="actions"><a  class="btn btn-sm dark" data-toggle="modal"  href="#view_log" id="openrluesviewmodal">view</a></div>';
                     },
                     'class':'center'
                 }
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "adminId" },
+	           { title: "ID",   data: "adminId"  },
 	           { title: "Email",   data: "email" },
 	           { title: "Role_Name",    data: "roleName" },
 	           { title: "Status",  data: "status"},
-	           { title: "CreatedBy", data: "createdBy" },
-	           { title: "CreatedTime", data: "createdTimeStr" },
-	           { title: "UpdatedBy",  data: "updatedBy" },
-	           { title: "UpdatedTime",    data: "updatedTimeStr" },  
+	           { title: "CreatedBy", data: "createdBy" ,"bVisible":false},
+	           { title: "CreatedTime", data: "createdTimeStr", "bVisible":false},
+	           { title: "UpdatedBy",  data: "updatedBy" ,"bVisible":false},
+	           { title: "UpdatedTime",    data: "updatedTimeStr" ,"bVisible":false},  
 	           { title: "Action" ,"class":"center"},
 	        ],
 	        "serverSide": true,

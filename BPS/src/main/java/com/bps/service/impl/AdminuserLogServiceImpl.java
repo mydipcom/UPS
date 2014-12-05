@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.dao.AdminLogDao;
-import com.bps.dao.InterfaceDao;
-import com.bps.dto.Param;
-import com.bps.dto.TInterface;
+
 import com.bps.dto.TadminLog;
 
 import com.bps.model.DataTableParamter;
@@ -25,11 +23,10 @@ import com.bps.service.AdminuserLogService;
 @Service
 public class AdminuserLogServiceImpl implements AdminuserLogService {
 
-	private static final Object[] Param = null;
+
 	@Autowired
 	private	AdminLogDao adminLogDao;
-	@Autowired
-	private InterfaceDao interfaceDao;
+
 	
 	public TadminLog getRuleLogById(Integer Id) {
 		// TODO Auto-generated method stub

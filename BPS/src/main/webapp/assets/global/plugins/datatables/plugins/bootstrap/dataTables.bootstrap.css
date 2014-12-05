@@ -125,30 +125,34 @@ div.dataTables_scrollHead table.table-bordered {
  */
 .table tbody tr.active td,
 .table tbody tr.active th {
-	background-color: #08C;
-	color: white;
+	background-color: #e4e2e4;
+	color: #0d0d0d;
 }
 
 .table tbody tr.active:hover td,
 .table tbody tr.active:hover th {
-	background-color: #0075b0 !important;
+	background-color: #b7d9aa!important;
 }
 
 .table tbody tr.active a {
-	color: white;
+	color: #8080ff;
 }
 
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active:nth-child(odd) th {
-	background-color: #017ebc;
+	background-color: #cae3c1;
 }
 
+.table-striped tbody tr.active:nth-child(even) td,
+.table-striped tbody tr.active:nth-child(even) th {
+	background-color: #e4efda;
+}
 table.DTTT_selectable tbody tr {
-	cursor: pointer;
+	cursor: pointer; 
 }
 
 div.DTTT .btn {
-	color: #400040!important;
+	color: #333 !important;
 	font-size: 12px;
 }
 

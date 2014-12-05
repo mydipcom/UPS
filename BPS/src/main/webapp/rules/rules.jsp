@@ -153,7 +153,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet box blue-hoki">
+						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="bonusrule.configuration.ManagedRulesTable" />
@@ -417,13 +417,13 @@
 					<div class="col-md-12">
 				
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet box blue-hoki">
+						<div class="portlet box green">
 						<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i> <s:message code="bonusrule.configuration.RulelogsTable"/>
 								</div>
 						</div>
-						<div class="portlet box blue-hoki">						
+												
 							<div class="portlet-body">																
 								<table class="table table-striped table-hover table-bordered" id="ruleslog_table">
 									<thead>
@@ -439,7 +439,7 @@
 																						
 								</table>
 							</div>
-						</div>
+						
 					</div>
 						<!-- END EXAMPLE TABLE PORTLET-->
 					 

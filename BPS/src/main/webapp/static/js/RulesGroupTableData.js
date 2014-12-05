@@ -105,6 +105,9 @@ var GroupsTable = function () {
              "success": function(data,status){
             	 if(status == "success"){					
 					 if(data.status){
+						 if(data.msg){
+							 handleAlerts("Base Group can ont delete.","warning","")
+						 }
 						 selected=[];						 
 		            	 oTable.api().draw();
 		            	 oTable.$('th span').removeClass();

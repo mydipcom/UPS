@@ -36,7 +36,7 @@ import com.bps.dto.TInterfaceLog;
 import com.bps.service.AdminUserService;
 import com.bps.service.BonusRuleService;
 import com.bps.service.InterfaceLogService;
-import com.bps.service.InterfaceService;
+//import com.bps.service.InterfaceService;
 import com.bps.service.PointUserService;
 
 /**
@@ -61,8 +61,8 @@ public class HomeController extends BaseController {
 	@Autowired
 	private BonusRuleService bonusRuleService;
 	
-	@Autowired
-	private InterfaceService interfaceService;
+	//@Autowired
+	//private InterfaceService interfaceService;
 	
 	@Autowired
 	private InterfaceLogService interfaceLogService;
@@ -150,6 +150,7 @@ public class HomeController extends BaseController {
 		List<TInterfaceLog> interfaceLogList = new ArrayList<TInterfaceLog>();
 		JSONObject resp = new JSONObject();
 		JSONObject jsonObject=null;
+		/*
 		String categories[]=interfaceService.getInterfaceNameList();
 		JSONObject[] json = new JSONObject[categories.length];
 		for(String categorie:categories){
@@ -159,8 +160,10 @@ public class HomeController extends BaseController {
 			jsonObject.put("color", "#87CEEB");
 			json[i++]=jsonObject;
 		}
+		
 		resp.put("data", json);
 		resp.put("categories", categories);
+		*/
 		return JSON.toJSONString(resp);
 	}
     public static void loadLibiray(HttpServletRequest request){

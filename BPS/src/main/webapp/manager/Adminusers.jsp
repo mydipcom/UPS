@@ -148,7 +148,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
-						<div class="portlet box blue-hoki">
+						<div class="portlet  box green">
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="system.management.user.tablename"/>
@@ -169,10 +169,10 @@
 											<label><input type="checkbox" checked data-column="2"><s:message code="system.management.user.searchform.email"/></label>
 											<label><input type="checkbox" checked data-column="3"><s:message code="system.management.user.searchform.rolename"/></label>
 											<label><input type="checkbox" checked data-column="4"><s:message code="system.management.user.searchform.status"/></label>
-											<label><input type="checkbox" checked data-column="5"><s:message code="system.management.user.createdBy"/></label>
-											<label><input type="checkbox" checked data-column="6"><s:message code="system.management.user.createdTime"/></label>
-											<label><input type="checkbox" checked data-column="7"><s:message code="system.management.user.updatedBy"/></label>
-											<label><input type="checkbox" checked data-column="8"><s:message code="system.management.user.updatedTime"/></label>
+											<label><input type="checkbox"  data-column="5"><s:message code="system.management.user.createdBy"/></label>
+											<label><input type="checkbox"  data-column="6"><s:message code="system.management.user.createdTime"/></label>
+											<label><input type="checkbox"  data-column="7"><s:message code="system.management.user.updatedBy"/></label>
+											<label><input type="checkbox"  data-column="8"><s:message code="system.management.user.updatedTime"/></label>
 										</div>
 									</div>								    																
 								</div>
@@ -286,13 +286,13 @@
 				
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 							<!-- BEGIN EXAMPLE TABLE PORTLET-->
-					<div class="portlet box blue-hoki">
+					<div class="portlet box green">
 						<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="system.management.user.logtablename" />
 								</div>
 						</div>
-						<div class="portlet box blue-hoki">
+						
 						<div class="portlet-body">																
 								<table class="table table-striped table-hover table-bordered" id="managerlog_table">
 									<thead>
@@ -308,7 +308,7 @@
 																						
 								</table>
 							</div>
-					</div>
+					
 						<!-- END EXAMPLE TABLE PORTLET-->
 					</div> 
 					</div>

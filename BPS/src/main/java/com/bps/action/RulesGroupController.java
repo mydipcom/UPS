@@ -91,6 +91,9 @@ public class RulesGroupController extends BaseController{
 					pointRuleDao.changegroup(pointRuleGroup);
 					pointsRuleGroupService.deletePointRuleGroupById(idArr[i]);		
 				}
+				else{
+					respJson.put("msg", true);
+				}
 			}
 		//	pointsRuleGroupService.deletePointRuleGroupByIds(idArr);
 			respJson.put("status", true);

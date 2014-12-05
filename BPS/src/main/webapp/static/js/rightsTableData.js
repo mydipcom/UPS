@@ -55,15 +55,15 @@ var RightsTable = function () {
             ],
             "columns": [
                {"orderable": false },
-	           { title: "ID",   data: "nodeId" },
-	           { title: "Bit Flag",   data: "bitFlag" },
+	           { title: "ID",   data: "nodeId" ,"bVisible":false},
+	           { title: "Bit Flag",   data: "bitFlag" ,"bVisible":false},
 	           { title: "Rights Name",  data: "name"},
 	           { title: "URI", data: "uri" },
 	           { title: "Request Method", data: "method" },
 	           { title: "Parent ID",  data: "pid" },
 	           { title: "Is Menu",    data: "isMenu" },
 	           { title: "Group Name",    data: "groupName" },
-	           { title: "Group Sort",    data: "groupSort" },
+	           { title: "Group Sort",    data: "groupSort" ,"bVisible":false},
 	           { title: "Status",    data: "status" }
 	          ],
 	        "serverSide": true,

@@ -93,7 +93,7 @@
 				<!-- END SEARCH FORM -->
 								<!-- BEGIN PAGE CONTENT-->				<div class="row">
 					<div class="col-md-12">
-						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box blue-hoki">
+						<!-- BEGIN EXAMPLE TABLE PORTLET-->						<div class="portlet box green">
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="fa fa-edit"></i><s:message code="system.management.roles.tablename" />

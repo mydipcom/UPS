@@ -130,7 +130,7 @@
 				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 					<div class="dashboard-stat red-intense">
 						<div class="visual">
-							<i class="fa fa-bar-chart-o"></i>
+							<i class="fa fa-comments"></i>
 						</div>
 						<div class="details">
 							<div class="number" id="point_user">
@@ -148,7 +148,7 @@
 				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 					<div class="dashboard-stat green-haze">
 						<div class="visual">
-							<i class="fa fa-bar-chart-o"></i>
+							<i class="fa fa-th-list"></i>
 						</div>
 						<div class="details">
 							<div class="number" id="point_rule">
@@ -209,7 +209,7 @@
 			<div class="clearfix">
 			</div>
 			<div class="row">
-				 <div class="col-md-6 col-sm-6">
+				 <div class="col-md-12">
 					<!-- BEGIN PORTLET-->
 					<div class="portlet box yellow">
 						<div class="portlet-title">
