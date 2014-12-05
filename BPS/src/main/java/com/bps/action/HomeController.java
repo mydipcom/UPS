@@ -11,12 +11,14 @@ package com.bps.action;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.wink.common.categories.Categories;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
@@ -32,7 +34,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
+import com.bps.commons.ClassTools;
 import com.bps.dto.TInterfaceLog;
+import com.bps.model.InterfaceInfoAnnotation;
 import com.bps.service.AdminUserService;
 import com.bps.service.BonusRuleService;
 import com.bps.service.InterfaceLogService;
@@ -145,13 +149,26 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping(value="/getInterfaceStatus",method=RequestMethod.GET)
 	@ResponseBody
-	public String getInterfaceStatus(HttpServletRequest request){
+	public String getInterfaceStatus(HttpServletRequest request) throws ClassNotFoundException{
 		int i=0;
 		List<TInterfaceLog> interfaceLogList = new ArrayList<TInterfaceLog>();
+		List<String> list=new ArrayList<String>();
 		JSONObject resp = new JSONObject();
 		JSONObject jsonObject=null;
-		/*
-		String categories[]=interfaceService.getInterfaceNameList();
+		String categories[] = null;
+		List<Class> clazzs = ClassTools.getClassByPackage("com.bps.api");
+		if(clazzs != null){
+			for(Class clazz:clazzs){
+				Method methods[] = clazz.getDeclaredMethods();
+				for(Method method :methods){
+					InterfaceInfoAnnotation annotation = method.getAnnotation(InterfaceInfoAnnotation.class);
+					list.add(annotation.name());			
+					}
+			}
+		}
+		categories = new String[list.size()];
+		categories = (String[]) list.toArray(categories);
+		i=0;
 		JSONObject[] json = new JSONObject[categories.length];
 		for(String categorie:categories){
 			interfaceLogList=interfaceLogService.findByInterfaceName(categorie);
@@ -163,7 +180,6 @@ public class HomeController extends BaseController {
 		
 		resp.put("data", json);
 		resp.put("categories", categories);
-		*/
 		return JSON.toJSONString(resp);
 	}
     public static void loadLibiray(HttpServletRequest request){

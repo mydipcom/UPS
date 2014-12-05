@@ -29,7 +29,7 @@ public class PointAPI {
 	private String log_content;
 	
 	@RequestMapping(value="/query")
-	@InterfaceInfoAnnotation(name="Query",url="api/query",description="Query Describe")
+	@InterfaceInfoAnnotation(name="query",url="api/query",description="Query Describe")
 	@InterfaceParamAnnotation(param={"user_id@String@true@point user id.@all","points@int@true@user points.@output","static@Boolean@true@point user status.@output"})
 	public String getPointUserApi(HttpServletRequest request ,@RequestHeader("Authorization") String apiKey,@RequestParam String user_id){
 		JSONObject resp = new JSONObject();
@@ -59,7 +59,7 @@ public class PointAPI {
 	}
 	
 	@RequestMapping(value="/changebonus",method=RequestMethod.POST)
-	@InterfaceInfoAnnotation(name="Changebonus",url="api/changebonus",description="Changebonus Describe")
+	@InterfaceInfoAnnotation(name="changebonus",url="api/changebonus",description="Changebonus Describe")
 	@InterfaceParamAnnotation(param={"user_id@String@true@point user id.@all","acount@int@true@user points.@input","action@Boolean@true@point user status.@input"
 			                         ,"points@int@true@user points.@output","status@Boolean@true@point user status.@output"})
 	public String changeBonusApi(HttpServletRequest request,@RequestHeader("Authorization")String apiKey,@RequestBody String jsonStr){
