@@ -7,11 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface InterfaceInfoAnnotation {
-	String name();
-
-	String description();
-
-	String url();
-
+public @interface InterfaceParamAnnotation {
+		String[] param();
 }

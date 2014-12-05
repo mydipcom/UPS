@@ -1,6 +1,5 @@
 package com.bps.api;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bps.commons.BPSException;
@@ -18,6 +16,7 @@ import com.bps.commons.SystemConfig;
 import com.bps.dto.TInterfaceLog;
 import com.bps.dto.TpointUser;
 import com.bps.model.InterfaceInfoAnnotation;
+import com.bps.model.InterfaceParamAnnotation;
 import com.bps.service.PointUserService;
 
 @RestController
@@ -30,7 +29,8 @@ public class PointAPI {
 	private String log_content;
 	
 	@RequestMapping(value="/query")
-	@InterfaceInfoAnnotation(name="query",description="Query Describe")
+	@InterfaceInfoAnnotation(name="Query",url="api/query",description="Query Describe")
+	@InterfaceParamAnnotation(param={"user_id@String@true@point user id.@all","points@int@true@user points.@output","static@Boolean@true@point user status.@output"})
 	public String getPointUserApi(HttpServletRequest request ,@RequestHeader("Authorization") String apiKey,@RequestParam String user_id){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
@@ -59,7 +59,9 @@ public class PointAPI {
 	}
 	
 	@RequestMapping(value="/changebonus",method=RequestMethod.POST)
-	@InterfaceInfoAnnotation(name="changebonus",description="Changebonus Describe")
+	@InterfaceInfoAnnotation(name="Changebonus",url="api/changebonus",description="Changebonus Describe")
+	@InterfaceParamAnnotation(param={"user_id@String@true@point user id.@all","acount@int@true@user points.@input","action@Boolean@true@point user status.@input"
+			                         ,"points@int@true@user points.@output","status@Boolean@true@point user status.@output"})
 	public String changeBonusApi(HttpServletRequest request,@RequestHeader("Authorization")String apiKey,@RequestBody String jsonStr){
 		JSONObject resp = new JSONObject();
 		TInterfaceLog interfaceLog = new TInterfaceLog();
@@ -80,13 +82,13 @@ public class PointAPI {
 				return JSON.toJSONString(resp);
 			}
 			JSONObject json = (JSONObject) JSON.parse(jsonStr);
-			if(json.getString("userId") == null || json.getString("userId").isEmpty() || json.getString("acount") == null || json.getString("action") == null){
+			if(json.getString("user_id") == null || json.getString("user_id").isEmpty() || json.getString("acount") == null || json.getString("action") == null){
 				resp.put("success", 0);
 				resp.put("msg", "params error.");
 				LogManageTools.writeInterfaceLog(log_content, interfaceLog);
 				return JSON.toJSONString(resp);
 			}
-			pointUser = pointUserService.getUserInfoById(json.getString("userId"));
+			pointUser = pointUserService.getUserInfoById(json.getString("user_id"));
 			if( pointUser == null ){
 				resp.put("success", 0);
 				resp.put("msg", "userId does not exist or error.");

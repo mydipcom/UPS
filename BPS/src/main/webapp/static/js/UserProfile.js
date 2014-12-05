@@ -21,41 +21,35 @@
 
 var rootURI="/";
 var UserProfile = function () {
-	    var handleUserProfile=function(){
-		//编辑提交操作
-	    $("#editUserProfile").on("submit", function(event) {
-	    	  event.stopPropagation();
-			  var jsondata=$(this).serializeJson();
-			  $.ajax( {
-	             "dataType": 'json', 
-	             "type": "POST", 
-	             "url": rootURI+"editprofile?rand="+Math.random(), 
-	             "data": $(this).serialize(),
-//	             "processData":false,
-//	             "contentType":"application/json",
-	             "success": function(resp,status){
-	            	 
-	            	 if(status == "success"){ 
-	            		
-	            		 if(resp.status){
-							 handleAlerts("Edited the data successfully.","success","#editFormMsg");
-						 }
-						 else{
-							 alert(resp.info);
-						 }
-					}             	 
-	             },
-	             "error":function(XMLHttpRequest, textStatus, errorThrown){
-	            	alert(errorThrown);
-	              }
-	           });
-			  return false;
-		});
-	    
-	  
+	   //修改个人资料
+	    var ChangeProfile = function(){
+	    	//编辑提交操作
+		     $.ajax( {
+		             "dataType": 'json', 
+		             "type": "POST", 
+		             "url": rootURI+"editprofile?rand="+Math.random(), 
+		             "data": $("#editUserProfile").serialize(),
+//		             "processData":false,
+//		             "contentType":"application/json",
+		             "success": function(resp,status){
+		            	 
+		            	 if(status == "success"){ 
+		            		
+		            		 if(resp.status){
+								 handleAlerts("Edited the data successfully.","success","#editFormMsg");
+							 }
+							 else{
+								 handleAlerts(resp.info,"danger","#editFormMsg");
+							 }
+						}             	 
+		             },
+		             "error":function(XMLHttpRequest, textStatus, errorThrown){
+		            	alert(errorThrown);
+		              }
+		           });
+				  return false;
+			};
 	   
-	   };	
-	    
 	    //修改密码
 	    var ChangePassword = function() {
                   event.stopPropagation();
@@ -151,6 +145,52 @@ var UserProfile = function () {
                 }
             });
     };
+    
+  //验证表单
+    var changeProfileValidation = function() {
+    	var changeform = $('#editUserProfile');
+        var errorDiv = $('.alert-danger', changeform);            
+            changeform.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input                
+            rules: {
+            	email: {
+                    required: true,
+                    email:true
+                }
+                            
+            },
+            onfocusout:function(element){
+            	$(element).valid();
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit              
+            	//successDiv.hide();
+                errorDiv.show();                    
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+            	ChangeProfile();
+            	errorDiv.hide();
+            }
+        });
+};
     //提示信息处理方法（是在页面中指定位置显示提示信息的方式）
 	var handleAlerts = function(msg,msgType,position) {         
         Metronic.alert({
@@ -182,9 +222,9 @@ var UserProfile = function () {
         //main function to initiate the module
         init: function (rootPath) {
         	rootURI=rootPath;
-        	handleUserProfile();
         	changePasswordValidation();
-		datePicker();
+        	changeProfileValidation();
+		    datePicker();
         }
 
     };

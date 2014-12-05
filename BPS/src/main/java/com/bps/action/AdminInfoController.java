@@ -64,7 +64,9 @@ public class AdminInfoController extends BaseController {
              mav.setViewName("login");
 	        }else{
 			String adminId=adminUser.getAdminId();
+			
 			adminInfo = adminInfoService.getAdminInfoById(adminId);
+			
 			if(adminInfo == null){
 				adminInfo = new TadminInfo();
 				adminInfo.setAdminId(adminId);
@@ -74,6 +76,7 @@ public class AdminInfoController extends BaseController {
 			if(adminInfo.getGender()==null){
 				adminInfo.setGender(true);
 			}
+			adminInfo.setEmail(adminUser.getEmail());
 	        }
         }catch(BPSException be){
         	
@@ -91,15 +94,24 @@ public class AdminInfoController extends BaseController {
 		TadminLog adminLog = new TadminLog();
 		try{
 			TadminUser adminUser = (TadminUser) request.getSession().getAttribute(SystemConstants.LOGINED);
+			TadminUser user = adminUserService.getTadminUsersByEmail(adminInfo.getEmail());
+			if(user != null && !adminUser.getAdminId().equals(user.getAdminId())){
+				respJson.put("status", false);
+				respJson.put("info", "Email is exists ,Please change another.");
+				return JSON.toJSONString(respJson);
+			}
+			adminUser.setEmail(adminInfo.getEmail());
 			String adminId=adminUser.getAdminId();
+			adminUser.setUpdatedBy(adminId);
+			adminUser.setUpdatedTime(System.currentTimeMillis());
 			adminLog.setAdminId(adminId);
 			adminInfo.setAdminId(adminId);
 			adminInfoService.updateAdminInfo(adminInfo);
+			adminUserService.updateAdminUser(adminUser);
 			log_content="success:edit profile.";
 			respJson.put("status", true);
 		}catch(BPSException be){
 			respJson.put("status", false);
-			respJson.put("info", be.getMessage());
 		}
 		LogManageTools.writeAdminLog(log_content, adminLog);
 		return JSON.toJSONString(respJson);
