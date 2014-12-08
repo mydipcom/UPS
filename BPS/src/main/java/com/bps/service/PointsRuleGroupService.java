@@ -22,5 +22,6 @@ public interface PointsRuleGroupService {
 	void deletePointRuleGroupById(Integer ids);
 	
 	public PagingData loadGroupList(DataTableParamter rdtp);
-
+	
+	public boolean checkgroup(TpointRuleGroup pointRuleGroup);
 }

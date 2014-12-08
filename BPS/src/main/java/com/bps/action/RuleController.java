@@ -79,8 +79,13 @@ private Logger logger = Logger.getLogger(UserController.class);
 	public String addRules(HttpServletRequest request,TpointRule pointRule){
         JSONObject respJson = new JSONObject();
 		try{
+			if (bonusRuleService.checkrules(pointRule)) {
+				respJson.put("status", true);
+				respJson.put("msg", true);
+			}else {
 			bonusRuleService.createRules(pointRule);
 			respJson.put("status", true);
+			}
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
@@ -99,11 +104,16 @@ private Logger logger = Logger.getLogger(UserController.class);
 		pointRuleLog.setFrom((short)0);
         JSONObject respJson = new JSONObject();
 		try{
+			if (bonusRuleService.checkrules(pointRule)) {
+				respJson.put("status", true);
+				respJson.put("msg", true);
+			}else {
 			bonusRuleService.updateRules(pointRule);
 			log_content="success:edit rules.";
 			LogManageTools.writePointRuleLog(log_content, pointRuleLog);
 			LogManageTools.writeAdminLog(log_content, adminLog);
 			respJson.put("status", true);
+			}
 		}
 		catch(BPSException be){
 			respJson.put("status", false);

@@ -20,5 +20,7 @@ public interface BonusRuleService {
 	
 	public PagingData loadRulesList(DataTableParamter rdtp);
 	
+	public boolean checkrules(TpointRule pointRule);
+	
 	int getBonusRuleAmount();	
 }

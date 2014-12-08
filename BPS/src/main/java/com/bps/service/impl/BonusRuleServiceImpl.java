@@ -107,5 +107,11 @@ public class BonusRuleServiceImpl implements BonusRuleService{
 		// TODO Auto-generated method stub
 		return pointRuleDao.getCount();
 	}
+
+
+		public boolean checkrules(TpointRule pointRule) {
+			
+			return pointRuleDao.checkrules(pointRule);
+		}
 	
 }

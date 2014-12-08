@@ -51,8 +51,13 @@ public class RulesGroupController extends BaseController{
 	public String addRulesGroup(HttpServletRequest request,TpointRuleGroup pointRuleGroup){
 		JSONObject respJson = new JSONObject();
 		try{
+			if (pointsRuleGroupService.checkgroup(pointRuleGroup)) {
+				respJson.put("status", true);
+				respJson.put("msg", true);
+			}else {
 			pointsRuleGroupService.createPointRuleGroup(pointRuleGroup);
 			respJson.put("status", true);
+			}
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
@@ -67,8 +72,13 @@ public class RulesGroupController extends BaseController{
 
 		JSONObject respJson = new JSONObject();
 		try{
+			if (pointsRuleGroupService.checkgroup(pointRuleGroup)) {
+				respJson.put("status", true);
+				respJson.put("msg", true);
+			}else {
 			pointsRuleGroupService.updatePointRuleGroup(pointRuleGroup);
 			respJson.put("status", true);
+			}
 		}
 		catch(BPSException be){
 			respJson.put("status", false);
