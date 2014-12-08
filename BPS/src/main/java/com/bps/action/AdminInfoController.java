@@ -117,7 +117,6 @@ public class AdminInfoController extends BaseController {
 			log_content="success:edit profile.";
 			respJson.put("status", true);
 		}catch(BPSException be){
-			be.printStackTrace();
 			respJson.put("status", false);
 		}
 		LogManageTools.writeAdminLog(log_content, adminLog);
