@@ -14,7 +14,19 @@ public class PointRuleGroupDao extends BaseDao<TpointRuleGroup>{
 		String hql="from TpointRuleGroup";
 		Query query = currentSession().createQuery(hql);
 		List<TpointRuleGroup> list=query.list();
-		return list;
-		
+		return list;	
 	}
+	 public boolean checkgroup(TpointRuleGroup pointRuleGroup){
+		 
+		 Query queryGroup=currentSession().createQuery("from TpointRuleGroup where groupName=?");
+		 queryGroup.setParameter(0, pointRuleGroup.getGroupName());
+		 List<TpointRuleGroup> list=queryGroup.list();
+		 if (list.size()!=0) {
+			return true;
+		}else {
+			 return false;
+		}
+		
+		 
+	 }
 }

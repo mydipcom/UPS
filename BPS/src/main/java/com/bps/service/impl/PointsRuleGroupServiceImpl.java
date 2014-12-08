@@ -59,4 +59,9 @@ public class PointsRuleGroupServiceImpl implements PointsRuleGroupService {
 		
 	}
 
+	public boolean checkgroup(TpointRuleGroup pointRuleGroup) {
+		
+		return pointRuleGroupDao.checkgroup(pointRuleGroup);
+	}
+
 }

@@ -40,8 +40,6 @@ public class PointRuleDao extends BaseDao<TpointRule> {
 		}
 	}
 	 public void  changegroup(TpointRuleGroup pointRuleGroup) {
-		
-		
 		 Query queryBaseGroup=currentSession().createQuery("from TpointRuleGroup where groupName=?");
 		 queryBaseGroup.setParameter(0, "Base Group");
 		 List<TpointRuleGroup> list=queryBaseGroup.list();
@@ -49,8 +47,17 @@ public class PointRuleDao extends BaseDao<TpointRule> {
 		 Session session=this.currentSession();
 		 Query query = session.createQuery("Update TpointRule set pointRuleGroup.groupId ="+baseGroup.getGroupId()+"where group_id="+pointRuleGroup.getGroupId() );
 		 query.executeUpdate();
-		 
-
-		
 	}
+	 public boolean checkrules(TpointRule pointRule){
+		 Query queryrules=currentSession().createQuery("from TpointRule where ruleName=? and group_id=?");
+		 queryrules.setParameter(0, pointRule.getRuleName());
+		 queryrules.setParameter(1, pointRule.getPointRuleGroup().getGroupId());
+		 List<TpointRule> list=queryrules.list();
+		 if(list.size()!=0){
+			 return true;
+		 }else {
+			 return false;
+		}
+	 
+	 }
 }

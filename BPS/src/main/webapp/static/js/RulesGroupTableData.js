@@ -137,10 +137,14 @@ var GroupsTable = function () {
 	            var groupId = data.groupId;
 	            var groupName =data.groupName;
 	            var descr=data.descr;
+	            if(groupName=="Base Group"){
+	            	handleAlerts("Base Group can not be edited.","danger","");
+	            	event.stopPropagation();
+	            }else{
 	            $("#editGroupsForm input[name='groupId']").val(groupId);
 	            $("#editGroupsForm input[name='groupName']").val(groupName);
 	            $("#editGroupsForm input[name='descr']").val(descr);
-	   
+	            }
 			}
 		});
 		
@@ -229,9 +233,14 @@ var GroupsTable = function () {
 //            "contentType":"application/json",
             "success": function(resp,status){
            	 if(status == "success"){  
-           		 if(resp.status){						 
+           		 if(resp.status){	
+           			 		if(resp.msg){
+           			 		oTable.api().draw();
+           			 		handleAlerts("Added the data failed the group exist.","warning","");	
+           			 		}else{
 		            	 oTable.api().draw();
-		            	 handleAlerts("Added the data successfully.","success","");		            	 
+		            	 handleAlerts("Added the data successfully.","success","");	
+           			 		}
 					 }
 					 else{
 						 handleAlerts("Failed to add the data.","danger","");						 
@@ -304,9 +313,15 @@ var EditGroup = function(){
          "success": function(resp,status){
         	 if(status == "success"){  
         		 if(resp.status){
-					 selected=[];
-	            	 oTable.api().draw();
-	            	 handleAlerts("Edited the data successfully.","success","");
+        			 if(resp.msg){
+        				 	selected=[];
+        			 		oTable.api().draw();
+        			 		handleAlerts("Added the data failed the group exist.","warning","");	
+        			 		}else{
+        			 			selected=[];
+        			 			oTable.api().draw();
+        			 			handleAlerts("Edited the data successfully.","success","");
+        			 		}
 				 }
 				 else{
 					 alert(resp.info);
