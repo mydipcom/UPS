@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,9 @@ public class AdminInfoController extends BaseController {
 		TadminInfo adminInfo=new TadminInfo();
 		try{
           TadminUser adminUser = (TadminUser) request.getSession().getAttribute(SystemConstants.LOGINED);
-            if ( null == adminUser ){
+            
              mav.setViewName("login");
-	        }else{
+	        
 			String adminId=adminUser.getAdminId();
 			
 			adminInfo = adminInfoService.getAdminInfoById(adminId);
@@ -77,7 +78,7 @@ public class AdminInfoController extends BaseController {
 				adminInfo.setGender(true);
 			}
 			adminInfo.setEmail(adminUser.getEmail());
-	        }
+	        
         }catch(BPSException be){
         	
         }
@@ -89,28 +90,34 @@ public class AdminInfoController extends BaseController {
 	
 	@RequestMapping(value="/editprofile",method=RequestMethod.POST)
 	@ResponseBody
-	public String editAdminInfo(HttpServletRequest request,TadminInfo adminInfo){
+	public String editAdminInfo(HttpServletRequest request,TadminInfo adminInfo,HttpSession session){
 		JSONObject respJson = new JSONObject();
 		TadminLog adminLog = new TadminLog();
 		try{
 			TadminUser adminUser = (TadminUser) request.getSession().getAttribute(SystemConstants.LOGINED);
 			TadminUser user = adminUserService.getTadminUsersByEmail(adminInfo.getEmail());
+			 String adminId=adminUser.getAdminId();
 			if(user != null && !adminUser.getAdminId().equals(user.getAdminId())){
 				respJson.put("status", false);
 				respJson.put("info", "Email is exists ,Please change another.");
 				return JSON.toJSONString(respJson);
 			}
-			adminUser.setEmail(adminInfo.getEmail());
-			String adminId=adminUser.getAdminId();
-			adminUser.setUpdatedBy(adminId);
-			adminUser.setUpdatedTime(System.currentTimeMillis());
-			adminLog.setAdminId(adminId);
+			if(!adminUser.getEmail().equals(adminInfo.getEmail())){
+				session.removeAttribute(SystemConstants.LOGINED);
+				user = adminUserService.getAdminUserById(adminId);
+				user.setEmail(adminInfo.getEmail());
+				user.setUpdatedBy(adminId);
+				user.setUpdatedTime(System.currentTimeMillis());
+				adminUserService.updateAdminUser(user);
+				setSessionUser(request, user);
+			}
+		    adminLog.setAdminId(adminId);
 			adminInfo.setAdminId(adminId);
 			adminInfoService.updateAdminInfo(adminInfo);
-			adminUserService.updateAdminUser(adminUser);
 			log_content="success:edit profile.";
 			respJson.put("status", true);
 		}catch(BPSException be){
+			be.printStackTrace();
 			respJson.put("status", false);
 		}
 		LogManageTools.writeAdminLog(log_content, adminLog);
