@@ -84,12 +84,13 @@
 		</mvc:interceptor>	    
 	</mvc:interceptors>
 	 
-	 <!-- 全局异常处理 -->
+	 <!-- 全局异常处理 
 	 <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 	 	<property name="defaultErrorView" value="/error/errpage"/>
 	 	<property name="defaultStatusCode" value="500"/>
 	 	<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>
 	 </bean>
+	 -->
 	 
 	 
     <!-- Spring MVC 文件上传配置 -->
