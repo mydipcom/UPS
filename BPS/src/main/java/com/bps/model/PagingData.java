@@ -55,6 +55,9 @@ public class PagingData implements Serializable {
 	}
 
 	public Object[] getAaData() {
+		if(aaData==null){
+			aaData=new Object[]{};
+		}
 		return aaData;
 	}
 
